@@ -4,6 +4,8 @@
  */
 package com.bms.model;
 
+import com.bms.model.consumerbanking.ConsumerBanking;
+
 /**
  *
  * @author Shabina
