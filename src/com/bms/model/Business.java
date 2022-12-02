@@ -8,6 +8,8 @@ package com.bms.model;
  *
  * @author Shabina
  */
-public class System {
+public class Business {
+    private ConsumerBanking consumerBank;
+    
     
 }

@@ -9,6 +9,7 @@ package com.bms.model.util;
  * @author Shabina
  */
 public class Person {
+    static private int id;
     private String firstName;
     private String lastName;
     private int personId;
@@ -17,8 +18,27 @@ public class Person {
     private int age;
     private String phoneNumber;
     private String emailAddress;
-    private char[] password;
+    //private char[] password;
 
+    
+    Person(){
+        id = id+1;
+        this.personId = id;
+    }
+    
+    public Person(String firstName, String lastName, String gender, String address, 
+            int age, String phoneNumber, String emailAddress){
+        id = id+1;
+        this.personId = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.address = address;
+        this.age = age;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+    }
+    
     public String getFirstName() {
         return firstName;
     }
@@ -83,11 +103,11 @@ public class Person {
         this.emailAddress = emailAddress;
     }
 
-    public char[] getPassword() {
+    /*public char[] getPassword() {
         return password;
     }
 
     public void setPassword(char[] password) {
         this.password = password;
-    }
+    }*/
 }
