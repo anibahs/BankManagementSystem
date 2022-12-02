@@ -4,18 +4,25 @@
  */
 package com.bms.model.consumerbanking;
 
+import com.bms.model.BankAccountDirectory;
+
 /**
  *
  * @author Shabina
  */
 public class ConsumerBanking {
-    private int consumerId;
+    private BankAccountDirectory bankAccountDirectory;
 
-    public int getConsumerId() {
-        return consumerId;
+    ConsumerBanking(){
+        this.bankAccountDirectory = new BankAccountDirectory();
+    }
+    
+    public BankAccountDirectory getBankAccountDirectory() {
+        return bankAccountDirectory;
     }
 
-    public void setConsumerId(int consumerId) {
-        this.consumerId = consumerId;
+    public void setBankAccountDirectory(BankAccountDirectory bankAccountDirectory) {
+        this.bankAccountDirectory = bankAccountDirectory;
     }
+
 }
