@@ -18,6 +18,7 @@ import com.bms.model.util.Person;
 import com.bms.model.util.User;
 import com.bms.model.util.UserDirectory;
 import com.bms.ui.consumerbanking.ViewBalanceJPanel;
+import javax.swing.JSplitPane;
 
 /**
  *
@@ -33,7 +34,7 @@ public class MainJFrame extends javax.swing.JFrame {
     
     CardLayout cl;
     JPanel cards;
-    Business business;    
+    Business business;  
     public MainJFrame() {
         initComponents();
         this.cl = new CardLayout();
@@ -331,7 +332,7 @@ public class MainJFrame extends javax.swing.JFrame {
             for (User user: this.business.getUserDirectory().getuserDirectory()){
                 //System.out.println(user.getUserName()+" / "+user.getPassword().toString());
                 if(unameTextField.getText().equals(user.getUserName())){
-                    ViewBalanceJPanel customerPanel = new ViewBalanceJPanel(cards,business,user);
+                    ViewBalanceJPanel customerPanel = new ViewBalanceJPanel(cards,business,user,splitPane);
                     cards.add(customerPanel, "vbPanel");
                     splitPane.setRightComponent(cards);
                     cl.show(cards, "vbPanel");

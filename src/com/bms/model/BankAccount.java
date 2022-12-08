@@ -4,6 +4,7 @@
  */
 package com.bms.model;
 
+import com.bms.model.consumerbanking.BankStatements;
 import com.bms.model.util.Customer;
 
 /**
@@ -17,8 +18,9 @@ public class BankAccount {
     private String routingNumber;
     private Customer customer;
     private int currentBalance;
+    private BankStatements statement;
 
-    
+
     BankAccount(){
         id = id+1;
         this.accountId = id;
@@ -31,6 +33,7 @@ public class BankAccount {
         this.accountType=type;
         this.routingNumber=routingNumber;
         this.currentBalance=currentBalance;
+        this.statement=new BankStatements();
     }
 
     public int getCurrentBalance() {
@@ -72,6 +75,23 @@ public class BankAccount {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+    
+        public static int getId() {
+        return id;
+    }
+
+    public static void setId(int id) {
+        BankAccount.id = id;
+    }
+
+    public BankStatements getStatement() {
+        return statement;
+    }
+
+    public void setStatement(BankStatements statement) {
+        this.statement = statement;
+    }
+
     
     @Override
     public String toString(){

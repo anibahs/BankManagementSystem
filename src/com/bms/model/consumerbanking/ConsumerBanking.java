@@ -4,7 +4,6 @@
  */
 package com.bms.model.consumerbanking;
 
-import com.bms.model.util.Customer;
 import com.bms.model.util.CustomerDirectory;
 
 /**

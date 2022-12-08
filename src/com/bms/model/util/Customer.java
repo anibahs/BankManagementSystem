@@ -6,6 +6,7 @@ package com.bms.model.util;
 
 import com.bms.model.BankAccount;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -16,8 +17,9 @@ public class Customer extends Person{
     static int id;
     private int customerId;
     private ArrayList<BankAccount> accounts;
+    private HashMap<Person, BankAccount> recipients;
     //private Branch homeBranch;
-    
+
     
  
     Customer(){
@@ -25,6 +27,7 @@ public class Customer extends Person{
         this.customerId = id;
         this.accounts = new ArrayList<BankAccount>();
         this.person = new Person();
+        this.recipients = new HashMap();
     }
     
     public Customer(Person person){
@@ -33,6 +36,7 @@ public class Customer extends Person{
         this.customerId = id;
         this.accounts = new ArrayList<BankAccount>();
         this.person = person;
+        this.recipients = new HashMap();
     }
     
     public Person getPerson() {
@@ -66,11 +70,26 @@ public class Customer extends Person{
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
+    
+
+    public HashMap<Person, BankAccount> getRecipients() {
+        return recipients;
+    }
+
+    public void setRecipient(HashMap<Person, BankAccount> recipients) {
+        this.recipients = recipients;
+    }
         
     public BankAccount addNewBankAccount(BankAccount account){
         BankAccount newAccount = new BankAccount(account.getCustomer(), account.getAccountType(), 
                 account.getRoutingNumber(), account.getCurrentBalance());
         this.accounts.add(newAccount);
         return newAccount;
+    }
+    
+    public HashMap<Person, BankAccount> addNewRecipient(Person person, BankAccount account){
+        
+        this.recipients.put(person, account);
+        return this.recipients;
     }
 }

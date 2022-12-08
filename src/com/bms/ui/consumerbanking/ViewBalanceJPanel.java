@@ -12,6 +12,7 @@ import java.awt.CardLayout;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,10 +27,18 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
     JPanel cards;
     CardLayout cl;
     Customer customer;
-    public ViewBalanceJPanel(JPanel cards,Business business, User loginUser) {
+    Business business;
+    User loginUser;
+    JSplitPane splitPane;
+
+    public ViewBalanceJPanel(JPanel cards,Business business, User loginUser, JSplitPane spltPn) {
         initComponents();
         this.cards = cards;
         this.cl =  (CardLayout)cards.getLayout();
+        this.business = business;
+        this.loginUser = loginUser;
+        this.splitPane=splitPane;
+
         accountTypeCmbBx.addItem("Checking");
         accountTypeCmbBx.addItem("Savings");
         
@@ -71,7 +80,7 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         accountTypeLbl = new javax.swing.JLabel();
         accountTypeCmbBx = new javax.swing.JComboBox<>();
         transferMoneyBtn = new javax.swing.JButton();
-        transferMoneyBtn2 = new javax.swing.JButton();
+        viwStatementsBtn = new javax.swing.JButton();
         viewAccountScrlPn = new javax.swing.JScrollPane();
         viewAccountsTbl = new javax.swing.JTable();
         viewAccountBtn = new javax.swing.JButton();
@@ -255,10 +264,20 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         transferMoneyBtn.setBackground(new java.awt.Color(54, 33, 39));
         transferMoneyBtn.setForeground(new java.awt.Color(255, 255, 255));
         transferMoneyBtn.setText("Transfer Money");
+        transferMoneyBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transferMoneyBtnActionPerformed(evt);
+            }
+        });
 
-        transferMoneyBtn2.setBackground(new java.awt.Color(54, 33, 39));
-        transferMoneyBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        transferMoneyBtn2.setText("View Statements");
+        viwStatementsBtn.setBackground(new java.awt.Color(54, 33, 39));
+        viwStatementsBtn.setForeground(new java.awt.Color(255, 255, 255));
+        viwStatementsBtn.setText("View Statements");
+        viwStatementsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viwStatementsBtnActionPerformed(evt);
+            }
+        });
 
         viewAccountScrlPn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
@@ -304,7 +323,7 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
                         .addComponent(viewAccountBtn))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGap(105, 105, 105)
-                        .addComponent(transferMoneyBtn2)
+                        .addComponent(viwStatementsBtn)
                         .addGap(121, 121, 121)
                         .addComponent(transferMoneyBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -323,7 +342,7 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
                 .addComponent(accountFieldsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(transferMoneyBtn2)
+                    .addComponent(viwStatementsBtn)
                     .addComponent(transferMoneyBtn))
                 .addContainerGap())
         );
@@ -380,6 +399,19 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         populateAccountFields(account);        // TODO add your handling code here:
     }//GEN-LAST:event_viewAccountBtnActionPerformed
 
+    private void viwStatementsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viwStatementsBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_viwStatementsBtnActionPerformed
+
+    private void transferMoneyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferMoneyBtnActionPerformed
+        // initiate transaction
+        MakeTransactionJPanel transactionPanel = new MakeTransactionJPanel(cards,business,loginUser, splitPane);
+        cards.add(transactionPanel, "mtPanel");
+        //cl.addLayoutComponent(this., SOMEBITS);
+        //splitPane.setRightComponent(cards);
+        cl.show(cards, "mtPanel");
+    }//GEN-LAST:event_transferMoneyBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField accountBalanceField;
@@ -401,12 +433,12 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel makeTransactionsLbl;
     private javax.swing.JButton transferMoneyBtn;
-    private javax.swing.JButton transferMoneyBtn2;
     private javax.swing.JButton viewAccountBtn;
     private javax.swing.JScrollPane viewAccountScrlPn;
     private javax.swing.JLabel viewAccountsLbl;
     private javax.swing.JTable viewAccountsTbl;
     private javax.swing.JLabel viewProfileLbl;
+    private javax.swing.JButton viwStatementsBtn;
     // End of variables declaration//GEN-END:variables
 
     public void populateAccountsTable(ArrayList<BankAccount> accounts) {
