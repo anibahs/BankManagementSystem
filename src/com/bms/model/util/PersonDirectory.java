@@ -21,8 +21,16 @@ public class PersonDirectory {
         this.personDirectory = personDirectory;
     }
 
-    PersonDirectory(){
+    public PersonDirectory(){
         this.personDirectory = new ArrayList<Person>();
+    }
+    
+    public Person addNewPerson(String firstName, String lastName, String gender, String address, 
+            int age, String phoneNumber, String emailAddress){
+        Person newPerson = new Person(firstName, lastName, gender, address, 
+             age, phoneNumber, emailAddress);
+        this.personDirectory.add(newPerson);
+        return newPerson;
     }
     
     

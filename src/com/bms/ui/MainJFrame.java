@@ -5,10 +5,19 @@
 package com.bms.UI;
 
 import com.bms.UI.employeerole.bankteller.BankTellerJPanel;
+import com.bms.model.BankAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
+import com.bms.model.Business;
+import com.bms.model.util.PersonDirectory;
+import com.bms.model.consumerbanking.ConsumerBanking;
+import com.bms.model.util.Customer;
+import com.bms.model.util.CustomerDirectory;
+import com.bms.model.util.Person;
+import com.bms.model.util.User;
+import com.bms.model.util.UserDirectory;
+import com.bms.ui.consumerbanking.ViewBalanceJPanel;
 
 /**
  *
@@ -24,11 +33,23 @@ public class MainJFrame extends javax.swing.JFrame {
     
     CardLayout cl;
     JPanel cards;
-    
+    Business business;    
     public MainJFrame() {
         initComponents();
         this.cl = new CardLayout();
         this.cards = new JPanel(cl);
+        this.business = new Business();
+        PersonDirectory personDirectory = this.business.getPersonDirectory();
+        Person person = personDirectory.addNewPerson("Shabina", "Singh", "Female", "Boston",
+                29, "16172384404", "anibahs@gmail.com");
+        
+        ConsumerBanking consumerBank = this.business.getConsumerBank();
+        CustomerDirectory consumerDirectory = consumerBank.getCustomerDirectory();
+        Customer customer = consumerDirectory.addNewCustomer(person);
+        BankAccount account = new BankAccount(customer, "Checking", "ICIC0000075", 5);
+        customer.addNewBankAccount(account);
+        UserDirectory userDirectory = this.business.getUserDirectory();
+        User user = userDirectory.addNewUser(person, "Customer", "shabina123".toCharArray());
     }
 
     /**
@@ -306,6 +327,16 @@ public class MainJFrame extends javax.swing.JFrame {
             splitPane.setRightComponent(cards);
             cl.show(cards, "BTPanel");
 
+        }else if(selectedfield.equals("Customer")){
+            for (User user: this.business.getUserDirectory().getuserDirectory()){
+                //System.out.println(user.getUserName()+" / "+user.getPassword().toString());
+                if(unameTextField.getText().equals(user.getUserName())){
+                    ViewBalanceJPanel customerPanel = new ViewBalanceJPanel(cards,business,user);
+                    cards.add(customerPanel, "vbPanel");
+                    splitPane.setRightComponent(cards);
+                    cl.show(cards, "vbPanel");
+                }
+            }
         }
         else{
             JOptionPane.showMessageDialog(this, "Invalid Username and password");
