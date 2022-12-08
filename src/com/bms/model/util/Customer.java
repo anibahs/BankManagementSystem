@@ -12,30 +12,35 @@ import java.util.ArrayList;
  * @author Shabina
  */
 public class Customer extends Person{
+    private Person person;
     static int id;
     private int customerId;
     private ArrayList<BankAccount> accounts;
     //private Branch homeBranch;
-
-
+    
+    
+ 
     Customer(){
         id = id+1;
         this.customerId = id;
+        this.accounts = new ArrayList<BankAccount>();
+        this.person = new Person();
     }
     
-    public Customer(String firstName, String lastName, String gender, String address, 
-            int age, String phoneNumber, String emailAddress){
-        
-        super(firstName, lastName, gender, address, age, phoneNumber, emailAddress);
+    public Customer(Person person){
+        super();
         id = id+1;
         this.customerId = id;
         this.accounts = new ArrayList<BankAccount>();
+        this.person = person;
     }
     
-    public BankAccount addBankAccount(BankAccount bankAccount){
-        BankAccount newAccount = new BankAccount();
-        this.accounts.add(newAccount);
-        return newAccount;
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
     
     /**public Branch getHomeBranch() {
@@ -61,5 +66,11 @@ public class Customer extends Person{
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
-    
+        
+    public BankAccount addNewBankAccount(BankAccount account){
+        BankAccount newAccount = new BankAccount(account.getCustomer(), account.getAccountType(), 
+                account.getRoutingNumber(), account.getCurrentBalance());
+        this.accounts.add(newAccount);
+        return newAccount;
+    }
 }

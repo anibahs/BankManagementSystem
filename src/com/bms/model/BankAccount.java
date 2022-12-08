@@ -11,24 +11,49 @@ import com.bms.model.util.Customer;
  * @author Shabina
  */
 public class BankAccount {
-    private String accountId;
+    static private int id;
+    private int accountId;
+    private String accountType;
     private String routingNumber;
     private Customer customer;
     private int currentBalance;
+
+    
+    BankAccount(){
+        id = id+1;
+        this.accountId = id;
+    }
+
+    public BankAccount(Customer customer, String type, String routingNumber, int currentBalance){
+        id = id+1;
+        this.accountId = id;
+        this.customer=customer;
+        this.accountType=type;
+        this.routingNumber=routingNumber;
+        this.currentBalance=currentBalance;
+    }
 
     public int getCurrentBalance() {
         return currentBalance;
     }
 
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+    
     public void setCurrentBalance(int currentBalance) {
         this.currentBalance = currentBalance;
     }
 
-    public String getAccountId() {
+    public int getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(String accountId) {
+    public void setAccountId(int accountId) {
         this.accountId = accountId;
     }
 
@@ -46,5 +71,10 @@ public class BankAccount {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+    
+    @Override
+    public String toString(){
+        return Integer.toString(this.getAccountId());
     }
 }

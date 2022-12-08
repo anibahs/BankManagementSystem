@@ -18,7 +18,6 @@ public class Person {
     private int age;
     private String phoneNumber;
     private String emailAddress;
-    //private char[] password;
 
     
     Person(){
@@ -103,11 +102,4 @@ public class Person {
         this.emailAddress = emailAddress;
     }
 
-    /*public char[] getPassword() {
-        return password;
-    }
-
-    public void setPassword(char[] password) {
-        this.password = password;
-    }*/
 }
