@@ -4,7 +4,8 @@
  */
 package com.bms.UI;
 
-import com.bms.UI.employeerole.bankteller.BankTellerJPanel;
+import com.bms.UI.employeerole.LoanOfficerJPanel;
+import com.bms.UI.employeerole.BankTellerJPanel;
 import com.bms.model.BankAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -18,6 +19,7 @@ import com.bms.model.util.Person;
 import com.bms.model.util.User;
 import com.bms.model.util.UserDirectory;
 import com.bms.ui.consumerbanking.ViewBalanceJPanel;
+
 
 /**
  *
@@ -38,6 +40,9 @@ public class MainJFrame extends javax.swing.JFrame {
         initComponents();
         this.cl = new CardLayout();
         this.cards = new JPanel(cl);
+
+        controlPanel.add(cards);
+
         this.business = new Business();
         PersonDirectory personDirectory = this.business.getPersonDirectory();
         Person person = personDirectory.addNewPerson("Shabina", "Singh", "Female", "Boston",
@@ -50,6 +55,7 @@ public class MainJFrame extends javax.swing.JFrame {
         customer.addNewBankAccount(account);
         UserDirectory userDirectory = this.business.getUserDirectory();
         User user = userDirectory.addNewUser(person, "Customer", "shabina123".toCharArray());
+
     }
 
     /**
@@ -90,6 +96,7 @@ public class MainJFrame extends javax.swing.JFrame {
         splitPane.setDividerLocation(200);
 
         sidePanel.setBackground(new java.awt.Color(54, 33, 89));
+        sidePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         homePanel.setBackground(new java.awt.Color(54, 33, 39));
 
@@ -99,6 +106,11 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Home Page");
         jLabel2.setToolTipText("");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
         homePanel.setLayout(homePanelLayout);
@@ -116,6 +128,8 @@ public class MainJFrame extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        sidePanel.add(homePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 240, 40));
 
         regPanel.setBackground(new java.awt.Color(54, 33, 39));
 
@@ -144,21 +158,7 @@ public class MainJFrame extends javax.swing.JFrame {
             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
-        sidePanel.setLayout(sidePanelLayout);
-        sidePanelLayout.setHorizontalGroup(
-            sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        sidePanelLayout.setVerticalGroup(
-            sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sidePanelLayout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        sidePanel.add(regPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 240, -1));
 
         splitPane.setLeftComponent(sidePanel);
 
@@ -195,7 +195,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -214,7 +214,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         loginscreenPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -224,6 +224,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel13.setText("Password: ");
 
         jButton1.setBackground(new java.awt.Color(54, 33, 39));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Login");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,7 +256,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addGroup(loginscreenPanelLayout.createSequentialGroup()
                         .addGap(126, 126, 126)
                         .addComponent(jButton1)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(609, Short.MAX_VALUE))
         );
         loginscreenPanelLayout.setVerticalGroup(
             loginscreenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,7 +275,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
@@ -282,19 +283,15 @@ public class MainJFrame extends javax.swing.JFrame {
         controlPanelLayout.setHorizontalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(controlPanelLayout.createSequentialGroup()
-                .addGap(169, 169, 169)
-                .addComponent(loginscreenPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(loginscreenPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(50, 50, 50)
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(loginscreenPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, 0)
+                .addComponent(loginscreenPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         splitPane.setRightComponent(controlPanel);
@@ -303,7 +300,7 @@ public class MainJFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 841, Short.MAX_VALUE)
+            .addComponent(splitPane, javax.swing.GroupLayout.PREFERRED_SIZE, 841, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,6 +321,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
             BankTellerJPanel bpanel = new BankTellerJPanel(cards);
             cards.add(bpanel, "BTPanel");
+            
             splitPane.setRightComponent(cards);
             cl.show(cards, "BTPanel");
 
@@ -338,10 +336,29 @@ public class MainJFrame extends javax.swing.JFrame {
                 }
             }
         }
+        else if(selectedfield.equals("LoanOfficer")){
+
+            LoanOfficerJPanel lpanel = new LoanOfficerJPanel(cards);
+            cards.add(lpanel, "LOPanel");
+            
+            splitPane.setRightComponent(cards);
+            cl.show(cards, "LOPanel");
+
+        }
         else{
             JOptionPane.showMessageDialog(this, "Invalid Username and password");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        JPanel panel =(JPanel) cards.getComponent(0);
+        cards.removeAll();
+        cards.add(panel,"ControlPanel");
+        cl.show(cards,"ControlPanel");
+        
+        
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments
