@@ -12,8 +12,9 @@ import java.util.ArrayList;
  */
 public class CustomerDirectory {
     private ArrayList<Customer> customerDirectory;
-
-    CustomerDirectory(){
+    
+    
+    public CustomerDirectory(){
         this.customerDirectory = new ArrayList<Customer>();
     }
     
@@ -25,8 +26,8 @@ public class CustomerDirectory {
         this.customerDirectory = customerDirectory;
     }
     
-    public Customer addCustomer(){
-        Customer newCustomer = new Customer();
+    public Customer addNewCustomer(Person person){
+        Customer newCustomer = new Customer(person);
         this.customerDirectory.add(newCustomer);
         return newCustomer;
     }
