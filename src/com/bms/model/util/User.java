@@ -28,6 +28,12 @@ public class User extends Person{
         this.userName = (person.getFirstName()+"."+person.getLastName()).toLowerCase();
     }
     
+    public User(String username, char[] password, String type){
+        this.type = type;
+        this.password = password;
+        this.userName = username.toLowerCase();
+    }
+    
     public Person getPerson() {
         return person;
     }

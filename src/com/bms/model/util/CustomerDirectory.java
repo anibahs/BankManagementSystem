@@ -4,6 +4,8 @@
  */
 package com.bms.model.util;
 
+import com.bms.model.BankAccount;
+import com.bms.model.consumerbank.BankStatements;
 import java.util.ArrayList;
 
 /**
@@ -31,5 +33,13 @@ public class CustomerDirectory {
         this.customerDirectory.add(newCustomer);
         return newCustomer;
     }
+    
+    
+    /*public Customer fetchCustomer(Customer customer, String account_id, String type, 
+            String routingNumber, int currentBalance){
+        Customer customer = new Customer();
+        
+        return customer;
+    }*/
     
 }
