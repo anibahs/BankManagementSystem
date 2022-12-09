@@ -4,9 +4,15 @@
  */
 package com.bms.UI.employeerole;
 
+import com.bms.model.Business;
+import com.bms.model.CommercialBank.CommercialBank;
+import com.bms.model.CommercialBank.Loan;
+import com.bms.model.util.Customer;
 import java.awt.CardLayout;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,16 +23,22 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
     /**
      * Creates new form LoanEstimatorJPanel
      */
-    double loan;
-    double interestRate;
-    double month;
-    double payment;
-    double MonthlyPayment;
+    CommercialBank commercialbank;
+    Customer customer;
+    Business business;
+    double loanamt;
+    Loan loanapp;
+    private double interestRate;
+    private double month;
+    private double payment;
+    private double MonthlyPayment;
     JPanel cards;
     CardLayout cl;
     
-    public LoanEstimatorJPanel(JPanel cards) {
+    
+    public LoanEstimatorJPanel(JPanel cards, Business business) {
         this.cards = cards;
+        this.business = business;
         this.cl = (CardLayout) cards.getLayout();
         initComponents();
     }
@@ -53,8 +65,10 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
         jLoanBtnLoanCalculator = new javax.swing.JButton();
         jLoanbtnReset = new javax.swing.JButton();
         jLoanBtnExit = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jLoanReport = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        repaymentField = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -111,79 +125,95 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLoanReport.setColumns(20);
-        jLoanReport.setRows(5);
-        jScrollPane1.setViewportView(jLoanReport);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "LoanAmt", "ROI", "NumberofPayments", "RepaymentLoan", "MonthlyEMI"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        jLabel1.setText("TotalRepayment: ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(82, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 703, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(206, 206, 206))
             .addGroup(layout.createSequentialGroup()
-                .addGap(142, 142, 142)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(214, 214, 214)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
+                        .addComponent(jLoanBtnLoanCalculator)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLoanbtnReset)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLoanBtnExit))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel5)))
-                    .addComponent(jLoanBtnLoanCalculator))
-                .addGap(76, 76, 76)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLoanbtnReset)
-                        .addGap(70, 70, 70)
-                        .addComponent(jLoanBtnExit))
-                    .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel1))
+                        .addGap(62, 62, 62)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTxtLoan)
                             .addComponent(jTxtInterest)
                             .addComponent(jTxtNoPayment)
-                            .addComponent(jTextMonthlyPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(42, 42, 42)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(186, Short.MAX_VALUE))
+                            .addComponent(jTextMonthlyPayment, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                            .addComponent(repaymentField))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jTxtLoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jTxtInterest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jTxtNoPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jTextMonthlyPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(73, 73, 73)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jTxtLoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTxtInterest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTxtNoPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(repaymentField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextMonthlyPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLoanBtnLoanCalculator)
                     .addComponent(jLoanbtnReset)
                     .addComponent(jLoanBtnExit))
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLoanBtnLoanCalculatorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoanBtnLoanCalculatorActionPerformed
         // TODO add your handling code here:
 
-        String monthlyPayment = String.format(jTextMonthlyPayment.getText());
+        //String monthlyPayment = String.format(jTextMonthlyPayment.getText());
 
         if (jTxtLoan.getText().equals("")){
             JOptionPane.showMessageDialog(null,"Please enter loan amount to borrow","Loan System", JOptionPane.INFORMATION_MESSAGE );
@@ -191,8 +221,8 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
 
         else
         {
-            loan = Double.parseDouble(jTxtLoan.getText());
-            String amount = String.format(jTxtLoan.getText());
+            loanamt = Double.parseDouble(jTxtLoan.getText());
+            
         }
 
         ///////////////////////////////////////////
@@ -203,7 +233,6 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
         else
         {
             interestRate = Double.parseDouble(jTxtInterest.getText());
-            String interest = String.format(jTxtInterest.getText());
         }
 
         //////////////////////////////////////////
@@ -214,23 +243,42 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
         else
         {
             month = Double.parseDouble(jTxtNoPayment.getText());
-            String numberInstallement = String.format(jTxtNoPayment.getText());
         }
         //////////////////////////////////////////
 
-        payment = loan + ((loan * interestRate)/ 100);
-
-        MonthlyPayment = (payment/month);
-        String PayMonth = String.format("%.2f",MonthlyPayment);
-        jTextMonthlyPayment.setText(PayMonth);
-
+        
+        commercialbank = new CommercialBank();
+        loanapp = new Loan();
+        
+        loanapp.setLoan(loanamt);
+        loanapp.setInterestRate(interestRate);
+        loanapp.setMonth(month);
+        MonthlyPayment = loanapp.CalculateMonthlyEMI(loanamt,interestRate,month);
+        payment = loanapp.CalculateTotalLoanPayment(loanamt, interestRate);
+        
+        
+        jTxtLoan.setText(String.valueOf(loanamt));
+        jTxtInterest.setText(String.valueOf(interestRate));
+        jTxtNoPayment.setText(String.valueOf(month));
+        repaymentField.setText(String.valueOf(payment));
+        jTextMonthlyPayment.setText(String.valueOf(MonthlyPayment));
+        
+        
+        
+        commercialbank.addLoan(loanapp);
+        System.out.print(this.commercialbank.getLoans());
+        PopulateTable(this.commercialbank.getLoans());
+        
+        
+        /*
         jLoanReport.append("\tLoan Predictor:\n\n"+
-            "Amount of Loan:\t\t" + loan
+            "Amount of Loan:\t\t" + loanamt
             + "\nInterest Rate:\t\t" + interestRate
             + "\nNumber of Installments:\t\t" + month
             + "\nTotal Loan Payment:\t\t" + payment
+            + "\nPer Monthly Installment:\t\t" + MonthlyPayment
         );
-
+        */
     }//GEN-LAST:event_jLoanBtnLoanCalculatorActionPerformed
 
     private void jLoanbtnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoanbtnResetActionPerformed
@@ -238,6 +286,7 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
         jTxtLoan.setText("");
         jTxtInterest.setText("");
         jTxtNoPayment.setText("");
+        repaymentField.setText("");
         jTextMonthlyPayment.setText("");
     }//GEN-LAST:event_jLoanbtnResetActionPerformed
 
@@ -248,6 +297,7 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
@@ -255,13 +305,31 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JButton jLoanBtnExit;
     private javax.swing.JButton jLoanBtnLoanCalculator;
-    private javax.swing.JTextArea jLoanReport;
     private javax.swing.JButton jLoanbtnReset;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextMonthlyPayment;
     private javax.swing.JTextField jTxtInterest;
     private javax.swing.JTextField jTxtLoan;
     private javax.swing.JTextField jTxtNoPayment;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JTextField repaymentField;
     // End of variables declaration//GEN-END:variables
+
+    private void PopulateTable(ArrayList<Loan> loans) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+      
+        
+        for(Loan loan: loans){
+            
+        Object[] row = new Object[6];
+        row[0] = loan.getLoan();
+        row[1] = loan.getInterestRate();
+        row[2] = loan.getMonth();
+        row[3] = loan.getPayment();
+        row[4] = loan.getMonthlyPayment();
+        model.addRow(row);
+    }
+}
 }
