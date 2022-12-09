@@ -81,7 +81,6 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         denyButton = new javax.swing.JButton();
-        jXDatePicker1 = new org.jdesktop.swingx.JXDatePicker();
         loanestimatorButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -437,8 +436,7 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
                         .addComponent(jTextMonthlyPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(custnameField)
-                        .addComponent(jComboBox3, 0, 115, Short.MAX_VALUE)
-                        .addComponent(jXDatePicker1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jComboBox3, 0, 115, Short.MAX_VALUE)))
                 .addContainerGap(427, Short.MAX_VALUE))
         );
         requestloanPanelLayout.setVerticalGroup(
@@ -453,9 +451,7 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel5)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel14)
                 .addGap(18, 18, 18)
                 .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -511,7 +507,7 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
                     .addContainerGap(137, Short.MAX_VALUE)
-                    .addComponent(profilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(profilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
@@ -645,7 +641,6 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTxtInterest;
     private javax.swing.JTextField jTxtLoan;
     private javax.swing.JTextField jTxtNoPayment;
-    private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
     private javax.swing.JTextField lameField;
     private javax.swing.JButton loanestimatorButton;
     private javax.swing.JPanel mainPanel;

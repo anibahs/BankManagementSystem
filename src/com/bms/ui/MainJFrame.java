@@ -19,8 +19,12 @@ import com.bms.model.util.Person;
 import com.bms.model.util.User;
 import com.bms.model.util.UserDirectory;
 import com.bms.ui.consumerbanking.ViewBalanceJPanel;
-import javax.swing.JSplitPane;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -56,6 +60,23 @@ public class MainJFrame extends javax.swing.JFrame {
         customer.addNewBankAccount(account);
         UserDirectory userDirectory = this.business.getUserDirectory();
         User user = userDirectory.addNewUser(person, "Customer", "shabina123".toCharArray());
+        
+        /**try{
+            String myConnectionString = "jdbc:mysql://localhost:3306?" + "useUnicode=yes&characterEncoding=UTF-8";
+            Connection conn = DriverManager.getConnection(myConnectionString, "root", "admin");
+            Statement stmt = conn.createStatement();
+            stmt.execute("SHOW DATABASES");
+            ResultSet rs = stmt.getResultSet();
+            while (rs.next()) {
+                System.out.println(rs.getString(1));
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }**/
+
 
     }
 
@@ -329,11 +350,29 @@ public class MainJFrame extends javax.swing.JFrame {
         }else if(selectedfield.equals("Customer")){
             for (User user: this.business.getUserDirectory().getuserDirectory()){
                 //System.out.println(user.getUserName()+" / "+user.getPassword().toString());
-                if(unameTextField.getText().equals(user.getUserName())){
-                    ViewBalanceJPanel customerPanel = new ViewBalanceJPanel(cards,business,user,splitPane);
-                    cards.add(customerPanel, "vbPanel");
-                    splitPane.setRightComponent(cards);
-                    cl.show(cards, "vbPanel");
+                
+                try {
+                    //Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
+                        "root", "admin");
+                    PreparedStatement st = (PreparedStatement) connection
+                        .prepareStatement("Select username, password from user where username=? and password=?");
+                    st.setString(1, unameTextField.getText());
+                    st.setString(2, new String(PasswordField.getPassword()));
+                    System.err.println(unameTextField.getText());
+                    System.err.println(PasswordField.getPassword().toString());
+                    ResultSet rs = st.executeQuery();
+                    if (rs.next()) {
+                        JOptionPane.showMessageDialog(this,"You have successfully logged in");
+                        ViewBalanceJPanel customerPanel = new ViewBalanceJPanel(cards,business,user,splitPane);
+                        cards.add(customerPanel, "vbPanel");
+                        splitPane.setRightComponent(cards);
+                        cl.show(cards, "vbPanel");
+                    } else {
+                        JOptionPane.showMessageDialog(this,"Wrong Username & Password");
+                    }
+                } catch (SQLException sqlException) {
+                    sqlException.printStackTrace();
                 }
             }
         }

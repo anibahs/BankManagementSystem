@@ -4,13 +4,10 @@
  */
 package com.bms.ui.consumerbanking;
 
-import com.bms.model.BankAccount;
 import com.bms.model.Business;
 import com.bms.model.util.Customer;
-import com.bms.model.util.Person;
 import com.bms.model.util.User;
 import java.awt.CardLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
@@ -39,12 +36,12 @@ public class MakeTransactionJPanel extends javax.swing.JPanel {
         this.splitPane=splitPane;
 
         
-        for(BankAccount account: customer.getAccounts()){
-            fromAccountCmbBx.addItem(account;
+        /**for(BankAccount account: customer.getAccounts()){
+            fromAccountCmbBx.;
         }     
         for(Person person: customer.getRecipients().keySet()){
             recipientCmbBx.addItem(person);
-        }           
+        }**/           
         for(Customer customer: business.getConsumerBank().getCustomerDirectory().getCustomerDirectory()){
             if(loginUser.getPerson().equals(customer.getPerson())){
                 this.customer = customer;
@@ -428,7 +425,7 @@ public class MakeTransactionJPanel extends javax.swing.JPanel {
 
     private void fromAccountCmbBxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fromAccountCmbBxActionPerformed
         // TODO add your handling code here:
-        fromAccountCmbBx.setSelectedItem(account);
+        //fromAccountCmbBx.setSelectedItem(account);
 
     }//GEN-LAST:event_fromAccountCmbBxActionPerformed
 
