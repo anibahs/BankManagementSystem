@@ -4,11 +4,15 @@
  */
 package com.bms.ui.consumerbanking;
 
+import com.bms.UI.MainJFrame;
 import com.bms.model.BankAccount;
 import com.bms.model.Business;
 import com.bms.model.util.Customer;
+import com.bms.model.util.DBConnection;
 import com.bms.model.util.User;
 import java.awt.CardLayout;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,7 +35,7 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
     User loginUser;
     JSplitPane splitPane;
 
-    public ViewBalanceJPanel(JPanel cards,Business business, User loginUser, JSplitPane spltPn) {
+    public ViewBalanceJPanel(JPanel cards,Business business, User loginUser, JSplitPane splitPane, JPanel panel) {
         initComponents();
         this.cards = cards;
         this.cl =  (CardLayout)cards.getLayout();
@@ -42,12 +46,13 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         accountTypeCmbBx.addItem("Checking");
         accountTypeCmbBx.addItem("Savings");
         
-        for(Customer customer: business.getConsumerBank().getCustomerDirectory().getCustomerDirectory()){
-            if(loginUser.getPerson().equals(customer.getPerson())){
-                this.customer = customer;
+        /**for(Customer cust: business.getConsumerBank().getCustomerDirectory().getCustomerDirectory()){
+            if(loginUser.getPerson().equals(cust.getPerson())){
+                this.customer = cust;
             }
-        }
-        populateAccountsTable(this.customer.getAccounts());
+        }**/
+        System.out.println("Going");
+        populateAccountsTable(this.fetchAccounts());
     }
 
     /**
@@ -407,8 +412,8 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         // initiate transaction
         MakeTransactionJPanel transactionPanel = new MakeTransactionJPanel(cards,business,loginUser, splitPane);
         cards.add(transactionPanel, "mtPanel");
-        //cl.addLayoutComponent(this., SOMEBITS);
-        //splitPane.setRightComponent(cards);
+        cl.addLayoutComponent(this, SOMEBITS);
+        splitPane.setRightComponent(cards);
         cl.show(cards, "mtPanel");
     }//GEN-LAST:event_transferMoneyBtnActionPerformed
 
@@ -454,9 +459,79 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         }
     }
 
-    private void populateAccountFields(BankAccount account) {
+    public void populateAccountFields(BankAccount account) {
         accountIdField.setText(String.valueOf(account.getAccountId()));
         accountTypeCmbBx.setSelectedItem(account.getAccountType());
         accountBalanceField.setText(String.valueOf( account.getCurrentBalance()));
     }
+    
+    public ArrayList<BankAccount> fetchAccounts(){
+        System.out.println("fetchAccounts");
+        ArrayList<BankAccount> accounts = new ArrayList<BankAccount>();
+        DBConnection con = new DBConnection();
+        String query = "Select account_id,account_type,routing_number,current_balance from bank_accounts"
+                + " WHERE account_id in (1,2);";
+        /**System.out.println("1");
+
+        ArrayList<String> slist = new ArrayList<String>();
+        System.out.println("customer"+customer.getCustomerId());
+        for(BankAccount account: customer.getAccounts()){
+            System.out.println("account.getAccountId()"+account.getAccountId());
+            slist.add(Integer.toString(account.getAccountId()));
+        }
+        System.out.println(slist);
+        
+        String customerAccountIds = String.join(",", slist);
+        System.out.println("customerAccountIds"+customerAccountIds);**/
+        ArrayList<Object> params = new ArrayList<Object>();
+        //params.add(customerAccountIds);
+        ResultSet rs = con.runSelect(cards, query, params,this);
+        System.out.println("3");
+
+        try{
+            do{
+                System.out.println(rs.getString("account_id"));
+                System.out.println(rs.getString("account_type"));
+                System.out.println(rs.getString("routing_number"));
+                System.out.println(rs.getString("current_balance"));
+                BankAccount account = business.getAccountDirectory().fetchBankAccount(customer, rs.getString("account_id"),
+                                        rs.getString("account_type"), rs.getString("routing_number"),
+                                        Integer.parseInt(rs.getString("current_balance")));
+                accounts.add(account);
+                System.out.println("accounts"+account);
+            }while(rs.next());
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return accounts;       
+    }
+    
+    
+    /**public ArrayList<BankAccount> fetchCustomers(){
+        System.out.println("fetchCustomers");
+        ArrayList<Customer> customers = new ArrayList<Customer>();
+        DBConnection con = new DBConnection();
+        String query = "Select * from custoemrs;";
+        System.out.println("1");
+        
+        ArrayList<Object> params = new ArrayList<Object>();
+        ResultSet rs = con.runSelect(cards, query, new ArrayList<Object>(),this);
+        System.out.println("3");
+
+        try{
+            while(rs.next()){
+                System.out.println("1");
+                Customer account = business.getCustomerDirectory().fetchCustomer(customer, rs.getString("account_id"),
+                                        rs.getString("account_type"), rs.getString("routing_number"),
+                                        Integer.parseInt(rs.getString("current_balance")));
+                accounts.add(account);
+                System.out.println("accounts"+account);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return accounts;     
+    }**/  
 }
