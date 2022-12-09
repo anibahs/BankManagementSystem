@@ -39,23 +39,11 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
         jPanel2 = new javax.swing.JPanel();
-        transferMoneyBtn1 = new javax.swing.JButton();
-        jLabel17 = new javax.swing.JLabel();
         transferMoneyBtn2 = new javax.swing.JButton();
-        accountBalanceLbl = new javax.swing.JLabel();
-        recipientLbl = new javax.swing.JLabel();
-        accountBalanceField = new javax.swing.JTextField();
-        transferMoneyField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        viewStatementsTbl = new javax.swing.JTable();
         accountIdLbl = new javax.swing.JLabel();
-        accoutIdField = new javax.swing.JTextField();
-        transferMoneyBtn = new javax.swing.JButton();
-        accountTypeLbl = new javax.swing.JLabel();
-        transferMoneyLbl1 = new javax.swing.JLabel();
         accoutTypeCmbBx = new javax.swing.JComboBox<>();
-        recipientCmbBx = new javax.swing.JComboBox<>();
-        transferMoneyLbl = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -190,17 +178,6 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
 
         add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, -1, -1));
 
-        transferMoneyBtn1.setBackground(new java.awt.Color(54, 33, 39));
-        transferMoneyBtn1.setForeground(new java.awt.Color(255, 255, 255));
-        transferMoneyBtn1.setText("Add New Recipient");
-        transferMoneyBtn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                transferMoneyBtn1ActionPerformed(evt);
-            }
-        });
-
-        jLabel17.setText("or");
-
         transferMoneyBtn2.setBackground(new java.awt.Color(54, 33, 39));
         transferMoneyBtn2.setForeground(new java.awt.Color(255, 255, 255));
         transferMoneyBtn2.setText("View Statements");
@@ -210,130 +187,59 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
             }
         });
 
-        accountBalanceLbl.setText("Account Balance:");
-
-        recipientLbl.setText("Choose Recipient:");
-
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        viewStatementsTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"123456789", "Checking", "0"},
-                {null, null, null}
+                {"123456789", "", "0", null},
+                {null, null, null, null}
             },
             new String [] {
-                "Account Number", "Account Type", "Balance ($)"
+                "Transaction Id", "Recipient Account", "Transaction Amount ($)", "Timestamp"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jTable1.setGridColor(new java.awt.Color(255, 255, 255));
-        jTable1.setRowHeight(22);
-        jScrollPane1.setViewportView(jTable1);
+        viewStatementsTbl.setGridColor(new java.awt.Color(255, 255, 255));
+        viewStatementsTbl.setRowHeight(22);
+        jScrollPane1.setViewportView(viewStatementsTbl);
 
         accountIdLbl.setText("Account Number:");
 
-        transferMoneyBtn.setBackground(new java.awt.Color(54, 33, 39));
-        transferMoneyBtn.setForeground(new java.awt.Color(255, 255, 255));
-        transferMoneyBtn.setText("Transfer");
-        transferMoneyBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                transferMoneyBtnActionPerformed(evt);
-            }
-        });
-
-        accountTypeLbl.setText("Account Type:");
-
-        transferMoneyLbl1.setText("Transaction Amount:");
-
         accoutTypeCmbBx.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "RoxburyCrossing", "Prudential", "Huntington" }));
-
-        recipientCmbBx.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "RoxburyCrossing", "Prudential", "Huntington" }));
-
-        transferMoneyLbl.setText("Wire Transfer:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(transferMoneyLbl1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(transferMoneyField, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(transferMoneyBtn))
-                    .addComponent(jLabel17)
-                    .addComponent(transferMoneyBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(accountIdLbl)
-                            .addComponent(accountBalanceLbl)
-                            .addComponent(transferMoneyLbl)
-                            .addComponent(recipientLbl))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(accoutIdField)
-                            .addComponent(accountBalanceField)
-                            .addComponent(recipientCmbBx, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(accountTypeLbl)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(accoutTypeCmbBx, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(transferMoneyBtn2)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jScrollPane1)))
+                .addGap(6, 6, 6)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(accountIdLbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(accoutTypeCmbBx, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(transferMoneyBtn2))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(accountIdLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(accoutTypeCmbBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(accountTypeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(accoutIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(accountBalanceLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(accountBalanceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(transferMoneyBtn2))
-                .addGap(18, 18, 18)
-                .addComponent(transferMoneyLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(recipientLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(recipientCmbBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(transferMoneyBtn1)
-                .addGap(32, 32, 32)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(transferMoneyLbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(transferMoneyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(transferMoneyBtn))
-                .addGap(43, 43, 43))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         jLayeredPane2.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -371,49 +277,29 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_makeTransactionsLblMouseClicked
 
-    private void transferMoneyBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferMoneyBtn1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_transferMoneyBtn1ActionPerformed
-
     private void transferMoneyBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferMoneyBtn2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_transferMoneyBtn2ActionPerformed
 
-    private void transferMoneyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferMoneyBtnActionPerformed
-
-    }//GEN-LAST:event_transferMoneyBtnActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField accountBalanceField;
-    private javax.swing.JLabel accountBalanceLbl;
     private javax.swing.JLabel accountIdLbl;
-    private javax.swing.JLabel accountTypeLbl;
-    private javax.swing.JTextField accoutIdField;
     private javax.swing.JComboBox<String> accoutTypeCmbBx;
     private javax.swing.JPanel homePanel;
     private javax.swing.JPanel homePanel1;
     private javax.swing.JPanel homePanel2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel makeTransactionsLbl;
-    private javax.swing.JComboBox<String> recipientCmbBx;
-    private javax.swing.JLabel recipientLbl;
-    private javax.swing.JButton transferMoneyBtn;
-    private javax.swing.JButton transferMoneyBtn1;
     private javax.swing.JButton transferMoneyBtn2;
-    private javax.swing.JTextField transferMoneyField;
-    private javax.swing.JLabel transferMoneyLbl;
-    private javax.swing.JLabel transferMoneyLbl1;
     private javax.swing.JLabel viewAccountsLbl;
     private javax.swing.JLabel viewProfileLbl;
+    private javax.swing.JTable viewStatementsTbl;
     // End of variables declaration//GEN-END:variables
 }

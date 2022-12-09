@@ -4,6 +4,13 @@
  */
 package com.bms.ui.consumerbanking;
 
+import com.bms.model.Business;
+import com.bms.model.util.Customer;
+import com.bms.model.util.User;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+
 /**
  *
  * @author Shabina
@@ -13,8 +20,33 @@ public class MakeTransactionJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ViewBalanceJPanel
      */
-    public MakeTransactionJPanel() {
+    JPanel cards;
+    CardLayout cl;
+    Customer customer;
+    Business business;
+    User loginUser;
+    JSplitPane splitPane;
+
+    public MakeTransactionJPanel(JPanel cards,Business business, User loginUser, JSplitPane spltPn) {
         initComponents();
+        this.cards = cards;
+        this.cl =  (CardLayout)cards.getLayout();
+        this.business = business;
+        this.loginUser = loginUser;
+        this.splitPane=splitPane;
+
+        
+        /**for(BankAccount account: customer.getAccounts()){
+            fromAccountCmbBx.;
+        }     
+        for(Person person: customer.getRecipients().keySet()){
+            recipientCmbBx.addItem(person);
+        }**/           
+        for(Customer customer: business.getConsumerBank().getCustomerDirectory().getCustomerDirectory()){
+            if(loginUser.getPerson().equals(customer.getPerson())){
+                this.customer = customer;
+            }
+        }
     }
 
     /**
@@ -211,8 +243,6 @@ public class MakeTransactionJPanel extends javax.swing.JPanel {
 
         transferMoneyLbl1.setText("Transaction Amount:");
 
-        recipientCmbBx.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "RoxburyCrossing", "Prudential", "Huntington" }));
-
         transferMoneyBtn1.setBackground(new java.awt.Color(54, 33, 39));
         transferMoneyBtn1.setForeground(new java.awt.Color(255, 255, 255));
         transferMoneyBtn1.setText("Add New Recipient");
@@ -224,7 +254,6 @@ public class MakeTransactionJPanel extends javax.swing.JPanel {
 
         fromAccountLbl.setText("From Account:");
 
-        fromAccountCmbBx.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "RoxburyCrossing", "Prudential", "Huntington" }));
         fromAccountCmbBx.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fromAccountCmbBxActionPerformed(evt);
@@ -396,6 +425,8 @@ public class MakeTransactionJPanel extends javax.swing.JPanel {
 
     private void fromAccountCmbBxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fromAccountCmbBxActionPerformed
         // TODO add your handling code here:
+        //fromAccountCmbBx.setSelectedItem(account);
+
     }//GEN-LAST:event_fromAccountCmbBxActionPerformed
 
 
