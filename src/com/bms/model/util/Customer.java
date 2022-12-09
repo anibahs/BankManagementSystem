@@ -32,6 +32,18 @@ public class Customer extends Person{
         this.recipients = new HashMap();
     }
     
+    public Customer(String customer_id){
+        this.customerId = Integer.parseInt(customer_id);
+    }
+    
+    /**public Customer(type, String routingNumber, int currentBalance){
+        id = id+1;
+        this.customerId = id;
+        this.accounts = new ArrayList<BankAccount>();
+        this.person = new Person();
+        this.recipients = new HashMap();
+    }**/
+    
     public Customer(Person person){
         super();
         id = id+1;
