@@ -9,16 +9,18 @@ package com.bms.model.util;
  * @author ashwini
  */
 public class Employee extends Person {
-    Person person;
+    Employee employee;
     private String employeetype;
 
-    public Person getPerson() {
-        return person;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
+
+    
 
     public String getEmployeetype() {
         return employeetype;

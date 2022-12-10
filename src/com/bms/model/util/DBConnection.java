@@ -28,7 +28,7 @@ public class DBConnection {
         ResultSet result=null;
         try {
             Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
-              "root", "admin");
+              "root", "ashwini");
             PreparedStatement st = (PreparedStatement) connection
                                         .prepareStatement(query,    ResultSet.TYPE_SCROLL_INSENSITIVE, 
                                                                             ResultSet.CONCUR_READ_ONLY);
@@ -53,15 +53,69 @@ public class DBConnection {
         boolean flag = false;
         try {
             Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
-              "root", "admin");
+              "root", "ashwini");
             PreparedStatement st = (PreparedStatement) connection
             .prepareStatement(query);
+            System.out.print("Query:"+query);
+            System.out.print("Parameter first:"+params.get(0));
+            
+            for(int i=0;i>=params.size();i++){
+                st.setString(++i, params.get(i).toString());
+            }
+            System.out.print("Statement"+st);
+            st.executeUpdate();
+            
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return flag;
+    }
+    
+    public boolean runInsertloan(JPanel cards,String query, ArrayList<Object> params){
+        boolean flag = false;
+        try {
+            Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
+              "root", "ashwini");
+            PreparedStatement st = (PreparedStatement) connection
+            .prepareStatement(query);
+            System.out.print("Query:"+query);
+            System.out.print("Parameter first:"+params.get(0));
+            
+            
             st.setString(1, params.get(0).toString());
             st.setString(2, params.get(1).toString());
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                flag = true;
-            }
+            st.setString(3, params.get(2).toString());
+            st.setString(4, params.get(3).toString());
+            st.setString(5, params.get(4).toString());
+            st.setString(6, params.get(5).toString());
+            
+            System.out.print("Statement"+st);
+            st.executeUpdate();
+            
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return flag;
+    }
+    
+    public boolean runUpdateloan(JPanel cards,String query, ArrayList<Object> params){
+        boolean flag = false;
+        try {
+            Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
+              "root", "ashwini");
+            PreparedStatement st = (PreparedStatement) connection
+            .prepareStatement(query);
+            System.out.print("Query:"+query);
+            System.out.print("Parameter:"+params);
+            
+            
+            st.setString(1, params.get(0).toString());
+            st.setString(2, params.get(1).toString());
+            st.setString(3, params.get(2).toString());
+            
+            System.out.print("Statement"+st);
+            st.executeUpdate();
+            
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
@@ -88,4 +142,6 @@ public class DBConnection {
         }
         return result;
     }
+    
+    
 }
