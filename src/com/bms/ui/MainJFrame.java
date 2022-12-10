@@ -329,12 +329,32 @@ public class MainJFrame extends javax.swing.JFrame {
         String password = PasswordField.getText();
 
         if(selectedfield.equals("BankTeller")){
-
-            BankTellerJPanel bpanel = new BankTellerJPanel(cards);
-            cards.add(bpanel, "BTPanel");
+            User loginUser;
+            DBConnection con = new DBConnection();
+            String query  = "Select username, password, type from users where username=? and password=?";
+            ArrayList<Object> params = new ArrayList<Object>();
+            params.add(username);
+            params.add(password);
+            try{
+                ResultSet res = con.runSelect(cards, query, params, this.controlPanel);
+                if(res.first()){
+                    loginUser = new User(res.getString("username"),res.getString("password").toCharArray(),res.getString("type"));
+                    JOptionPane.showMessageDialog(this,"You have successfully logged in");
+                    
+                    BankTellerJPanel bpanel = new BankTellerJPanel(cards,business,loginUser,splitPane,this.controlPanel);
+                    cards.add(bpanel, "BTPanel");
+                    splitPane.setRightComponent(cards);
+                    cl.show(cards, "BTPanel");
+                    
+                }else{
+                    JOptionPane.showMessageDialog(this,"Wrong Username & Password");
+                }
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
             
-            splitPane.setRightComponent(cards);
-            cl.show(cards, "BTPanel");
+            
+            
 
         }else if(selectedfield.equals("Customer")){
             User loginUser;

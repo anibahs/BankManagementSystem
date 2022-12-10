@@ -15,6 +15,7 @@ import java.util.HashMap;
  */
 public class Customer extends Person{
     private Person person;
+    private Customer customer;
     static int id;
     private int customerId;
     private ArrayList<BankAccount> accounts;
@@ -24,7 +25,7 @@ public class Customer extends Person{
 
     
  
-    Customer(){
+    public Customer(){
         id = id+1;
         this.customerId = id;
         this.accounts = new ArrayList<BankAccount>();

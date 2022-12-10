@@ -14,10 +14,14 @@ import java.util.ArrayList;
  */
 public class CustomerDirectory {
     private ArrayList<Customer> customerDirectory;
+    User user;
+    BankAccount bankaccount;
     
     
     public CustomerDirectory(){
         this.customerDirectory = new ArrayList<Customer>();
+        //this.user = new User();
+        //this.bankaccount = new BankAccount();
     }
     
     public ArrayList<Customer> getCustomerDirectory() {
@@ -41,5 +45,28 @@ public class CustomerDirectory {
         
         return customer;
     }*/
-    
+    public Customer fetchCustomer(String fname, String lname,String address, String phone, Integer accountid,
+            String type,Integer balance,String routingno,Integer custid){
+        
+        Customer emp = new Customer();
+        BankAccount bank = new BankAccount();
+        ArrayList<BankAccount> accounts = new ArrayList<BankAccount>();
+        System.out.print("Fetching Customer"+emp);
+        
+        emp.setFirstName(fname);
+        emp.setLastName(lname);
+        emp.setAddress(address);
+        emp.setPhoneNumber(phone);
+        bank.setAccountId(accountid);
+        bank.setAccountType(type);
+        bank.setCurrentBalance(balance);
+        bank.setRoutingNumber(routingno);
+        accounts.add(bank);
+        emp.setCustomerId(custid);
+        emp.setAccounts(accounts);
+        
+        
+        System.out.print("FetchEmployee Name"+emp);
+        return emp;
+    }
 }

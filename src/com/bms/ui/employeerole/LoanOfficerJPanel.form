@@ -344,15 +344,13 @@
                           <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="ageField" pref="102" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="addressField1" pref="102" max="32767" attributes="0"/>
-                                  <Component id="phoneField" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="emailField" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lameField" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="fnameField" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="genderField" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="bnameField" alignment="1" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="addressField1" pref="102" max="32767" attributes="0"/>
+                              <Component id="phoneField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="emailField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lameField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="fnameField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="genderField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="bnameField" alignment="1" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace pref="249" max="32767" attributes="0"/>
                       </Group>
@@ -685,10 +683,8 @@
                                               <Component id="jTxtInterest" alignment="0" max="32767" attributes="0"/>
                                               <Component id="jTxtNoPayment" alignment="0" max="32767" attributes="0"/>
                                               <Component id="jTextMonthlyPayment" pref="122" max="32767" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="accountidField" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="jComboBox3" alignment="0" pref="115" max="32767" attributes="0"/>
-                                              </Group>
+                                              <Component id="accountidField" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="jComboBox3" alignment="0" pref="115" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">

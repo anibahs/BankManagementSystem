@@ -33,10 +33,13 @@ public class DBConnection {
                                         .prepareStatement(query,    ResultSet.TYPE_SCROLL_INSENSITIVE, 
                                                                             ResultSet.CONCUR_READ_ONLY);
             int i=1;
-            for( Object p : params){
-                st.setString(i, p.toString());
-                i=i+1;
+            System.out.println("Parameter"+params.size());
+                for( Object p : params){
+                    st.setString(i, p.toString());
+                    i=i+1;
             }
+            
+            
             System.out.println("Running query:");
             System.out.println(st.toString());
             result = st.executeQuery();

@@ -21,7 +21,7 @@ public class BankAccount {
     private BankStatements statement;
 
 
-    BankAccount(){
+    public BankAccount(){
         id = id+1;
         this.accountId = id;
     }

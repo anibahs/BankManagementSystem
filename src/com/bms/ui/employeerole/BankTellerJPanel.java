@@ -4,9 +4,20 @@
  */
 package com.bms.UI.employeerole;
 
+import com.bms.model.BankAccount;
+import com.bms.model.Business;
+import com.bms.model.util.Customer;
+import com.bms.model.util.DBConnection;
+import com.bms.model.util.Employee;
+import com.bms.model.util.User;
 import java.awt.CardLayout;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,16 +28,21 @@ public class BankTellerJPanel extends javax.swing.JPanel {
     /**
      * Creates new form EditCustJPanel
      */
-    
+    Business business;
+    Employee employee;
     JPanel cards;
     CardLayout cl;
+    User loginUser;
+    JSplitPane splitPane;
     double totalbalance;
     double transferamount;
      
-    public BankTellerJPanel(JPanel cards) {
+    public BankTellerJPanel(JPanel cards,Business business,User loginUser, JSplitPane splitPane, JPanel panel) {
         
         this.cards = cards;
-        this.cl =  (CardLayout)cards.getLayout();
+        this.business = business;
+        this.loginUser = loginUser;
+        this.splitPane=splitPane;
         initComponents();
         withdrawdepositPanel.setVisible(false);
         profilePanel.setVisible(false);
@@ -55,8 +71,6 @@ public class BankTellerJPanel extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
         profilePanel = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        unameTextField = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
@@ -69,6 +83,10 @@ public class BankTellerJPanel extends javax.swing.JPanel {
         phoneField = new javax.swing.JTextField();
         genderField = new javax.swing.JTextField();
         bnameField = new javax.swing.JTextField();
+        ageField = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        addressField1 = new javax.swing.JTextField();
         searchCustPanel = new javax.swing.JPanel();
         jComboBox2 = new javax.swing.JComboBox<>();
         searchField = new javax.swing.JTextField();
@@ -219,8 +237,6 @@ public class BankTellerJPanel extends javax.swing.JPanel {
 
         profilePanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel12.setText("Username: ");
-
         jLabel13.setText("First Name: ");
 
         jLabel11.setText("Branch:");
@@ -233,29 +249,45 @@ public class BankTellerJPanel extends javax.swing.JPanel {
 
         jLabel19.setText("Phonenumber:");
 
+        jLabel12.setText("Age");
+
+        jLabel22.setText("Address:");
+
         javax.swing.GroupLayout profilePanelLayout = new javax.swing.GroupLayout(profilePanel);
         profilePanel.setLayout(profilePanelLayout);
         profilePanelLayout.setHorizontalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(profilePanelLayout.createSequentialGroup()
                 .addGap(51, 51, 51)
-                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel18)
-                    .addComponent(jLabel19))
-                .addGap(29, 29, 29)
-                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(phoneField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(unameTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                    .addComponent(emailField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lameField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fnameField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(genderField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bnameField))
+                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(profilePanelLayout.createSequentialGroup()
+                        .addComponent(jLabel22)
+                        .addGap(63, 63, 63)
+                        .addComponent(addressField1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+                    .addGroup(profilePanelLayout.createSequentialGroup()
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(78, 78, 78)
+                        .addComponent(ageField))
+                    .addGroup(profilePanelLayout.createSequentialGroup()
+                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(29, 29, 29)
+                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(phoneField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                            .addComponent(emailField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(genderField, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(profilePanelLayout.createSequentialGroup()
+                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel18))
+                        .addGap(45, 45, 45)
+                        .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lameField, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                            .addComponent(fnameField)
+                            .addComponent(bnameField, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap(249, Short.MAX_VALUE))
         );
         profilePanelLayout.setVerticalGroup(
@@ -265,11 +297,7 @@ public class BankTellerJPanel extends javax.swing.JPanel {
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(unameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -277,7 +305,11 @@ public class BankTellerJPanel extends javax.swing.JPanel {
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ageField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(genderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -289,7 +321,11 @@ public class BankTellerJPanel extends javax.swing.JPanel {
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(78, 78, 78))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addressField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46))
         );
 
         searchCustPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -309,13 +345,13 @@ public class BankTellerJPanel extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "First Name", "Last Name", "Gender", "Address", "Age", "Phonenumber", "Email"
+                "First Name", "Last Name", "Address", "Phonenumber", "AccountId", "Accounttype", "CurrentBalance", "RoutingNumber", "CustomerId"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -325,21 +361,21 @@ public class BankTellerJPanel extends javax.swing.JPanel {
         searchCustPanelLayout.setHorizontalGroup(
             searchCustPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(searchCustPanelLayout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(searchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchCustPanelLayout.createSequentialGroup()
-                .addContainerGap(177, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(searchCustPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(searchCustPanelLayout.createSequentialGroup()
+                        .addGap(245, 245, 245)
+                        .addComponent(sbyIDButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(searchCustPanelLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addGroup(searchCustPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(searchCustPanelLayout.createSequentialGroup()
+                                .addComponent(searchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(178, Short.MAX_VALUE))
-            .addGroup(searchCustPanelLayout.createSequentialGroup()
-                .addGap(245, 245, 245)
-                .addComponent(sbyIDButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         searchCustPanelLayout.setVerticalGroup(
             searchCustPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,7 +503,7 @@ public class BankTellerJPanel extends javax.swing.JPanel {
             .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane2Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(profilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(profilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(220, Short.MAX_VALUE)))
             .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane2Layout.createSequentialGroup()
@@ -511,13 +547,25 @@ public class BankTellerJPanel extends javax.swing.JPanel {
         profilePanel.setVisible(true);
         searchCustPanel.setVisible(false);
         withdrawdepositPanel.setVisible(false);
+        populateTextFields(fetchEmployee());
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void sbyIDButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sbyIDButtonActionPerformed
         // TODO add your handling code here:
+        String selectedfield = jComboBox2.getSelectedItem().toString();
+        int rowindex = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        System.out.println(selectedfield);
+        if(selectedfield.equals("CustomerName")){
+            String name = searchField.getText();
+            System.out.print("Search Customer Name"+name);
+            searchbyName(name);
+            searchField.setText("");
 
+
+        }
         
-
+        
         
     }//GEN-LAST:event_sbyIDButtonActionPerformed
 
@@ -561,6 +609,8 @@ public class BankTellerJPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField BalanceField;
+    private javax.swing.JTextField addressField1;
+    private javax.swing.JTextField ageField;
     private javax.swing.JTextField bnameField;
     private javax.swing.JTextField emailField;
     private javax.swing.JTextField fnameField;
@@ -581,6 +631,7 @@ public class BankTellerJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -601,7 +652,117 @@ public class BankTellerJPanel extends javax.swing.JPanel {
     private javax.swing.JButton showbalanceButton;
     private javax.swing.JButton transferButton;
     private javax.swing.JTextField transferamtField;
-    private javax.swing.JTextField unameTextField;
     private javax.swing.JPanel withdrawdepositPanel;
     // End of variables declaration//GEN-END:variables
+
+    private Employee fetchEmployee() {
+        Employee emp = new Employee();
+        DBConnection con = new DBConnection();
+        String query = "Select first_name,last_name,age,gender,address,phone_number,email from employee, person"
+                + " WHERE employee.person_id = person.person_id and employee_type = 'BankTeller'";
+        //System.out.println(query);
+       /**
+        ArrayList<String> slist = new ArrayList<String>();
+        System.out.println("customer"+customer.getCustomerId());
+        for(BankAccount account: customer.getAccounts()){
+            System.out.println("account.getAccountId()"+account.getAccountId());
+            slist.add(Integer.toString(account.getAccountId()));
+        }
+        System.out.println(slist);
+        
+        String customerAccountIds = String.join(",", slist);
+        System.out.println("customerAccountIds"+customerAccountIds);**/
+        ArrayList<Object> params = new ArrayList<Object>();
+        //params.add(customerAccountIds);
+        ResultSet rs = con.runSelect(cards, query, params,this);
+        System.out.println("3");
+
+        try{
+            do{
+                System.out.println(rs.getString("first_name"));
+                System.out.println(rs.getString("last_name"));
+                
+                emp = business.getEmployee().fetchEmployee(rs.getString("first_name"),
+                        rs.getString("last_name"),rs.getInt("age"),rs.getString("gender"),
+                        rs.getString("address"),rs.getString("phone_number"),
+                        rs.getString("email"));
+                //emps.add(emp);
+                //System.out.println("Employee:"+emp);
+                
+            }while(rs.next());
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        //System.out.println("Employee:"+emp);
+        return emp;
+
+    }
+
+    private void populateTextFields(Employee emp) {
+        System.out.print("Populating Employee"+emp);
+        
+        fnameField.setText(String.valueOf(emp.getFirstName()));
+        lameField.setText(String.valueOf(emp.getLastName()));
+        genderField.setText(String.valueOf(emp.getGender()));
+        ageField.setText(String.valueOf(emp.getAge()));
+        phoneField.setText(String.valueOf(emp.getPhoneNumber()));
+        emailField.setText(String.valueOf(emp.getEmailAddress()));
+        addressField1.setText(String.valueOf(emp.getAddress()));
+    }
+
+    private void searchbyName(String name) {
+        Customer cust = new Customer();
+        ArrayList<Customer> custdir = new ArrayList<Customer>();
+        DBConnection con = new DBConnection();
+        String query = "Select per.first_name,per.last_name,per.address,per.phone_number,acc.account_id,acc.account_type,acc.current_balance,"
+                + "acc.routing_number,acc.customer_id "
+                + "from person as per ,bank_accounts as acc, customers as cust "
+                + "where per.person_id = cust.person_id and cust.account_id = acc.account_id and per.first_name='"+name+ "'";
+        System.out.println(query);
+        ArrayList<Object> params = new ArrayList<Object>();
+        //params.add(name);
+        //params.add(customerAccountIds);
+        ResultSet rs = con.runSelect(cards, query, params,this);
+
+        try{
+            do{
+                
+                
+                cust = business.getConsumerBank().getCustomerDirectory().fetchCustomer(rs.getString("first_name"),
+                        rs.getString("last_name"),rs.getString("address"),rs.getString("phone_number"), 
+                        rs.getInt("account_id"), rs.getString("account_type"),
+                        rs.getInt("current_balance"),rs.getString("routing_number"),rs.getInt("customer_id"));
+                custdir.add(cust);
+                System.out.println("Employee:"+cust);
+                
+            }while(rs.next());
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("Customer directory entry 1:"+custdir);
+        PopulateTable(custdir);
+    }
+
+    private void PopulateTable(ArrayList<Customer> cust) {
+       
+        System.out.print("Customer Array"+cust);
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+      
+        BankAccount bank = new BankAccount();
+        ArrayList<BankAccount> accounts = new ArrayList<BankAccount>();
+        for(Customer doc: cust){
+                Object[] row = new Object[10];
+                row[0]= doc.getFirstName();
+                row[1]=doc.getLastName();
+                row[2]=doc.getAddress();
+                row[3]=doc.getPhoneNumber();
+                
+                model.addRow(row);
+        }
+}
 }
