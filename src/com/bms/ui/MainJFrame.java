@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import com.bms.model.Business;
 import com.bms.model.util.PersonDirectory;
+import com.bms.model.consumerbanking.*;
 import com.bms.model.consumerbank.ConsumerBank;
 import com.bms.model.util.Customer;
 import com.bms.model.util.CustomerDirectory;
@@ -100,7 +101,6 @@ public class MainJFrame extends javax.swing.JFrame {
         splitPane.setDividerLocation(200);
 
         sidePanel.setBackground(new java.awt.Color(54, 33, 89));
-        sidePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         homePanel.setBackground(new java.awt.Color(54, 33, 39));
 
@@ -133,8 +133,6 @@ public class MainJFrame extends javax.swing.JFrame {
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        sidePanel.add(homePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 240, 40));
-
         regPanel.setBackground(new java.awt.Color(54, 33, 39));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/bms/UI/images/register.png"))); // NOI18N
@@ -162,7 +160,21 @@ public class MainJFrame extends javax.swing.JFrame {
             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        sidePanel.add(regPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 240, -1));
+        javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
+        sidePanel.setLayout(sidePanelLayout);
+        sidePanelLayout.setHorizontalGroup(
+            sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        sidePanelLayout.setVerticalGroup(
+            sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sidePanelLayout.createSequentialGroup()
+                .addGap(110, 110, 110)
+                .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         splitPane.setLeftComponent(sidePanel);
 
@@ -356,7 +368,7 @@ public class MainJFrame extends javax.swing.JFrame {
         }
         else if(selectedfield.equals("LoanOfficer")){
 
-            LoanOfficerJPanel lpanel = new LoanOfficerJPanel(cards);
+            LoanOfficerJPanel lpanel = new LoanOfficerJPanel(cards,business);
             cards.add(lpanel, "LOPanel");
             
             splitPane.setRightComponent(cards);

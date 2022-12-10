@@ -45,8 +45,6 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
         accountIdLbl = new javax.swing.JLabel();
         accoutTypeCmbBx = new javax.swing.JComboBox<>();
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         mainPanel.setBackground(new java.awt.Color(122, 72, 221));
 
         homePanel.setBackground(new java.awt.Color(54, 33, 39));
@@ -176,8 +174,6 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
                 .addGap(31, 31, 31))
         );
 
-        add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, -1, -1));
-
         transferMoneyBtn2.setBackground(new java.awt.Color(54, 33, 39));
         transferMoneyBtn2.setForeground(new java.awt.Color(255, 255, 255));
         transferMoneyBtn2.setText("View Statements");
@@ -220,7 +216,7 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(accountIdLbl)
@@ -258,7 +254,24 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
                 .addContainerGap(110, Short.MAX_VALUE))
         );
 
-        add(jLayeredPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 159, 793, -1));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(159, 159, 159)
+                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewProfileLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProfileLblMouseClicked

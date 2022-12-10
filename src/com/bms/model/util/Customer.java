@@ -5,6 +5,7 @@
 package com.bms.model.util;
 
 import com.bms.model.BankAccount;
+import com.bms.model.CommercialBank.Loan;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,6 +18,7 @@ public class Customer extends Person{
     static int id;
     private int customerId;
     private ArrayList<BankAccount> accounts;
+    private ArrayList<Loan> loans;
     private HashMap<Person, BankAccount> recipients;
     //private Branch homeBranch;
 
@@ -104,4 +106,13 @@ public class Customer extends Person{
         this.recipients.put(person, account);
         return this.recipients;
     }
+
+    public ArrayList<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(ArrayList<Loan> loans) {
+        this.loans = loans;
+    }
+    
 }

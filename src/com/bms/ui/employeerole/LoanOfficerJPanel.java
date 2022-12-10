@@ -4,6 +4,7 @@
  */
 package com.bms.UI.employeerole;
 
+import com.bms.model.Business;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -19,9 +20,11 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
      */
     JPanel cards;
     CardLayout cl;
+    Business business;
     
-    public LoanOfficerJPanel(JPanel cards) {
+    public LoanOfficerJPanel(JPanel cards,Business business) {
         this.cards = cards;
+        this.business = business;
         this.cl =  (CardLayout)cards.getLayout();
         initComponents();
         profilePanel.setVisible(false);
@@ -581,7 +584,7 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
 
     private void loanestimatorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loanestimatorButtonActionPerformed
         // TODO add your handling code here:
-            LoanEstimatorJPanel bpanel = new LoanEstimatorJPanel(cards);
+            LoanEstimatorJPanel bpanel = new LoanEstimatorJPanel(cards,business);
             cards.add(bpanel, "LoanPanel");
             //requestloanPanel.add(cards);
             cl.show(cards, "LoanPanel");
