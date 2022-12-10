@@ -6,6 +6,7 @@ package com.bms.model;
 
 import com.bms.model.CommercialBank.CommercialBank;
 import com.bms.model.consumerbanking.ConsumerBanking;
+import com.bms.model.consumerbank.ConsumerBank;
 import com.bms.model.util.UserDirectory;
 import com.bms.model.util.PersonDirectory;
 /**
@@ -13,20 +14,22 @@ import com.bms.model.util.PersonDirectory;
  * @author Shabina
  */
 public class Business {
-    private ConsumerBanking consumerBank;
+    private ConsumerBank consumerBank;
     private UserDirectory userDirectory;
     private PersonDirectory personDirectory;
     private CommercialBank commercialbank;
     
+    private BankAccountDirectory accountDirectory;
+
     
     public Business(){
-        this.consumerBank= new ConsumerBanking();
+        this.consumerBank= new ConsumerBank();
         this.userDirectory = new UserDirectory();
         this.personDirectory = new PersonDirectory();
         this.commercialbank = new CommercialBank();
+        this.accountDirectory = new BankAccountDirectory();
     }
-        
-        
+               
     public PersonDirectory getPersonDirectory() {
         return personDirectory;
     }
@@ -43,11 +46,11 @@ public class Business {
         this.userDirectory = userDirectory;
     }
     
-    public ConsumerBanking getConsumerBank() {
+    public ConsumerBank getConsumerBank() {
         return consumerBank;
     }
 
-    public void setConsumerBank(ConsumerBanking consumerBank) {
+    public void setConsumerBank(ConsumerBank consumerBank) {
         this.consumerBank = consumerBank;
     }
 
@@ -60,5 +63,12 @@ public class Business {
     }
     
     
+    public BankAccountDirectory getAccountDirectory() {
+        return accountDirectory;
+    }
+
+    public void setAccountDirectory(BankAccountDirectory accountDirectory) {
+        this.accountDirectory = accountDirectory;
+    }
     
 }

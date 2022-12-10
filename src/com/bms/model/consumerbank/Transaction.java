@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.bms.model.consumerbanking;
+package com.bms.model.consumerbank;
 
 import com.bms.model.BankAccount;
 import java.sql.Date;
@@ -69,5 +69,11 @@ public class Transaction {
 
     public void setTransactionAmount(int transactionAmount) {
         this.transactionAmount = transactionAmount;
+    }
+
+    public void execute() {
+        this.fromAccount.setCurrentBalance(this.fromAccount.getCurrentBalance()-this.transactionAmount);
+        this.toAccount.setCurrentBalance(this.toAccount.getCurrentBalance()+this.transactionAmount);
+        //call function to insert data into db
     }
 }
