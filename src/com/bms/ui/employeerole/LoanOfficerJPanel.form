@@ -691,6 +691,15 @@
                                           <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
                                           <Component id="jXDatePicker1" min="-2" max="-2" attributes="0"/>
                                       </Group>
+                                  <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="repaymentField" max="32767" attributes="0"/>
+                                      <Component id="jTxtLoan" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jTxtInterest" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jTxtNoPayment" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jTextMonthlyPayment" pref="122" max="32767" attributes="0"/>
+                                      <Component id="accountidField" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jComboBox3" alignment="0" pref="115" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -718,10 +727,7 @@
                               <Component id="jComboBox3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jXDatePicker1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -871,8 +877,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="repaymentField">
-                </Component>
-                <Component class="org.jdesktop.swingx.JXDatePicker" name="jXDatePicker1">
                 </Component>
               </SubComponents>
             </Container>

@@ -5,7 +5,9 @@
 package com.bms.model.consumerbank;
 
 import com.bms.model.BankAccount;
+import com.bms.model.util.DBConnection;
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -23,6 +25,7 @@ public class Transaction {
         id=id+1;
         this.transactionId=id;
     }
+    
     public static int getId() {
         return id;
     }
@@ -71,9 +74,36 @@ public class Transaction {
         this.transactionAmount = transactionAmount;
     }
 
-    public void execute() {
-        this.fromAccount.setCurrentBalance(this.fromAccount.getCurrentBalance()-this.transactionAmount);
-        this.toAccount.setCurrentBalance(this.toAccount.getCurrentBalance()+this.transactionAmount);
-        //call function to insert data into db
+    public boolean execute() {
+        try{
+            this.fromAccount.setCurrentBalance(this.fromAccount.getCurrentBalance()-this.transactionAmount);
+            this.toAccount.setCurrentBalance(this.toAccount.getCurrentBalance()+this.transactionAmount);
+            //call function to insert data into db
+            this.insertTransaction(this);
+            this.fromAccount.updateAccount();
+            this.toAccount.updateAccount();
+            return true;
+        } catch (Exception e ){
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean insertTransaction(Transaction transaction){
+        String query = "INSERT INTO transactions Values(default,?,?,?,?)";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(transaction.getFromAccount().getAccountId());
+        params.add(transaction.getToAccount().getAccountId());
+        params.add(transaction.getTransactionAmount());
+        params.add(transaction.getTimestamp());
+        try{
+            DBConnection conn = new DBConnection();
+            conn.runInsert(query, params);
+            return true;
+        }catch(Exception c){
+            c.printStackTrace();
+        }
+        
+        return false;
     }
 }

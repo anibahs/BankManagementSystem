@@ -6,6 +6,9 @@ package com.bms.UI;
 
 import com.bms.UI.employeerole.LoanOfficerJPanel;
 import com.bms.UI.employeerole.BankTellerJPanel;
+import com.bms.ui.consumerbank.ViewBalanceJPanel;
+import com.bms.model.BankAccount;
+import com.bms.model.BankAccountDirectory;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,7 +18,8 @@ import com.bms.model.consumerbank.ConsumerBank;
 import com.bms.model.util.CustomerDirectory;
 import com.bms.model.util.DBConnection;
 import com.bms.model.util.User;
-import com.bms.UI.consumerbank.ViewBalanceJPanel;
+import com.bms.model.util.Customer;
+import com.bms.model.util.Person;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -34,6 +38,7 @@ public class MainJFrame extends javax.swing.JFrame {
     CardLayout cl;
     JPanel cards;
     Business business;  
+    Customer customer;
     public MainJFrame() {
         initComponents();
         this.cl = new CardLayout();
@@ -45,16 +50,6 @@ public class MainJFrame extends javax.swing.JFrame {
         PersonDirectory personDirectory = this.business.getPersonDirectory();
         ConsumerBank consumerBank = this.business.getConsumerBank();
         CustomerDirectory consumerDirectory = consumerBank.getCustomerDirectory();
-        /**Person person = personDirectory.addNewPerson("Ashwini", "Khedkar", "Female", "Boston",
-                29, "16172384404", "anibahs@gmail.com");
-        
-        ConsumerBank consumerBank = this.business.getConsumerBank();
-        CustomerDirectory consumerDirectory = consumerBank.getCustomerDirectory();
-        Customer customer = consumerDirectory.addNewCustomer(person);
-        BankAccount account = new BankAccount(customer, "Checking", "ICIC0000075", 5);
-        customer.addNewBankAccount(account);
-        UserDirectory userDirectory = this.business.getUserDirectory();
-        User user = userDirectory.addNewUser(person, "Customer", "ashwini123".toCharArray());**/
 
     }
 
@@ -246,6 +241,11 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel11.setText("User Role: ");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Customer", "BankTeller", "LoanOfficer", "WealthManager", "RelationshipManager", "BranchManager" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout loginscreenPanelLayout = new javax.swing.GroupLayout(loginscreenPanel);
         loginscreenPanel.setLayout(loginscreenPanelLayout);
@@ -327,16 +327,16 @@ public class MainJFrame extends javax.swing.JFrame {
 
         String username = unameTextField.getText();
         String password = PasswordField.getText();
-
+        User loginUser;
         if(selectedfield.equals("BankTeller")){
-            User loginUser;
+            
             DBConnection con = new DBConnection();
             String query  = "Select username, password, type from users where username=? and password=?";
             ArrayList<Object> params = new ArrayList<Object>();
             params.add(username);
             params.add(password);
             try{
-                ResultSet res = con.runSelect(cards, query, params, this.controlPanel);
+                ResultSet res = con.runSelect(query, params);
                 if(res.first()){
                     loginUser = new User(res.getString("username"),res.getString("password").toCharArray(),res.getString("type"));
                     JOptionPane.showMessageDialog(this,"You have successfully logged in");
@@ -352,24 +352,28 @@ public class MainJFrame extends javax.swing.JFrame {
             }catch(Exception e){
                 System.out.println(e.getMessage());
             }
-            
-            
-            
-
         }else if(selectedfield.equals("Customer")){
-            User loginUser;
             DBConnection con = new DBConnection();
             String query  = "Select username, password, type from users where username=? and password=?";
             ArrayList<Object> params = new ArrayList<Object>();
             params.add(username);
             params.add(password);
             try{
-                ResultSet res = con.runSelect(cards, query, params, this.controlPanel);
+                ResultSet res = con.runSelect(query, params);
                 if(res.first()){
                     loginUser = new User(res.getString("username"),res.getString("password").toCharArray(),res.getString("type"));
-                    JOptionPane.showMessageDialog(this,"You have successfully logged in");
-                    
-                    ViewBalanceJPanel customerPanel = new ViewBalanceJPanel(cards,business,loginUser,splitPane,this.controlPanel);
+                    //JOptionPane.showMessageDialog(this,"You have successfully logged in");
+                    CustomerDirectory custDirectory = business.getConsumerBank().getCustomerDirectory();
+                    Customer fetchedCustomer = custDirectory.fetchCustomer(Integer.toString(loginUser.getPersonId()));
+                    this.customer=fetchedCustomer;
+
+                    BankAccountDirectory accDirectory = business.getAccountDirectory();
+                    ArrayList<BankAccount> accounts = this.customer.fetchAccounts(fetchedCustomer);
+
+                    PersonDirectory personDirectory = business.getPersonDirectory();
+                    Person existingPerson = personDirectory.fetchPerson(Integer.toString(loginUser.getPersonId()));
+
+                    ViewBalanceJPanel customerPanel = new ViewBalanceJPanel(cards,business,loginUser,splitPane,this.controlPanel, this.customer);
                     cards.add(customerPanel, "vbPanel");
                     splitPane.setRightComponent(cards);
                     cl.show(cards, "vbPanel");
@@ -382,14 +386,13 @@ public class MainJFrame extends javax.swing.JFrame {
             
         }
         else if(selectedfield.equals("LoanOfficer")){
-            User loginUser;
             DBConnection con = new DBConnection();
             String query  = "Select username, password, type from users where username=? and password=?";
             ArrayList<Object> params = new ArrayList<Object>();
             params.add(username);
             params.add(password);
             try{
-                ResultSet res = con.runSelect(cards, query, params, this.controlPanel);
+                ResultSet res = con.runSelect(query, params);
                 if(res.first()){
                     loginUser = new User(res.getString("username"),res.getString("password").toCharArray(),res.getString("type"));
                     JOptionPane.showMessageDialog(this,"You have successfully logged in");
@@ -422,6 +425,10 @@ public class MainJFrame extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments

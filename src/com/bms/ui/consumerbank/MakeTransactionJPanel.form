@@ -16,10 +16,15 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="mainPanel" min="-2" max="-2" attributes="0"/>
           <Group type="102" attributes="0">
-              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-              <Component id="jLayeredPane2" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="mainPanel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLayeredPane2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -28,10 +33,9 @@
           <Group type="102" attributes="0">
               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
               <Component id="mainPanel" min="-2" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="159" pref="159" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jLayeredPane2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="174" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -251,15 +255,105 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="transferMoneyLbl" alignment="0" max="32767" attributes="0"/>
+                              <Component id="fromAccountLbl" alignment="0" pref="120" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="fromAccountCmbBx" min="-2" pref="198" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="accountBalanceLbl" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="accountBalanceField" min="-2" pref="198" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="transferMoneyLbl2" alignment="0" max="32767" attributes="0"/>
+                              <Component id="toRecipientName" alignment="0" max="32767" attributes="0"/>
+                              <Component id="transferMoneyLbl1" alignment="0" pref="120" max="32767" attributes="0"/>
+                              <Component id="accountIdLbl1" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="transactionAmountField" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="toRecipientNameField" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="recipientAddressLbl" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="toRecipientAddressField" min="-2" pref="199" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                  <Component id="transferMoneyBtn" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="toAccountIdField" min="-2" pref="198" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="destRoutingNumberLbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="toRoutingNumberField" min="-2" pref="200" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="verifyRecipientBtn" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="345" max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="transferMoneyLbl" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="fromAccountLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="fromAccountCmbBx" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="accountBalanceLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="accountBalanceField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                  <Component id="transferMoneyLbl2" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="accountIdLbl1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toAccountIdField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="destRoutingNumberLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toRoutingNumberField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="verifyRecipientBtn" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="toRecipientNameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toRecipientAddressField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="recipientAddressLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toRecipientName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="transferMoneyLbl1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="transactionAmountField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                  <Component id="transferMoneyBtn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="110" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -267,109 +361,123 @@
       <SubComponents>
         <Container class="javax.swing.JPanel" name="jPanel2">
 
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="destRoutingNumberLbl">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Routing Number:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="accountBalanceField">
-            </Component>
-            <Component class="javax.swing.JLabel" name="recipientNameLbl">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Recipient Name:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="transactionAmountField">
-            </Component>
-            <Component class="javax.swing.JTextField" name="toRecipientNameField">
-              <Properties>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="transferMoneyBtn">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="27" green="21" red="36" type="rgb"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Transfer"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transferMoneyBtnActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JLabel" name="recipientAddressLbl">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Recipient Address:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="transferMoneyLbl1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Transaction Amount:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="toRecipientAddressField">
-              <Properties>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="addRecipientBtn">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="27" green="21" red="36" type="rgb"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Verify Recipient"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addRecipientBtnActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JLabel" name="fromAccountLbl">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="From Account:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="fromAccountCmbBx">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fromAccountCmbBxActionPerformed"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JLabel" name="transferMoneyLbl">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="From:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="toRoutingNumberField">
-            </Component>
-            <Component class="javax.swing.JLabel" name="accountIdLbl1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Account Number:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="accountBalanceLbl">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Account Balance:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="toAccountIdField">
-            </Component>
-            <Component class="javax.swing.JLabel" name="transferMoneyLbl2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="To:"/>
-              </Properties>
-            </Component>
-          </SubComponents>
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="188" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="27" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
         </Container>
+        <Component class="javax.swing.JButton" name="transferMoneyBtn">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="27" green="21" red="36" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Transfer"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transferMoneyBtnActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="transferMoneyLbl">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="From:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="verifyRecipientBtn">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="27" green="21" red="36" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Verify Recipient"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verifyRecipientBtnActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="destRoutingNumberLbl">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Routing Number:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="accountBalanceField">
+        </Component>
+        <Component class="javax.swing.JTextField" name="transactionAmountField">
+        </Component>
+        <Component class="javax.swing.JTextField" name="toRecipientNameField">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="toRecipientNameFieldActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="recipientAddressLbl">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Recipient Address:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="transferMoneyLbl1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Transaction Amount:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="toRecipientAddressField">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="fromAccountLbl">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="From Account:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="fromAccountCmbBx">
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="fromAccountCmbBxMouseClicked"/>
+            <EventHandler event="caretPositionChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="fromAccountCmbBxCaretPositionChanged"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fromAccountCmbBxActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JTextField" name="toRoutingNumberField">
+        </Component>
+        <Component class="javax.swing.JLabel" name="accountIdLbl1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Account Number:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="accountBalanceLbl">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Account Balance:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="toAccountIdField">
+        </Component>
+        <Component class="javax.swing.JLabel" name="transferMoneyLbl2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="To:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="toRecipientName">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Recipient Name:"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

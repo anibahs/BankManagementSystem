@@ -2,17 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.bms.UI.consumerbank;
+package com.bms.ui.consumerbank;
 
-import com.bms.UI.MainJFrame;
 import com.bms.model.BankAccount;
 import com.bms.model.Business;
 import com.bms.model.util.Customer;
-import com.bms.model.util.DBConnection;
 import com.bms.model.util.User;
 import java.awt.CardLayout;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -34,25 +30,23 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
     Business business;
     User loginUser;
     JSplitPane splitPane;
+    BankAccount account;
 
-    public ViewBalanceJPanel(JPanel cards,Business business, User loginUser, JSplitPane splitPane, JPanel panel) {
+    public ViewBalanceJPanel(JPanel cards,Business business, User loginUser, JSplitPane splitPane, JPanel panel, Customer cust) {
         initComponents();
         this.cards = cards;
         this.cl =  (CardLayout)cards.getLayout();
         this.business = business;
         this.loginUser = loginUser;
         this.splitPane=splitPane;
-
+        this.customer = cust;
+        
         accountTypeCmbBx.addItem("Checking");
         accountTypeCmbBx.addItem("Savings");
         
-        /**for(Customer cust: business.getConsumerBank().getCustomerDirectory().getCustomerDirectory()){
-            if(loginUser.getPerson().equals(cust.getPerson())){
-                this.customer = cust;
-            }
-        }**/
-        System.out.println("Going");
-        populateAccountsTable(this.fetchAccounts());
+        
+        populateAccountsTable(customer.getAccounts());
+        
     }
 
     /**
@@ -413,7 +407,7 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
 
         DefaultTableModel model = (DefaultTableModel) viewAccountsTbl.getModel();
         BankAccount account = (BankAccount) model.getValueAt(selectedRowIndex, 0);
-
+        this.account=account;
         populateAccountFields(account);        // TODO add your handling code here:
     }//GEN-LAST:event_viewAccountBtnActionPerformed
 
@@ -423,9 +417,8 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
 
     private void transferMoneyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferMoneyBtnActionPerformed
         // initiate transaction
-        MakeTransactionJPanel transactionPanel = new MakeTransactionJPanel(cards,business,loginUser, splitPane);
+        MakeTransactionJPanel transactionPanel = new MakeTransactionJPanel(cards, business, loginUser, splitPane, this.account, this.customer);
         cards.add(transactionPanel, "mtPanel");
-        cl.addLayoutComponent(this, SOMEBITS);
         splitPane.setRightComponent(cards);
         cl.show(cards, "mtPanel");
     }//GEN-LAST:event_transferMoneyBtnActionPerformed
@@ -477,74 +470,5 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         accountTypeCmbBx.setSelectedItem(account.getAccountType());
         accountBalanceField.setText(String.valueOf( account.getCurrentBalance()));
     }
-    
-    public ArrayList<BankAccount> fetchAccounts(){
-        System.out.println("fetchAccounts");
-        ArrayList<BankAccount> accounts = new ArrayList<BankAccount>();
-        DBConnection con = new DBConnection();
-        String query = "Select account_id,account_type,routing_number,current_balance from bank_accounts"
-                + " WHERE account_id in (1,2);";
-        /**System.out.println("1");
-
-        ArrayList<String> slist = new ArrayList<String>();
-        System.out.println("customer"+customer.getCustomerId());
-        for(BankAccount account: customer.getAccounts()){
-            System.out.println("account.getAccountId()"+account.getAccountId());
-            slist.add(Integer.toString(account.getAccountId()));
-        }
-        System.out.println(slist);
-        
-        String customerAccountIds = String.join(",", slist);
-        System.out.println("customerAccountIds"+customerAccountIds);**/
-        ArrayList<Object> params = new ArrayList<Object>();
-        //params.add(customerAccountIds);
-        ResultSet rs = con.runSelect(cards, query, params,this);
-        System.out.println("3");
-
-        try{
-            do{
-                System.out.println(rs.getString("account_id"));
-                System.out.println(rs.getString("account_type"));
-                System.out.println(rs.getString("routing_number"));
-                System.out.println(rs.getString("current_balance"));
-                BankAccount account = business.getAccountDirectory().fetchBankAccount(customer, rs.getString("account_id"),
-                                        rs.getString("account_type"), rs.getString("routing_number"),
-                                        Integer.parseInt(rs.getString("current_balance")));
-                accounts.add(account);
-                System.out.println("accounts"+account);
-            }while(rs.next());
-        }catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return accounts;       
-    }
-    
-    
-    /**public ArrayList<BankAccount> fetchCustomers(){
-        System.out.println("fetchCustomers");
-        ArrayList<Customer> customers = new ArrayList<Customer>();
-        DBConnection con = new DBConnection();
-        String query = "Select * from custoemrs;";
-        System.out.println("1");
-        
-        ArrayList<Object> params = new ArrayList<Object>();
-        ResultSet rs = con.runSelect(cards, query, new ArrayList<Object>(),this);
-        System.out.println("3");
-
-        try{
-            while(rs.next()){
-                System.out.println("1");
-                Customer account = business.getCustomerDirectory().fetchCustomer(customer, rs.getString("account_id"),
-                                        rs.getString("account_type"), rs.getString("routing_number"),
-                                        Integer.parseInt(rs.getString("current_balance")));
-                accounts.add(account);
-                System.out.println("accounts"+account);
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return accounts;     
-    }**/  
+ 
 }

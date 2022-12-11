@@ -6,6 +6,8 @@ package com.bms.model;
 
 import com.bms.model.consumerbank.BankStatements;
 import com.bms.model.util.Customer;
+import com.bms.model.util.DBConnection;
+import java.util.ArrayList;
 
 /**
  *
@@ -30,7 +32,7 @@ public class BankAccount {
         this.accountId = Integer.parseInt(account_id);
     }
     
-    public BankAccount(Customer customer, String type, String routingNumber, int currentBalance){
+    public BankAccount(Customer customer,String accountId, String type, String routingNumber, int currentBalance){
         id = id+1;
         this.accountId = id;
         this.customer=customer;
@@ -100,5 +102,21 @@ public class BankAccount {
     @Override
     public String toString(){
         return Integer.toString(this.getAccountId());
+    }
+
+    public boolean updateAccount() {
+        String query = "UPDATE bank_accounts SET current_balance = ? WHERE account_id = ?;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(this.currentBalance);
+        params.add(this.getAccountId());
+        try{
+            DBConnection conn = new DBConnection();
+            conn.runInsert(query, params);
+            return true;
+        }catch(Exception c){
+            c.printStackTrace();
+        }
+        
+        return false;
     }
 }

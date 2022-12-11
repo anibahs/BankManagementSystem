@@ -674,7 +674,7 @@ public class BankTellerJPanel extends javax.swing.JPanel {
         System.out.println("customerAccountIds"+customerAccountIds);**/
         ArrayList<Object> params = new ArrayList<Object>();
         //params.add(customerAccountIds);
-        ResultSet rs = con.runSelect(cards, query, params,this);
+        ResultSet rs = con.runSelect(query, params);
         System.out.println("3");
 
         try{
@@ -724,7 +724,7 @@ public class BankTellerJPanel extends javax.swing.JPanel {
         ArrayList<Object> params = new ArrayList<Object>();
         //params.add(name);
         //params.add(customerAccountIds);
-        ResultSet rs = con.runSelect(cards, query, params,this);
+        ResultSet rs = con.runSelect(query, params);
 
         try{
             do{

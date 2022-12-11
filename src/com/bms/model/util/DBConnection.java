@@ -19,16 +19,16 @@ import javax.swing.JPanel;
  */
 public class DBConnection {
     
-    
+    String password = "ashwini";
     public DBConnection(){
         
     }
     
-    public ResultSet runSelect(JPanel cards,String query, ArrayList<Object> params, JPanel panel){
+    public ResultSet runSelect(String query, ArrayList<Object> params){
         ResultSet result=null;
         try {
             Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
-              "root", "ashwini");
+              "root", this.password);
             PreparedStatement st = (PreparedStatement) connection
                                         .prepareStatement(query,    ResultSet.TYPE_SCROLL_INSENSITIVE, 
                                                                             ResultSet.CONCUR_READ_ONLY);
@@ -40,7 +40,7 @@ public class DBConnection {
             }
             
             
-            System.out.println("Running query:");
+            System.out.println("Running query: ");
             System.out.println(st.toString());
             result = st.executeQuery();
             if (result.first()) {
@@ -52,18 +52,17 @@ public class DBConnection {
         return result;
     }
     
-    public boolean runInsert(JPanel cards,String query, ArrayList<Object> params){
+    public boolean runInsert(String query, ArrayList<Object> params){
         boolean flag = false;
         try {
             Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
-              "root", "ashwini");
+              "root", this.password);
             PreparedStatement st = (PreparedStatement) connection
             .prepareStatement(query);
-            System.out.print("Query:"+query);
-            System.out.print("Parameter first:"+params.get(0));
-            
-            for(int i=0;i>=params.size();i++){
-                st.setString(++i, params.get(i).toString());
+            int i=1;
+            for( Object p : params){
+                st.setString(i, p.toString());
+                i=i+1;
             }
             System.out.print("Statement"+st);
             st.executeUpdate();
@@ -78,7 +77,7 @@ public class DBConnection {
         boolean flag = false;
         try {
             Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
-              "root", "ashwini");
+              "root", this.password);
             PreparedStatement st = (PreparedStatement) connection
             .prepareStatement(query);
             System.out.print("Query:"+query);
@@ -105,7 +104,7 @@ public class DBConnection {
         boolean flag = false;
         try {
             Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
-              "root", "ashwini");
+              "root", this.password);
             PreparedStatement st = (PreparedStatement) connection
             .prepareStatement(query);
             System.out.print("Query:"+query);
@@ -129,7 +128,7 @@ public class DBConnection {
         ResultSet result = null;
         try{
             String myConnectionString = "jdbc:mysql://localhost:3306?" + "useUnicode=yes&characterEncoding=UTF-8";
-            Connection conn = DriverManager.getConnection(myConnectionString, "root", "admin");
+            Connection conn = DriverManager.getConnection(myConnectionString, "root", this.password);
             Statement stmt = conn.createStatement();
             stmt.execute("SHOW DATABASES");
             ResultSet rs = stmt.getResultSet();
