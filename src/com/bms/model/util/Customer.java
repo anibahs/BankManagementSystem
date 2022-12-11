@@ -145,7 +145,7 @@ public class Customer extends Person{
         }catch(Exception e){
             e.printStackTrace();
         }
-        this.getAccounts().addAll(accounts);
+        //this.getAccounts().addAll(accounts);
         return accounts;       
     }
     

@@ -6,6 +6,7 @@ package com.bms.UI;
 
 import com.bms.UI.employeerole.LoanOfficerJPanel;
 import com.bms.UI.employeerole.BankTellerJPanel;
+import com.bms.ui.consumerbank.ViewBalanceJPanel;
 import com.bms.model.BankAccount;
 import com.bms.model.BankAccountDirectory;
 import java.awt.CardLayout;
@@ -14,12 +15,11 @@ import javax.swing.JPanel;
 import com.bms.model.Business;
 import com.bms.model.util.PersonDirectory;
 import com.bms.model.consumerbank.ConsumerBank;
-import com.bms.model.util.Customer;
 import com.bms.model.util.CustomerDirectory;
 import com.bms.model.util.DBConnection;
-import com.bms.model.util.Person;
 import com.bms.model.util.User;
-import com.bms.ui.consumerbanking.ViewBalanceJPanel;
+import com.bms.model.util.Customer;
+import com.bms.model.util.Person;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -370,12 +370,30 @@ public class MainJFrame extends javax.swing.JFrame {
             
         }
         else if(selectedfield.equals("LoanOfficer")){
-
-            LoanOfficerJPanel lpanel = new LoanOfficerJPanel(cards,business);
-            cards.add(lpanel, "LOPanel");
+            User loginUser;
+            DBConnection con = new DBConnection();
+            String query  = "Select username, password, type from users where username=? and password=?";
+            ArrayList<Object> params = new ArrayList<Object>();
+            params.add(username);
+            params.add(password);
+            try{
+                ResultSet res = con.runSelect(query, params);
+                if(res.first()){
+                    loginUser = new User(res.getString("username"),res.getString("password").toCharArray(),res.getString("type"));
+                    JOptionPane.showMessageDialog(this,"You have successfully logged in");
+                    
+                    LoanOfficerJPanel lpanel = new LoanOfficerJPanel(cards,business,loginUser,splitPane,this.controlPanel);
+                    cards.add(lpanel, "LOPanel");
+                    splitPane.setRightComponent(cards);
+                    cl.show(cards, "LOPanel");
+                    
+                }else{
+                    JOptionPane.showMessageDialog(this,"Wrong Username & Password");
+                }
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
             
-            splitPane.setRightComponent(cards);
-            cl.show(cards, "LOPanel");
 
         }
         else{

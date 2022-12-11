@@ -2,19 +2,51 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.bms.ui.consumerbanking;
+package com.bms.ui.consumerbank;
+
+import com.bms.model.BankAccount;
+import com.bms.model.Business;
+import com.bms.model.util.Customer;
+import com.bms.model.util.User;
+import java.awt.CardLayout;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Shabina
  */
-public class ViewCustomerJPanel extends javax.swing.JPanel {
+public class ViewBalanceJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form ViewBalanceJPanel
      */
-    public ViewCustomerJPanel() {
+    JPanel cards;
+    CardLayout cl;
+    Customer customer;
+    Business business;
+    User loginUser;
+    JSplitPane splitPane;
+    BankAccount account;
+
+    public ViewBalanceJPanel(JPanel cards,Business business, User loginUser, JSplitPane splitPane, JPanel panel, Customer cust) {
         initComponents();
+        this.cards = cards;
+        this.cl =  (CardLayout)cards.getLayout();
+        this.business = business;
+        this.loginUser = loginUser;
+        this.splitPane=splitPane;
+        this.customer = cust;
+        
+        accountTypeCmbBx.addItem("Checking");
+        accountTypeCmbBx.addItem("Savings");
+        
+        
+        populateAccountsTable(customer.getAccounts());
+        
     }
 
     /**
@@ -39,21 +71,18 @@ public class ViewCustomerJPanel extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
         jPanel2 = new javax.swing.JPanel();
-        fnameField = new javax.swing.JTextField();
-        lastNameLbl = new javax.swing.JLabel();
-        emailLbl = new javax.swing.JLabel();
-        genderLbl = new javax.swing.JLabel();
-        emailField = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        branchLbl = new javax.swing.JLabel();
-        firstNameLbl = new javax.swing.JLabel();
-        genderField = new javax.swing.JTextField();
-        unameTextField = new javax.swing.JTextField();
-        phoneField = new javax.swing.JTextField();
-        userNameLbl = new javax.swing.JLabel();
-        lameField = new javax.swing.JTextField();
-        phoneNumberLbl = new javax.swing.JLabel();
-        updateProfileBtn = new javax.swing.JButton();
+        accountFieldsPanel = new javax.swing.JPanel();
+        accountIdLbl = new javax.swing.JLabel();
+        accountBalanceLbl = new javax.swing.JLabel();
+        accountIdField = new javax.swing.JTextField();
+        accountBalanceField = new javax.swing.JTextField();
+        accountTypeLbl = new javax.swing.JLabel();
+        accountTypeCmbBx = new javax.swing.JComboBox<>();
+        transferMoneyBtn = new javax.swing.JButton();
+        viwStatementsBtn = new javax.swing.JButton();
+        viewAccountScrlPn = new javax.swing.JScrollPane();
+        viewAccountsTbl = new javax.swing.JTable();
+        viewAccountBtn = new javax.swing.JButton();
 
         mainPanel.setBackground(new java.awt.Color(122, 72, 221));
 
@@ -184,130 +213,171 @@ public class ViewCustomerJPanel extends javax.swing.JPanel {
                 .addGap(31, 31, 31))
         );
 
-        lastNameLbl.setText("Last Name: ");
+        accountIdLbl.setText("Account Number:");
 
-        emailLbl.setText("Email:");
+        accountBalanceLbl.setText("Account Balance:");
 
-        genderLbl.setText("Gender: ");
+        accountTypeLbl.setText("Account Type:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "RoxburyCrossing", "Prudential", "Huntington" }));
+        javax.swing.GroupLayout accountFieldsPanelLayout = new javax.swing.GroupLayout(accountFieldsPanel);
+        accountFieldsPanel.setLayout(accountFieldsPanelLayout);
+        accountFieldsPanelLayout.setHorizontalGroup(
+            accountFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(accountFieldsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(accountFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(accountFieldsPanelLayout.createSequentialGroup()
+                        .addComponent(accountIdLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(accountIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(accountFieldsPanelLayout.createSequentialGroup()
+                        .addComponent(accountBalanceLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(accountBalanceField)))
+                .addGap(32, 32, 32)
+                .addComponent(accountTypeLbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(accountTypeCmbBx, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        accountFieldsPanelLayout.setVerticalGroup(
+            accountFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(accountFieldsPanelLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(accountFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(accountIdLbl)
+                    .addComponent(accountIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(accountTypeLbl)
+                    .addComponent(accountTypeCmbBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGroup(accountFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(accountBalanceLbl)
+                    .addComponent(accountBalanceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19))
+        );
 
-        branchLbl.setText("Branch:");
+        transferMoneyBtn.setBackground(new java.awt.Color(54, 33, 39));
+        transferMoneyBtn.setForeground(new java.awt.Color(255, 255, 255));
+        transferMoneyBtn.setText("Transfer Money");
+        transferMoneyBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transferMoneyBtnActionPerformed(evt);
+            }
+        });
 
-        firstNameLbl.setText("First Name: ");
+        viwStatementsBtn.setBackground(new java.awt.Color(54, 33, 39));
+        viwStatementsBtn.setForeground(new java.awt.Color(255, 255, 255));
+        viwStatementsBtn.setText("View Statements");
+        viwStatementsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viwStatementsBtnActionPerformed(evt);
+            }
+        });
 
-        userNameLbl.setText("Username: ");
+        viewAccountScrlPn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
-        phoneNumberLbl.setText("Phone Number:");
+        viewAccountsTbl.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"123456789", "Checking", "0"},
+                {null, null, null}
+            },
+            new String [] {
+                "Account Number", "Account Type", "Balance ($)"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        viewAccountsTbl.setGridColor(new java.awt.Color(255, 255, 255));
+        viewAccountsTbl.setRowHeight(22);
+        viewAccountScrlPn.setViewportView(viewAccountsTbl);
+
+        viewAccountBtn.setBackground(new java.awt.Color(54, 33, 39));
+        viewAccountBtn.setForeground(new java.awt.Color(255, 255, 255));
+        viewAccountBtn.setText("View Account");
+        viewAccountBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewAccountBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(242, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(firstNameLbl, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(genderLbl, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(emailLbl, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(phoneNumberLbl, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lastNameLbl, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(userNameLbl, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(branchLbl, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(29, 29, 29)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(phoneField)
-                    .addComponent(unameTextField)
-                    .addComponent(emailField)
-                    .addComponent(lameField)
-                    .addComponent(fnameField)
-                    .addComponent(genderField, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(238, 238, 238))
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(viewAccountBtn))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGap(105, 105, 105)
+                        .addComponent(viwStatementsBtn)
+                        .addGap(121, 121, 121)
+                        .addComponent(transferMoneyBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(accountFieldsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(viewAccountScrlPn, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap())
         );
-
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {branchLbl, emailLbl, firstNameLbl, genderLbl, lastNameLbl, phoneNumberLbl, userNameLbl});
-
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {emailField, fnameField, genderField, jComboBox1, lameField, phoneField, unameTextField});
-
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(branchLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(viewAccountScrlPn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(viewAccountBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(accountFieldsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(userNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(unameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(firstNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lastNameLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(genderLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(genderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(phoneNumberLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(emailLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28))
+                    .addComponent(viwStatementsBtn)
+                    .addComponent(transferMoneyBtn))
+                .addContainerGap())
         );
 
-        updateProfileBtn.setBackground(new java.awt.Color(54, 33, 39));
-        updateProfileBtn.setForeground(new java.awt.Color(255, 255, 255));
-        updateProfileBtn.setText("Update");
-
         jLayeredPane2.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(updateProfileBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
         jLayeredPane2Layout.setHorizontalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(updateProfileBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(238, 238, 238))
+            .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(updateProfileBtn)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(241, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(159, 159, 159)
-                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(159, 159, 159)
+                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -327,35 +397,78 @@ public class ViewCustomerJPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_makeTransactionsLblMouseClicked
 
+    private void viewAccountBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAccountBtnActionPerformed
+        int selectedRowIndex = viewAccountsTbl.getSelectedRow();
+
+        if(selectedRowIndex<0){
+            JOptionPane.showMessageDialog(this, "Please select an account to view.");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) viewAccountsTbl.getModel();
+        BankAccount account = (BankAccount) model.getValueAt(selectedRowIndex, 0);
+        this.account=account;
+        populateAccountFields(account);        // TODO add your handling code here:
+    }//GEN-LAST:event_viewAccountBtnActionPerformed
+
+    private void viwStatementsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viwStatementsBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_viwStatementsBtnActionPerformed
+
+    private void transferMoneyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferMoneyBtnActionPerformed
+        // initiate transaction
+        MakeTransactionJPanel transactionPanel = new MakeTransactionJPanel(cards, business, loginUser, splitPane, this.account, this.customer);
+        cards.add(transactionPanel, "mtPanel");
+        splitPane.setRightComponent(cards);
+        cl.show(cards, "mtPanel");
+    }//GEN-LAST:event_transferMoneyBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel branchLbl;
-    private javax.swing.JTextField emailField;
-    private javax.swing.JLabel emailLbl;
-    private javax.swing.JLabel firstNameLbl;
-    private javax.swing.JTextField fnameField;
-    private javax.swing.JTextField genderField;
-    private javax.swing.JLabel genderLbl;
+    private javax.swing.JTextField accountBalanceField;
+    private javax.swing.JLabel accountBalanceLbl;
+    private javax.swing.JPanel accountFieldsPanel;
+    private javax.swing.JTextField accountIdField;
+    private javax.swing.JLabel accountIdLbl;
+    private javax.swing.JComboBox<String> accountTypeCmbBx;
+    private javax.swing.JLabel accountTypeLbl;
     private javax.swing.JPanel homePanel;
     private javax.swing.JPanel homePanel1;
     private javax.swing.JPanel homePanel2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField lameField;
-    private javax.swing.JLabel lastNameLbl;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel makeTransactionsLbl;
-    private javax.swing.JTextField phoneField;
-    private javax.swing.JLabel phoneNumberLbl;
-    private javax.swing.JTextField unameTextField;
-    private javax.swing.JButton updateProfileBtn;
-    private javax.swing.JLabel userNameLbl;
+    private javax.swing.JButton transferMoneyBtn;
+    private javax.swing.JButton viewAccountBtn;
+    private javax.swing.JScrollPane viewAccountScrlPn;
     private javax.swing.JLabel viewAccountsLbl;
+    private javax.swing.JTable viewAccountsTbl;
     private javax.swing.JLabel viewProfileLbl;
+    private javax.swing.JButton viwStatementsBtn;
     // End of variables declaration//GEN-END:variables
+
+    public void populateAccountsTable(ArrayList<BankAccount> accounts) {
+        DefaultTableModel model = (DefaultTableModel) viewAccountsTbl.getModel();
+        model.setRowCount(0);
+        
+        for(BankAccount account : accounts){
+            Object[] row = new Object[11];
+            row[0] = account;
+            row[1] = account.getAccountType();
+            row[2] = account.getCurrentBalance();         
+            model.addRow(row);
+        }
+    }
+
+    public void populateAccountFields(BankAccount account) {
+        accountIdField.setText(String.valueOf(account.getAccountId()));
+        accountTypeCmbBx.setSelectedItem(account.getAccountType());
+        accountBalanceField.setText(String.valueOf( account.getCurrentBalance()));
+    }
+ 
 }

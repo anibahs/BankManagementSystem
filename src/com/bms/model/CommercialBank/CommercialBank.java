@@ -58,6 +58,27 @@ public class CommercialBank {
         loans.add(l);
         return l;
     }
+    public Loan fetchLoan(Double loanamt){
+        for(Loan lo : loans){
+            if(lo.getLoan() == loanamt){
+                return lo;
+            }
+        }
+        return null;
+    }
     
-    
+    public Loan fetchLoanbyID(Double amt,Double roi,Double month, Double repay, Double emi){
+        
+        Loan emp = new Loan();
+        System.out.print("Fetching Loan"+emp);
+        
+        emp.setLoan(amt);
+        emp.setInterestRate(roi);
+        emp.setMonth(month);
+        emp.setPayment(repay);
+        emp.setMonthlyPayment(emi);
+        
+        //System.out.print("FetchEmployee Name"+emp);
+        return emp;
+    }
 }
