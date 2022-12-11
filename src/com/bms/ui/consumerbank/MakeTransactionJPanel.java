@@ -2,19 +2,53 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.bms.ui.consumerbanking;
+package com.bms.UI.consumerbank;
+
+import com.bms.model.BankAccount;
+import com.bms.model.Business;
+import com.bms.model.consumerbank.Transaction;
+import com.bms.model.util.Customer;
+import com.bms.model.util.User;
+import java.awt.CardLayout;
+import java.sql.Date;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 /**
  *
  * @author Shabina
  */
-public class ViewStatementsJPanel extends javax.swing.JPanel {
+public class MakeTransactionJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form ViewBalanceJPanel
      */
-    public ViewStatementsJPanel() {
+    JPanel cards;
+    CardLayout cl;
+    Customer customer;
+    Business business;
+    User loginUser;
+    JSplitPane splitPane;
+    Transaction transaction;
+    public MakeTransactionJPanel(JPanel cards,Business business, User loginUser, JSplitPane spltPn) {
         initComponents();
+        this.cards = cards;
+        this.cl =  (CardLayout)cards.getLayout();
+        this.business = business;
+        this.loginUser = loginUser;
+        this.splitPane=splitPane;
+        this.transaction= new Transaction();
+        
+        for(BankAccount account: customer.getAccounts()){
+            fromAccountCmbBx.addItem(account.toString());
+        }     
+          
+        for(Customer customer: business.getConsumerBank().getCustomerDirectory().getCustomerDirectory()){
+            if(loginUser.getPerson().equals(customer.getPerson())){
+                this.customer = customer;
+            }
+        }
     }
 
     /**
@@ -39,11 +73,24 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
         jPanel2 = new javax.swing.JPanel();
-        transferMoneyBtn2 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        viewStatementsTbl = new javax.swing.JTable();
-        accountIdLbl = new javax.swing.JLabel();
-        accoutTypeCmbBx = new javax.swing.JComboBox<>();
+        destRoutingNumberLbl = new javax.swing.JLabel();
+        accountBalanceField = new javax.swing.JTextField();
+        recipientNameLbl = new javax.swing.JLabel();
+        transactionAmountField = new javax.swing.JTextField();
+        toRecipientNameField = new javax.swing.JTextField();
+        transferMoneyBtn = new javax.swing.JButton();
+        recipientAddressLbl = new javax.swing.JLabel();
+        transferMoneyLbl1 = new javax.swing.JLabel();
+        toRecipientAddressField = new javax.swing.JTextField();
+        addRecipientBtn = new javax.swing.JButton();
+        fromAccountLbl = new javax.swing.JLabel();
+        fromAccountCmbBx = new javax.swing.JComboBox<>();
+        transferMoneyLbl = new javax.swing.JLabel();
+        toRoutingNumberField = new javax.swing.JTextField();
+        accountIdLbl1 = new javax.swing.JLabel();
+        accountBalanceLbl = new javax.swing.JLabel();
+        toAccountIdField = new javax.swing.JTextField();
+        transferMoneyLbl2 = new javax.swing.JLabel();
 
         mainPanel.setBackground(new java.awt.Color(122, 72, 221));
 
@@ -174,69 +221,69 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
                 .addGap(31, 31, 31))
         );
 
-        transferMoneyBtn2.setBackground(new java.awt.Color(54, 33, 39));
-        transferMoneyBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        transferMoneyBtn2.setText("View Statements");
-        transferMoneyBtn2.addActionListener(new java.awt.event.ActionListener() {
+        destRoutingNumberLbl.setText("Routing Number:");
+        jPanel2.add(destRoutingNumberLbl);
+        jPanel2.add(accountBalanceField);
+
+        recipientNameLbl.setText("Recipient Name:");
+        jPanel2.add(recipientNameLbl);
+        jPanel2.add(transactionAmountField);
+
+        toRecipientNameField.setEnabled(false);
+        jPanel2.add(toRecipientNameField);
+
+        transferMoneyBtn.setBackground(new java.awt.Color(54, 33, 39));
+        transferMoneyBtn.setForeground(new java.awt.Color(255, 255, 255));
+        transferMoneyBtn.setText("Transfer");
+        transferMoneyBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                transferMoneyBtn2ActionPerformed(evt);
+                transferMoneyBtnActionPerformed(evt);
             }
         });
+        jPanel2.add(transferMoneyBtn);
 
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        recipientAddressLbl.setText("Recipient Address:");
+        jPanel2.add(recipientAddressLbl);
 
-        viewStatementsTbl.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"123456789", "", "0", null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Transaction Id", "Recipient Account", "Transaction Amount ($)", "Timestamp"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
-            };
+        transferMoneyLbl1.setText("Transaction Amount:");
+        jPanel2.add(transferMoneyLbl1);
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+        toRecipientAddressField.setEnabled(false);
+        jPanel2.add(toRecipientAddressField);
+
+        addRecipientBtn.setBackground(new java.awt.Color(54, 33, 39));
+        addRecipientBtn.setForeground(new java.awt.Color(255, 255, 255));
+        addRecipientBtn.setText("Verify Recipient");
+        addRecipientBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addRecipientBtnActionPerformed(evt);
             }
         });
-        viewStatementsTbl.setGridColor(new java.awt.Color(255, 255, 255));
-        viewStatementsTbl.setRowHeight(22);
-        jScrollPane1.setViewportView(viewStatementsTbl);
+        jPanel2.add(addRecipientBtn);
 
-        accountIdLbl.setText("Account Number:");
+        fromAccountLbl.setText("From Account:");
+        jPanel2.add(fromAccountLbl);
 
-        accoutTypeCmbBx.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "RoxburyCrossing", "Prudential", "Huntington" }));
+        fromAccountCmbBx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fromAccountCmbBxActionPerformed(evt);
+            }
+        });
+        jPanel2.add(fromAccountCmbBx);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(accountIdLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(accoutTypeCmbBx, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(transferMoneyBtn2))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(accountIdLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(accoutTypeCmbBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(transferMoneyBtn2))
-                .addContainerGap(107, Short.MAX_VALUE))
-        );
+        transferMoneyLbl.setText("From:");
+        jPanel2.add(transferMoneyLbl);
+        jPanel2.add(toRoutingNumberField);
+
+        accountIdLbl1.setText("Account Number:");
+        jPanel2.add(accountIdLbl1);
+
+        accountBalanceLbl.setText("Account Balance:");
+        jPanel2.add(accountBalanceLbl);
+        jPanel2.add(toAccountIdField);
+
+        transferMoneyLbl2.setText("To:");
+        jPanel2.add(transferMoneyLbl2);
 
         jLayeredPane2.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -290,14 +337,50 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_makeTransactionsLblMouseClicked
 
-    private void transferMoneyBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferMoneyBtn2ActionPerformed
+    private void transferMoneyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferMoneyBtnActionPerformed
+        this.transaction.setTransactionAmount(Integer.parseInt(transactionAmountField.getText()));
+        this.transaction.setTimestamp(new Date(System.currentTimeMillis()));
+        //add function to remove and add money
+        transaction.execute();
+        JOptionPane.showMessageDialog(this,"Money has been Transferred.");
+
+    }//GEN-LAST:event_transferMoneyBtnActionPerformed
+
+    private void addRecipientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRecipientBtnActionPerformed
+        for( BankAccount account: business.getAccountDirectory().getBankAccountDirectory()){
+            if(toAccountIdField.getText().equals(account.getAccountId())){
+                if(toRoutingNumberField.getText().equals(account.getRoutingNumber())){
+                    toRecipientNameField.setText(account.getCustomer().getPerson().getFirstName()+" "+account.getCustomer().getPerson().getLastName());
+                    toRecipientAddressField.setText(account.getCustomer().getPerson().getAddress());
+                    this.transaction.setToAccount(account);
+                }
+            }
+        
+        }
+        toRoutingNumberField.getText();
+                
+    }//GEN-LAST:event_addRecipientBtnActionPerformed
+
+    private void fromAccountCmbBxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fromAccountCmbBxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_transferMoneyBtn2ActionPerformed
+        int accountid=Integer.parseInt(fromAccountCmbBx.getSelectedItem().toString());
+        for(BankAccount account: customer.getAccounts()){
+            if((Integer.toString(account.getAccountId())).equals(accountid)){
+                accountBalanceField.setText(Integer.toString(account.getCurrentBalance()));
+                this.transaction.setFromAccount(account);
+            }
+        }
+    }//GEN-LAST:event_fromAccountCmbBxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel accountIdLbl;
-    private javax.swing.JComboBox<String> accoutTypeCmbBx;
+    private javax.swing.JTextField accountBalanceField;
+    private javax.swing.JLabel accountBalanceLbl;
+    private javax.swing.JLabel accountIdLbl1;
+    private javax.swing.JButton addRecipientBtn;
+    private javax.swing.JLabel destRoutingNumberLbl;
+    private javax.swing.JComboBox<String> fromAccountCmbBx;
+    private javax.swing.JLabel fromAccountLbl;
     private javax.swing.JPanel homePanel;
     private javax.swing.JPanel homePanel1;
     private javax.swing.JPanel homePanel2;
@@ -307,12 +390,20 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel makeTransactionsLbl;
-    private javax.swing.JButton transferMoneyBtn2;
+    private javax.swing.JLabel recipientAddressLbl;
+    private javax.swing.JLabel recipientNameLbl;
+    private javax.swing.JTextField toAccountIdField;
+    private javax.swing.JTextField toRecipientAddressField;
+    private javax.swing.JTextField toRecipientNameField;
+    private javax.swing.JTextField toRoutingNumberField;
+    private javax.swing.JTextField transactionAmountField;
+    private javax.swing.JButton transferMoneyBtn;
+    private javax.swing.JLabel transferMoneyLbl;
+    private javax.swing.JLabel transferMoneyLbl1;
+    private javax.swing.JLabel transferMoneyLbl2;
     private javax.swing.JLabel viewAccountsLbl;
     private javax.swing.JLabel viewProfileLbl;
-    private javax.swing.JTable viewStatementsTbl;
     // End of variables declaration//GEN-END:variables
 }
