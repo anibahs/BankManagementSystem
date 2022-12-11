@@ -4,6 +4,8 @@
  */
 package com.bms.model.util;
 
+import com.bms.model.BankAccount;
+import com.bms.model.consumerbank.BankStatements;
 import java.util.ArrayList;
 
 /**
@@ -24,6 +26,28 @@ public class EmployeeDirectory {
     public void setEmployeeDirectory(ArrayList<Employee> employeeDirectory) {
         this.employeeDirectory = employeeDirectory;
     }
-    
+    public Employee addNewEmployee(){
+        Employee emp = new Employee();
+        this.employeeDirectory.add(emp);
+        return emp;
+    }
+      
+    public Employee fetchEmployee(String fname, String lname,Integer age, String gender, String address, String phone,
+            String email){
+        
+        Employee emp = new Employee();
+        System.out.print("Fetching Employee"+emp);
+        
+        emp.setFirstName(fname);
+        emp.setLastName(lname);
+        emp.setAge(age);
+        emp.setGender(gender);
+        emp.setAddress(address);
+        emp.setPhoneNumber(phone);
+        emp.setEmailAddress(email);
+        
+        //System.out.print("FetchEmployee Name"+emp);
+        return emp;
+    }
     
 }

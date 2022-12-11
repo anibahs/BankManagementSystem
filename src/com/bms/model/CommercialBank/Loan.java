@@ -10,6 +10,7 @@ package com.bms.model.CommercialBank;
  */
     
 public class Loan {
+    private int loanid;
     private double loan;
     private double interestRate;
     private double month;
@@ -17,6 +18,7 @@ public class Loan {
     private double MonthlyPayment;
     
     public Loan(){
+        this.loanid = loanid +1;
         this.loan = 0;
         this.interestRate = 0.0;
         this.month = 0;
@@ -79,4 +81,6 @@ public class Loan {
     public String toString(){
         return String.valueOf(this.getLoan());
     }
+    
+    
 }

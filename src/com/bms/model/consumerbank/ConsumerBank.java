@@ -4,7 +4,11 @@
  */
 package com.bms.model.consumerbank;
 
+import com.bms.model.util.Customer;
 import com.bms.model.util.CustomerDirectory;
+import java.util.ArrayList;
+
+
 
 /**
  *
@@ -12,6 +16,7 @@ import com.bms.model.util.CustomerDirectory;
  */
 public class ConsumerBank {
     private CustomerDirectory consumerDirectory;
+    private ArrayList<Customer> customerDirectory;
 
     public CustomerDirectory getCustomerDirectory() {
         return consumerDirectory;
@@ -24,7 +29,10 @@ public class ConsumerBank {
     public ConsumerBank(){
         this.consumerDirectory = new CustomerDirectory();
     }
-    
-   
+        
+    public ArrayList<Customer> addCustomerDirectory(ArrayList<Customer> customers){
+        this.customerDirectory = customers;
+        return this.customerDirectory;
+    }   
     
 }

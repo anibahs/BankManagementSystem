@@ -8,10 +8,16 @@ import com.bms.model.Business;
 import com.bms.model.CommercialBank.CommercialBank;
 import com.bms.model.CommercialBank.Loan;
 import com.bms.model.util.Customer;
+import com.bms.model.util.DBConnection;
+import com.bms.model.util.employeerole.LoanOfficer;
 import java.awt.CardLayout;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -33,12 +39,14 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
     private double payment;
     private double MonthlyPayment;
     JPanel cards;
+    JSplitPane splitPane;
     CardLayout cl;
     
     
-    public LoanEstimatorJPanel(JPanel cards, Business business) {
+    public LoanEstimatorJPanel(JPanel cards, Business business,JSplitPane splitPane) {
         this.cards = cards;
         this.business = business;
+        this.splitPane=splitPane;
         this.cl = (CardLayout) cards.getLayout();
         initComponents();
     }
@@ -103,6 +111,12 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
         jLabel4.setText("Number of Payments:");
 
         jLabel5.setText("Monthly Payment:");
+
+        jTxtInterest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTxtInterestActionPerformed(evt);
+            }
+        });
 
         jLoanBtnLoanCalculator.setText("Loan Calculator");
         jLoanBtnLoanCalculator.addActionListener(new java.awt.event.ActionListener() {
@@ -181,11 +195,11 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTxtLoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTxtInterest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -197,7 +211,7 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(repaymentField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTextMonthlyPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -292,8 +306,35 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
 
     private void jLoanBtnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoanBtnExitActionPerformed
         // TODO add your handling code here:
-        cl.previous(cards);
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int rowindex = jTable1.getSelectedRow();
+        
+        double loanamt = (Double)model.getValueAt(rowindex, 0);
+        double roi = (Double)model.getValueAt(rowindex, 1);
+        double month = (Double)model.getValueAt(rowindex, 2);
+        double totalrepay = (Double)model.getValueAt(rowindex, 3);
+        double monemi = (Double)model.getValueAt(rowindex, 4);
+        
+        
+        AddLoanstoDB(loanamt,roi,month,totalrepay,monemi);
+        
+        Loan loan = new Loan();
+        loan.setLoan(loanamt);
+        loan.setInterestRate(roi);
+        loan.setMonth(month);
+        loan.setPayment(totalrepay);
+        loan.setMonthlyPayment(monemi);
+        LoanOfficerJPanel jpanel = new LoanOfficerJPanel(cards,business,splitPane,loan);
+        cards.add(jpanel, "LOPanel");
+        splitPane.setRightComponent(cards);
+        cl.show(cards, "LOPanel");
+        //cl.previous(cards);
+        
     }//GEN-LAST:event_jLoanBtnExitActionPerformed
+
+    private void jTxtInterestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtInterestActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtInterestActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -332,4 +373,24 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
         model.addRow(row);
     }
 }
+
+    private void AddLoanstoDB(Double loanamt,Double roi,Double month,Double repay,Double monemi) {
+        
+        
+        ArrayList<Loan> loans = new ArrayList<Loan>();
+        DBConnection con = new DBConnection();
+        int loanid = 0;
+        //Double loanamt = Double.parseInt
+        String query = "Insert into loan (loanamt,InterestRate,NoofMonths,RepaymentTotal,MonthlyEMI,loanID) values (?,?,?,?,?,?)";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(loanamt);
+        params.add(roi);
+        params.add(month);
+        params.add(repay);
+        params.add(monemi);
+        params.add(5);
+        //params.add(customerAccountIds);
+        con.runInsertloan(cards, query, params);
+        
+    }
 }

@@ -27,8 +27,7 @@ public class Person {
     
     public Person(String firstName, String lastName, String gender, String address, 
             int age, String phoneNumber, String emailAddress){
-        id = id+1;
-        this.personId = id;
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -105,6 +104,19 @@ public class Person {
     @Override
     public String toString(){
         return this.getFirstName()+" " +this.getLastName();
+    }
+    
+    public Person fetchPerson(int personId, String firstName, String lastName, String gender, String address, 
+            int age, String phoneNumber, String emailAddress){
+        this.personId = personId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.address = address;
+        this.age = age;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        return this;
     }
 
 }

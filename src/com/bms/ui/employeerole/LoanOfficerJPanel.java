@@ -5,9 +5,19 @@
 package com.bms.UI.employeerole;
 
 import com.bms.model.Business;
+import com.bms.model.CommercialBank.Loan;
+import com.bms.model.util.DBConnection;
+import com.bms.model.util.Employee;
+import com.bms.model.util.User;
 import java.awt.CardLayout;
+import java.util.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 /**
  *
@@ -21,15 +31,36 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
     JPanel cards;
     CardLayout cl;
     Business business;
+    Employee employee;
+    User loginUser;
+    Loan loan;
+    JSplitPane splitPane;
     
-    public LoanOfficerJPanel(JPanel cards,Business business) {
+    public LoanOfficerJPanel(JPanel cards,Business business,User loginUser, JSplitPane splitPane, JPanel panel) {
         this.cards = cards;
         this.business = business;
+        this.loginUser = loginUser;
+        this.splitPane=splitPane;
         this.cl =  (CardLayout)cards.getLayout();
         initComponents();
         profilePanel.setVisible(false);
         searchCustPanel.setVisible(false);
         requestloanPanel.setVisible(false);
+        
+    }
+    
+    public LoanOfficerJPanel(JPanel cards,Business business, JSplitPane splitPane,Loan loan) {
+        this.cards = cards;
+        this.business = business;
+        //this.loginUser = loginUser;
+        this.splitPane=splitPane;
+        this.loan = loan;
+        this.cl =  (CardLayout)cards.getLayout();
+        initComponents();
+        profilePanel.setVisible(false);
+        searchCustPanel.setVisible(false);
+        requestloanPanel.setVisible(false);
+        
     }
 
     /**
@@ -56,7 +87,7 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         profilePanel = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        unameTextField = new javax.swing.JTextField();
+        ageField = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
@@ -69,6 +100,8 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         phoneField = new javax.swing.JTextField();
         genderField = new javax.swing.JTextField();
         bnameField = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
+        addressField1 = new javax.swing.JTextField();
         searchCustPanel = new javax.swing.JPanel();
         jComboBox2 = new javax.swing.JComboBox<>();
         searchField = new javax.swing.JTextField();
@@ -77,7 +110,7 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         requestloanPanel = new javax.swing.JPanel();
-        custnameField = new javax.swing.JTextField();
+        accountidField = new javax.swing.JTextField();
         approveButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
@@ -93,6 +126,9 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         jTxtInterest = new javax.swing.JTextField();
         jTxtNoPayment = new javax.swing.JTextField();
         jTextMonthlyPayment = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
+        repaymentField = new javax.swing.JTextField();
+        jXDatePicker1 = new org.jdesktop.swingx.JXDatePicker();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -228,7 +264,7 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
 
         profilePanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel12.setText("Username: ");
+        jLabel12.setText("Age");
 
         jLabel13.setText("First Name: ");
 
@@ -242,6 +278,8 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
 
         jLabel19.setText("Phonenumber:");
 
+        jLabel22.setText("Address:");
+
         javax.swing.GroupLayout profilePanelLayout = new javax.swing.GroupLayout(profilePanel);
         profilePanel.setLayout(profilePanelLayout);
         profilePanelLayout.setHorizontalGroup(
@@ -249,22 +287,24 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
             .addGroup(profilePanelLayout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12)
                     .addComponent(jLabel13)
                     .addComponent(jLabel11)
                     .addComponent(jLabel16)
                     .addComponent(jLabel17)
                     .addComponent(jLabel18)
-                    .addComponent(jLabel19))
+                    .addComponent(jLabel19)
+                    .addComponent(jLabel22)
+                    .addComponent(jLabel12))
                 .addGap(29, 29, 29)
-                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(phoneField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(unameTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                    .addComponent(emailField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lameField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fnameField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(genderField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bnameField))
+                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ageField, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                    .addComponent(addressField1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                    .addComponent(phoneField)
+                    .addComponent(emailField)
+                    .addComponent(lameField)
+                    .addComponent(fnameField)
+                    .addComponent(genderField)
+                    .addComponent(bnameField, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap(249, Short.MAX_VALUE))
         );
         profilePanelLayout.setVerticalGroup(
@@ -274,11 +314,7 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(unameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -286,7 +322,11 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
+                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ageField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(genderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -298,7 +338,11 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(78, 78, 78))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addressField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46))
         );
 
         searchCustPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -381,7 +425,7 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Personal", "Education", "Automotive", "Housing" }));
 
-        jLabel6.setText("CustomerName:");
+        jLabel6.setText("AccountNumber:");
 
         jLabel14.setText("Loan Applied Date:");
 
@@ -411,50 +455,68 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
 
         jLabel20.setText("Monthly Payment:");
 
+        jTxtLoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTxtLoanActionPerformed(evt);
+            }
+        });
+
+        jLabel23.setText("TotalRepayment: ");
+
         javax.swing.GroupLayout requestloanPanelLayout = new javax.swing.GroupLayout(requestloanPanel);
         requestloanPanel.setLayout(requestloanPanelLayout);
         requestloanPanelLayout.setHorizontalGroup(
             requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(requestloanPanelLayout.createSequentialGroup()
-                .addGap(93, 93, 93)
                 .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel20)
-                    .addComponent(loanestimatorButton)
                     .addGroup(requestloanPanelLayout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(approveButton)))
-                .addGap(27, 27, 27)
-                .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(denyButton)
-                    .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTxtLoan)
-                        .addComponent(jTxtInterest)
-                        .addComponent(jTxtNoPayment)
-                        .addComponent(jTextMonthlyPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(custnameField)
-                        .addComponent(jComboBox3, 0, 115, Short.MAX_VALUE)))
-                .addContainerGap(427, Short.MAX_VALUE))
+                        .addGap(93, 93, 93)
+                        .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel20)
+                            .addComponent(loanestimatorButton)
+                            .addComponent(jLabel23))
+                        .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(requestloanPanelLayout.createSequentialGroup()
+                                .addGap(73, 73, 73)
+                                .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(repaymentField)
+                                    .addComponent(jTxtLoan)
+                                    .addComponent(jTxtInterest)
+                                    .addComponent(jTxtNoPayment)
+                                    .addComponent(jTextMonthlyPayment, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                                    .addComponent(accountidField)
+                                    .addComponent(jComboBox3, 0, 115, Short.MAX_VALUE)))
+                            .addGroup(requestloanPanelLayout.createSequentialGroup()
+                                .addGap(69, 69, 69)
+                                .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(requestloanPanelLayout.createSequentialGroup()
+                        .addGap(176, 176, 176)
+                        .addComponent(approveButton)
+                        .addGap(27, 27, 27)
+                        .addComponent(denyButton)))
+                .addContainerGap(410, Short.MAX_VALUE))
         );
         requestloanPanelLayout.setVerticalGroup(
             requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(requestloanPanelLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(custnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(accountidField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(23, 23, 23)
                 .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addComponent(jLabel14)
+                .addGap(22, 22, 22)
+                .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -471,13 +533,17 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
                 .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
                     .addComponent(jTextMonthlyPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(repaymentField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(loanestimatorButton)
-                .addGap(23, 23, 23)
+                .addGap(18, 18, 18)
                 .addGroup(requestloanPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(approveButton)
                     .addComponent(denyButton))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         jLayeredPane1.setLayer(profilePanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -556,6 +622,8 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         profilePanel.setVisible(true);
         searchCustPanel.setVisible(false);
         requestloanPanel.setVisible(false);
+        //System.out.print("Fetching data:"+fetchEmployee());
+        populateTextFields(fetchEmployee());
         
     }//GEN-LAST:event_jLabel2MouseClicked
 
@@ -573,6 +641,7 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         requestloanPanel.setVisible(true);
         profilePanel.setVisible(false);
         searchCustPanel.setVisible(false);
+        PopulateLoanTextFields(fetchLoan());
     }//GEN-LAST:event_jLabel10MouseClicked
 
     private void sbyIDButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sbyIDButtonActionPerformed
@@ -584,7 +653,7 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
 
     private void loanestimatorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loanestimatorButtonActionPerformed
         // TODO add your handling code here:
-            LoanEstimatorJPanel bpanel = new LoanEstimatorJPanel(cards,business);
+            LoanEstimatorJPanel bpanel = new LoanEstimatorJPanel(cards,business,splitPane);
             cards.add(bpanel, "LoanPanel");
             //requestloanPanel.add(cards);
             cl.show(cards, "LoanPanel");
@@ -593,6 +662,27 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
 
     private void approveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveButtonActionPerformed
         // TODO add your handling code here:
+        
+        String accountId = accountidField.getText();
+        String selectedtype = jComboBox3.getSelectedItem().toString();
+        Date sdate = jXDatePicker1.getDate();
+        String pattern = "MM-dd-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(sdate);
+        
+        ArrayList<Loan> loans = new ArrayList<Loan>();
+        DBConnection con = new DBConnection();
+        int loanid = 0;
+        //Double loanamt = Double.parseInt
+        String query = "update loan set account_id = ?, loantype = ?, loanDate = ? where loanId = 5";
+        ArrayList<Object> params = new ArrayList<Object>();
+        
+        params.add(accountId);
+        params.add(selectedtype);
+        params.add(date);
+        
+        con.runUpdateloan(cards, query, params);
+        
         JOptionPane.showMessageDialog(this, "Loan Application Request Submitted Successfully!");
     }//GEN-LAST:event_approveButtonActionPerformed
 
@@ -601,11 +691,19 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Loan Application Request Denied Successfully!");
     }//GEN-LAST:event_denyButtonActionPerformed
 
+    private void jTxtLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtLoanActionPerformed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_jTxtLoanActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField accountidField;
+    private javax.swing.JTextField addressField1;
+    private javax.swing.JTextField ageField;
     private javax.swing.JButton approveButton;
     private javax.swing.JTextField bnameField;
-    private javax.swing.JTextField custnameField;
     private javax.swing.JButton denyButton;
     private javax.swing.JTextField emailField;
     private javax.swing.JTextField fnameField;
@@ -629,6 +727,8 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -644,16 +744,132 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTxtInterest;
     private javax.swing.JTextField jTxtLoan;
     private javax.swing.JTextField jTxtNoPayment;
+    private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
     private javax.swing.JTextField lameField;
     private javax.swing.JButton loanestimatorButton;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTextField phoneField;
     private javax.swing.JPanel profilePanel;
+    private javax.swing.JTextField repaymentField;
     private javax.swing.JPanel requestloanPanel;
     private javax.swing.JButton sbyIDButton;
     private javax.swing.JPanel searchCustPanel;
     private javax.swing.JTextField searchField;
     private javax.swing.JLabel searchLabel;
-    private javax.swing.JTextField unameTextField;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTextFields(Employee emp) {
+        
+        
+          
+        System.out.print("Populating Employee"+emp);
+        
+        fnameField.setText(String.valueOf(emp.getFirstName()));
+        lameField.setText(String.valueOf(emp.getLastName()));
+        genderField.setText(String.valueOf(emp.getGender()));
+        ageField.setText(String.valueOf(emp.getAge()));
+        phoneField.setText(String.valueOf(emp.getPhoneNumber()));
+        emailField.setText(String.valueOf(emp.getEmailAddress()));
+        addressField1.setText(String.valueOf(emp.getAddress()));
+        
+    }
+
+    private Employee fetchEmployee() {
+        //ArrayList<Employee> emps = new ArrayList<Employee>();
+        Employee emp = new Employee();
+        DBConnection con = new DBConnection();
+        String query = "Select first_name,last_name,age,gender,address,phone_number,email from employee, person"
+                + " WHERE employee.person_id = person.person_id and employee_type = 'LoanOfficer'";
+        //System.out.println(query);
+       /**
+        ArrayList<String> slist = new ArrayList<String>();
+        System.out.println("customer"+customer.getCustomerId());
+        for(BankAccount account: customer.getAccounts()){
+            System.out.println("account.getAccountId()"+account.getAccountId());
+            slist.add(Integer.toString(account.getAccountId()));
+        }
+        System.out.println(slist);
+        
+        String customerAccountIds = String.join(",", slist);
+        System.out.println("customerAccountIds"+customerAccountIds);**/
+        ArrayList<Object> params = new ArrayList<Object>();
+        //params.add(customerAccountIds);
+        ResultSet rs = con.runSelect(query, params);
+        System.out.println("3");
+
+        try{
+            do{
+                System.out.println(rs.getString("first_name"));
+                System.out.println(rs.getString("last_name"));
+                
+                emp = business.getEmployee().fetchEmployee(rs.getString("first_name"),
+                        rs.getString("last_name"),rs.getInt("age"),rs.getString("gender"),
+                        rs.getString("address"),rs.getString("phone_number"),
+                        rs.getString("email"));
+                //emps.add(emp);
+                //System.out.println("Employee:"+emp);
+                
+            }while(rs.next());
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        //System.out.println("Employee:"+emp);
+        return emp;
+    }
+
+    private Loan fetchLoan() {
+        Loan loan = new Loan();
+        DBConnection con = new DBConnection();
+        String query = "Select loanamt,InterestRate,NoofMonths,RepaymentTotal,MonthlyEMI from loan";
+        //System.out.println(query);
+       /**
+        ArrayList<String> slist = new ArrayList<String>();
+        System.out.println("customer"+customer.getCustomerId());
+        for(BankAccount account: customer.getAccounts()){
+            System.out.println("account.getAccountId()"+account.getAccountId());
+            slist.add(Integer.toString(account.getAccountId()));
+        }
+        System.out.println(slist);
+        
+        String customerAccountIds = String.join(",", slist);
+        System.out.println("customerAccountIds"+customerAccountIds);**/
+        ArrayList<Object> params = new ArrayList<Object>();
+        //params.add(customerAccountIds);
+        ResultSet rs = con.runSelect(query, params);
+        System.out.println("3");
+
+        try{
+            do{
+                
+                
+                loan = business.getCommercialbank().fetchLoanbyID(rs.getDouble("loanamt"),
+                        rs.getDouble("InterestRate"), rs.getDouble("NoofMonths"),
+                        rs.getDouble("RepaymentTotal"), rs.getDouble("MonthlyEMI"));
+                //emps.add(emp);
+                //System.out.println("Employee:"+emp);
+                
+            }while(rs.next());
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        //System.out.println("Employee:"+emp);
+        return loan;
+
+    }
+
+    private void PopulateLoanTextFields(Loan fetchLoan) {
+        System.out.print("Populating Employee"+fetchLoan);
+        
+        jTxtLoan.setText(String.valueOf(fetchLoan.getLoan()));
+        jTxtInterest.setText(String.valueOf(fetchLoan.getInterestRate()));
+        jTxtNoPayment.setText(String.valueOf(fetchLoan.getMonth()));
+        repaymentField.setText(String.valueOf(fetchLoan.getPayment()));
+        jTextMonthlyPayment.setText(String.valueOf(fetchLoan.getMonthlyPayment()));
+    }
+
+   
 }
