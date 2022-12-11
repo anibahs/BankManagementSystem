@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import com.bms.model.Business;
 import com.bms.model.util.PersonDirectory;
-import com.bms.model.consumerbanking.*;
 import com.bms.model.consumerbank.ConsumerBank;
 import com.bms.model.util.Customer;
 import com.bms.model.util.CustomerDirectory;
@@ -191,6 +190,11 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Investment Banking");
         jLabel8.setToolTipText("");
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -344,16 +348,19 @@ public class MainJFrame extends javax.swing.JFrame {
         }else if(selectedfield.equals("Customer")){
             User loginUser;
             DBConnection con = new DBConnection();
+            System.out.print("DB Connection started");
             String query  = "Select username, password, type from users where username=? and password=?";
+            System.out.print("Querys"+query);
             ArrayList<Object> params = new ArrayList<Object>();
             params.add(username);
             params.add(password);
             try{
-                ResultSet res = con.runSelect(cards, query, params, this.controlPanel);
+                ResultSet res = con.runSelect(this.cards, query, params, this.controlPanel);
                 if(res.first()){
                     loginUser = new User(res.getString("username"),res.getString("password").toCharArray(),res.getString("type"));
                     JOptionPane.showMessageDialog(this,"You have successfully logged in");
-                    
+//                    ViewCustomerJPanel vcpanel = new ViewCustomerJPanel(cards);
+//                    cards.add(vcpanel, "CPanel");
                     ViewBalanceJPanel customerPanel = new ViewBalanceJPanel(cards,business,loginUser,splitPane,this.controlPanel);
                     cards.add(customerPanel, "vbPanel");
                     splitPane.setRightComponent(cards);
@@ -389,6 +396,11 @@ public class MainJFrame extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jLabel8MouseClicked
 
     /**
      * @param args the command line arguments

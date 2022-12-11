@@ -21,6 +21,7 @@ public class DBConnection {
     
     
     public DBConnection(){
+       
         
     }
     
@@ -28,7 +29,7 @@ public class DBConnection {
         ResultSet result=null;
         try {
             Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
-              "root", "admin");
+              "root", "root@1234");
             PreparedStatement st = (PreparedStatement) connection
                                         .prepareStatement(query,    ResultSet.TYPE_SCROLL_INSENSITIVE, 
                                                                             ResultSet.CONCUR_READ_ONLY);
@@ -37,6 +38,7 @@ public class DBConnection {
                 st.setString(i, p.toString());
                 i=i+1;
             }
+            
             System.out.println("Running query:");
             System.out.println(st.toString());
             result = st.executeQuery();
@@ -53,7 +55,7 @@ public class DBConnection {
         boolean flag = false;
         try {
             Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
-              "root", "admin");
+              "root", "root@1234");
             PreparedStatement st = (PreparedStatement) connection
             .prepareStatement(query);
             st.setString(1, params.get(0).toString());
@@ -72,7 +74,7 @@ public class DBConnection {
         ResultSet result = null;
         try{
             String myConnectionString = "jdbc:mysql://localhost:3306?" + "useUnicode=yes&characterEncoding=UTF-8";
-            Connection conn = DriverManager.getConnection(myConnectionString, "root", "admin");
+            Connection conn = DriverManager.getConnection(myConnectionString, "root", "root@1234");
             Statement stmt = conn.createStatement();
             stmt.execute("SHOW DATABASES");
             ResultSet rs = stmt.getResultSet();

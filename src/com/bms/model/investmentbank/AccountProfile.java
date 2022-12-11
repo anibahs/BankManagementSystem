@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package cms.bms.model.investmentbanking;
+package com.bms.model.investmentbank;
 
 import java.util.ArrayList;
 
@@ -10,17 +10,20 @@ import java.util.ArrayList;
  *
  * @author asawari
  */
-public class accountProfile {
-    private String accountName;
+
+public class AccountProfile {
+     private String accountName;
     private double balance;
     private ArrayList<StockProfile> stocksBought;
-
-    public accountProfile(String accName, double bal) {
-        accountName = accName;
+    
+    // Class constructor
+    public AccountProfile(String aName, double bal) {
+        accountName = aName;
         balance = bal;
         stocksBought = new ArrayList<>();
+
     }
-    
+
     // Method to retrieve the account name
     public String getAccountName() {
         return accountName;

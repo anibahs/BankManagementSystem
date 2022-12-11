@@ -5,7 +5,7 @@
 package com.bms.model;
 
 import com.bms.model.CommercialBank.CommercialBank;
-import com.bms.model.consumerbanking.ConsumerBanking;
+//import com.bms.model.consumerbanking.ConsumerBanking;
 import com.bms.model.consumerbank.ConsumerBank;
 import com.bms.model.util.UserDirectory;
 import com.bms.model.util.PersonDirectory;

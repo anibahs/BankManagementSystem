@@ -4,6 +4,18 @@
  */
 package com.bms.ui.consumerbanking;
 
+import com.bms.model.investmentbank.AccountProfile;
+import com.bms.model.investmentbank.CompanyStock;
+import com.bms.model.investmentbank.CurrencyStock;
+import com.bms.model.investmentbank.StockProfile;
+import com.bms.ui.investmentbank.CreateAccountJPanel;
+import com.bms.ui.investmentbank.InvestmentMainJPanel;
+import static com.bms.ui.investmentbank.InvestmentMainJPanel.HISTORYFILEPATH;
+import static com.bms.ui.investmentbank.InvestmentMainJPanel.createAllStocks;
+import static com.bms.ui.investmentbank.InvestmentMainJPanel.createHistoryFiles;
+import static com.bms.ui.investmentbank.InvestmentMainJPanel.deleteHistoryFiles;
+import static com.bms.ui.investmentbank.InvestmentMainJPanel.recalculationLoop;
+import com.bms.ui.investmentbank.MakeInvestmentJPanel;
 import com.bms.UI.MainJFrame;
 import com.bms.model.BankAccount;
 import com.bms.model.Business;
@@ -11,9 +23,18 @@ import com.bms.model.util.Customer;
 import com.bms.model.util.DBConnection;
 import com.bms.model.util.User;
 import java.awt.CardLayout;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -34,6 +55,12 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
     Business business;
     User loginUser;
     JSplitPane splitPane;
+    AccountProfile account;
+    StockProfile[][] profiles;
+    //AccountProfile accProfile;
+    boolean created = false;
+    
+    
 
     public ViewBalanceJPanel(JPanel cards,Business business, User loginUser, JSplitPane splitPane, JPanel panel) {
         initComponents();
@@ -53,6 +80,7 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         }**/
         System.out.println("Going");
         populateAccountsTable(this.fetchAccounts());
+        
     }
 
     /**
@@ -75,8 +103,11 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         makeTransactionsLbl = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        homePanel3 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        investLbl1 = new javax.swing.JLabel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
-        jPanel2 = new javax.swing.JPanel();
+        ViewAccountJPanel = new javax.swing.JPanel();
         accountFieldsPanel = new javax.swing.JPanel();
         accountIdLbl = new javax.swing.JLabel();
         accountBalanceLbl = new javax.swing.JLabel();
@@ -89,6 +120,9 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         viewAccountScrlPn = new javax.swing.JScrollPane();
         viewAccountsTbl = new javax.swing.JTable();
         viewAccountBtn = new javax.swing.JButton();
+        StockSimulatorJPanel = new javax.swing.JPanel();
+        jTextArea1 = new javax.swing.JTextArea();
+        btnName = new javax.swing.JButton();
 
         mainPanel.setBackground(new java.awt.Color(122, 72, 221));
 
@@ -175,13 +209,16 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(makeTransactionsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addComponent(makeTransactionsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         homePanel2Layout.setVerticalGroup(
             homePanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(makeTransactionsLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(homePanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(makeTransactionsLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -189,18 +226,54 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         jLabel10.setText("Welcome Customer!");
         jLabel10.setToolTipText("");
 
+        homePanel3.setBackground(new java.awt.Color(54, 33, 39));
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/bms/UI/images/money.png"))); // NOI18N
+
+        investLbl1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        investLbl1.setForeground(new java.awt.Color(255, 255, 255));
+        investLbl1.setText("Investment Banking");
+        investLbl1.setToolTipText("");
+        investLbl1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                investLbl1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout homePanel3Layout = new javax.swing.GroupLayout(homePanel3);
+        homePanel3.setLayout(homePanel3Layout);
+        homePanel3Layout.setHorizontalGroup(
+            homePanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homePanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(investLbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
+        );
+        homePanel3Layout.setVerticalGroup(
+            homePanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(investLbl1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+            .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(homePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
                 .addComponent(homePanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(homePanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(281, 281, 281)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,13 +283,15 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(homePanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(homePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(homePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(homePanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(homePanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addGap(23, 23, 23))
         );
 
         accountIdLbl.setText("Account Number:");
@@ -312,17 +387,17 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout ViewAccountJPanelLayout = new javax.swing.GroupLayout(ViewAccountJPanel);
+        ViewAccountJPanel.setLayout(ViewAccountJPanelLayout);
+        ViewAccountJPanelLayout.setHorizontalGroup(
+            ViewAccountJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ViewAccountJPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(ViewAccountJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(ViewAccountJPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(viewAccountBtn))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ViewAccountJPanelLayout.createSequentialGroup()
                         .addGap(105, 105, 105)
                         .addComponent(viwStatementsBtn)
                         .addGap(121, 121, 121)
@@ -332,9 +407,9 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
                     .addComponent(viewAccountScrlPn, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        ViewAccountJPanelLayout.setVerticalGroup(
+            ViewAccountJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ViewAccountJPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(viewAccountScrlPn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -342,13 +417,52 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(accountFieldsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(ViewAccountJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(viwStatementsBtn)
                     .addComponent(transferMoneyBtn))
                 .addContainerGap())
         );
 
-        jLayeredPane2.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("Please click below to use stock Simulator");
+
+        btnName.setText("Stock Simulator");
+        btnName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNameActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout StockSimulatorJPanelLayout = new javax.swing.GroupLayout(StockSimulatorJPanel);
+        StockSimulatorJPanel.setLayout(StockSimulatorJPanelLayout);
+        StockSimulatorJPanelLayout.setHorizontalGroup(
+            StockSimulatorJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(StockSimulatorJPanelLayout.createSequentialGroup()
+                .addGap(67, 67, 67)
+                .addComponent(jTextArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(126, Short.MAX_VALUE))
+            .addGroup(StockSimulatorJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(StockSimulatorJPanelLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(btnName)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        StockSimulatorJPanelLayout.setVerticalGroup(
+            StockSimulatorJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(StockSimulatorJPanelLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jTextArea1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(220, Short.MAX_VALUE))
+            .addGroup(StockSimulatorJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(StockSimulatorJPanelLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(btnName)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        jLayeredPane2.setLayer(ViewAccountJPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(StockSimulatorJPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
@@ -356,25 +470,38 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addGap(57, 57, 57)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ViewAccountJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(70, Short.MAX_VALUE))
+            .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(StockSimulatorJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ViewAccountJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(241, Short.MAX_VALUE))
+            .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(StockSimulatorJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(226, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -430,8 +557,36 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         cl.show(cards, "mtPanel");
     }//GEN-LAST:event_transferMoneyBtnActionPerformed
 
+    private void investLbl1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_investLbl1MouseClicked
+      
+            // TODO add your handling code here:
+          StockSimulatorJPanel.setVisible(true);
+          ViewAccountJPanel.setVisible(false);
+ 
+    }//GEN-LAST:event_investLbl1MouseClicked
+
+    private void btnNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNameActionPerformed
+        
+        
+        try {
+            //  String btnName = evt.getActionCommand();
+   
+            InvestmentMainJPanel window = new InvestmentMainJPanel(cards);
+            //ViewBalanceJPanel customerPanel = new ViewBalanceJPanel(cards,business,loginUser,splitPane,this.controlPanel);
+            //cards.add(window, "IMPanel");
+            //splitPane.setRightComponent(cards);
+            //cl.show(cards, "IMPanel");
+        } catch (IOException ex) {
+            Logger.getLogger(ViewBalanceJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_btnNameActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel StockSimulatorJPanel;
+    private javax.swing.JPanel ViewAccountJPanel;
     private javax.swing.JTextField accountBalanceField;
     private javax.swing.JLabel accountBalanceLbl;
     private javax.swing.JPanel accountFieldsPanel;
@@ -439,15 +594,19 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel accountIdLbl;
     private javax.swing.JComboBox<String> accountTypeCmbBx;
     private javax.swing.JLabel accountTypeLbl;
+    private javax.swing.JButton btnName;
     private javax.swing.JPanel homePanel;
     private javax.swing.JPanel homePanel1;
     private javax.swing.JPanel homePanel2;
+    private javax.swing.JPanel homePanel3;
+    private javax.swing.JLabel investLbl1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane2;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel makeTransactionsLbl;
     private javax.swing.JButton transferMoneyBtn;
@@ -546,5 +705,7 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
             e.printStackTrace();
         }
         return accounts;     
-    }**/  
+    }**/
+  
+
 }
