@@ -3,9 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.bms.model;
-
-import com.bms.model.consumerbank.BankStatements;
-import com.bms.model.util.Customer;
 import java.util.ArrayList;
 
 /**
@@ -32,17 +29,10 @@ public class BankAccountDirectory {
         this.bankAccountDirectory.add(newBankAccount);
         return newBankAccount;
     }
-      
-    public BankAccount fetchBankAccount(Customer customer, String account_id, String type, 
-            String routingNumber, int currentBalance){
-        BankAccount account = new BankAccount(account_id);
-        account.setCustomer(customer);
-        account.setAccountType(type);
-        account.setRoutingNumber(routingNumber);
-        account.setCurrentBalance(currentBalance);
-        account.setStatement(new BankStatements());
-        
-        return account;
+
+    public void addBankAccount(BankAccount ba) {
+        this.bankAccountDirectory.add(ba);
     }
+
 }
 

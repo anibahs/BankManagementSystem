@@ -24,7 +24,7 @@ public class DBConnection {
         
     }
     
-    public ResultSet runSelect(JPanel cards,String query, ArrayList<Object> params, JPanel panel){
+    public ResultSet runSelect(String query, ArrayList<Object> params){
         ResultSet result=null;
         try {
             Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
@@ -37,7 +37,7 @@ public class DBConnection {
                 st.setString(i, p.toString());
                 i=i+1;
             }
-            System.out.println("Running query:");
+            System.out.println("Running query: ");
             System.out.println(st.toString());
             result = st.executeQuery();
             if (result.first()) {
@@ -49,19 +49,21 @@ public class DBConnection {
         return result;
     }
     
-    public boolean runInsert(JPanel cards,String query, ArrayList<Object> params){
+    public boolean runInsert(String query, ArrayList<Object> params){
         boolean flag = false;
         try {
             Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
               "root", "admin");
             PreparedStatement st = (PreparedStatement) connection
             .prepareStatement(query);
-            st.setString(1, params.get(0).toString());
-            st.setString(2, params.get(1).toString());
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                flag = true;
+            int i=1;
+            for( Object p : params){
+                st.setString(i, p.toString());
+                i=i+1;
             }
+            System.out.println("Running query: ");
+            System.out.println(st.toString());
+            st.executeUpdate();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
