@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+    </Property>
+  </Properties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -19,8 +24,9 @@
           <Group type="102" attributes="0">
               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
               <Component id="jLayeredPane2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="6" max="32767" attributes="0"/>
           </Group>
-          <Component id="mainPanel" min="-2" max="-2" attributes="0"/>
+          <Component id="mainPanel" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -52,7 +58,7 @@
                   <Component id="homePanel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Component id="homePanel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="39" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="homePanel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               </Group>
@@ -144,15 +150,14 @@
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       <Component id="jLabel3" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="viewAccountsLbl" min="-2" pref="147" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                      <Component id="viewStatementsLbl" min="-2" pref="181" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
-                  <Component id="viewAccountsLbl" alignment="0" max="32767" attributes="0"/>
+                  <Component id="viewStatementsLbl" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -164,7 +169,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="viewAccountsLbl">
+            <Component class="javax.swing.JLabel" name="viewStatementsLbl">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="18" style="0"/>
@@ -172,11 +177,11 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="View Accounts"/>
+                <Property name="text" type="java.lang.String" value="View Statements"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="viewAccountsLblMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="viewStatementsLblMouseClicked"/>
               </Events>
             </Component>
           </SubComponents>
@@ -223,7 +228,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Withdraw/Deposit"/>
+                <Property name="text" type="java.lang.String" value="Make Transaction"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
               <Events>
@@ -251,66 +256,50 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="455" max="32767" attributes="0"/>
                   <Component id="updateProfileBtn" min="-2" pref="104" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="238" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="253" max="-2" attributes="0"/>
+              </Group>
+              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="249" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="firstNameLbl" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="addressLbl" linkSize="1" alignment="0" min="-2" pref="84" max="-2" attributes="0"/>
+                          <Component id="userNameLbl" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lastNameLbl" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="emailLbl" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="phoneNumberLbl" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="genderLbl" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="ageLbl" linkSize="1" alignment="0" min="-2" pref="84" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="29" pref="29" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="genderField" linkSize="3" alignment="1" max="32767" attributes="0"/>
+                          <Component id="ageField" linkSize="3" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="unameTextField" linkSize="3" alignment="1" pref="200" max="32767" attributes="0"/>
+                          <Component id="phoneField" linkSize="3" alignment="1" max="32767" attributes="0"/>
+                          <Component id="addressField" linkSize="3" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="fnameField" linkSize="3" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lnameField" linkSize="3" alignment="1" max="32767" attributes="0"/>
+                          <Component id="emailField" linkSize="3" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="250" max="32767" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="415" max="32767" attributes="0"/>
                   <Component id="updateProfileBtn" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="82" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanel2">
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="242" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="firstNameLbl" linkSize="1" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="genderLbl" linkSize="1" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="emailLbl" linkSize="1" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="phoneNumberLbl" linkSize="1" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="lastNameLbl" linkSize="1" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="userNameLbl" linkSize="1" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="branchLbl" linkSize="1" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="phoneField" linkSize="2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="unameTextField" linkSize="2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="emailField" linkSize="2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lameField" linkSize="2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="fnameField" linkSize="2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="genderField" linkSize="2" alignment="0" min="-2" pref="102" max="-2" attributes="0"/>
-                          <Component id="jComboBox1" linkSize="2" min="-2" pref="200" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="238" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="branchLbl" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                          <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="userNameLbl" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                           <Component id="unameTextField" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -323,9 +312,19 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lastNameLbl" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="lameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lnameField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="ageLbl" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="ageField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="addressLbl" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="addressField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="genderLbl" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                           <Component id="genderField" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -340,76 +339,13 @@
                           <Component id="emailLbl" alignment="1" min="-2" pref="25" max="-2" attributes="0"/>
                           <Component id="emailField" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
                   </Group>
               </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JTextField" name="fnameField">
-            </Component>
-            <Component class="javax.swing.JLabel" name="lastNameLbl">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Last Name: "/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="emailLbl">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Email:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="genderLbl">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Gender: "/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="emailField">
-            </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBox1">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value=""/>
-                    <StringItem index="1" value="RoxburyCrossing"/>
-                    <StringItem index="2" value="Prudential"/>
-                    <StringItem index="3" value="Huntington"/>
-                  </StringArray>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JLabel" name="branchLbl">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Branch:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="firstNameLbl">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="First Name: "/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="genderField">
-            </Component>
-            <Component class="javax.swing.JTextField" name="unameTextField">
-            </Component>
-            <Component class="javax.swing.JTextField" name="phoneField">
-            </Component>
-            <Component class="javax.swing.JLabel" name="userNameLbl">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Username: "/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="lameField">
-            </Component>
-            <Component class="javax.swing.JLabel" name="phoneNumberLbl">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Phone Number:"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
         <Component class="javax.swing.JButton" name="updateProfileBtn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -420,6 +356,71 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Update"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateProfileBtnActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="fnameField">
+        </Component>
+        <Component class="javax.swing.JLabel" name="lastNameLbl">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Last Name: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="emailLbl">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Email:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="genderLbl">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Gender: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="emailField">
+        </Component>
+        <Component class="javax.swing.JLabel" name="firstNameLbl">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="First Name: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="genderField">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="unameTextField">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="phoneField">
+        </Component>
+        <Component class="javax.swing.JLabel" name="userNameLbl">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Username: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="lnameField">
+        </Component>
+        <Component class="javax.swing.JLabel" name="phoneNumberLbl">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Phone Number:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="ageLbl">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Age:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="ageField">
+        </Component>
+        <Component class="javax.swing.JLabel" name="addressLbl">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Address:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="addressField">
         </Component>
       </SubComponents>
     </Container>

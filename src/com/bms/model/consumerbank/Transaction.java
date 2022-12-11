@@ -25,6 +25,14 @@ public class Transaction {
         id=id+1;
         this.transactionId=id;
     }
+
+    public Transaction(int transId, BankAccount fromAcc, BankAccount toAcc, int transAmount, Date time){
+        this.transactionId=transId;
+        this.fromAccount=fromAcc;
+        this.toAccount=toAcc;
+        this.transactionAmount=transAmount;
+        this.timestamp=time;
+    }
     
     public static int getId() {
         return id;
@@ -80,8 +88,8 @@ public class Transaction {
             this.toAccount.setCurrentBalance(this.toAccount.getCurrentBalance()+this.transactionAmount);
             //call function to insert data into db
             this.insertTransaction(this);
-            this.fromAccount.updateAccount();
-            this.toAccount.updateAccount();
+            this.fromAccount.updateAccountBalance();
+            this.toAccount.updateAccountBalance();
             return true;
         } catch (Exception e ){
             e.printStackTrace();
@@ -105,5 +113,10 @@ public class Transaction {
         }
         
         return false;
+    }
+    
+    @Override
+    public String toString(){
+        return Integer.toString(this.getTransactionId());
     }
 }

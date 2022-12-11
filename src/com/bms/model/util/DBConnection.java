@@ -61,7 +61,8 @@ public class DBConnection {
                 st.setString(i, p.toString());
                 i=i+1;
             }
-            System.out.print("Statement"+st);
+            System.out.println("Running query: ");
+            System.out.println(st.toString());
             st.executeUpdate();
             
         } catch (SQLException sqlException) {
@@ -88,7 +89,8 @@ public class DBConnection {
             st.setString(5, params.get(4).toString());
             st.setString(6, params.get(5).toString());
             
-            System.out.print("Statement"+st);
+            System.out.println("Running query: ");
+            System.out.println(st.toString());
             st.executeUpdate();
             
         } catch (SQLException sqlException) {
@@ -103,16 +105,13 @@ public class DBConnection {
             Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
               "root", this.password);
             PreparedStatement st = (PreparedStatement) connection
-            .prepareStatement(query);
-            System.out.print("Query:"+query);
-            System.out.print("Parameter:"+params);
-            
-            
+                .prepareStatement(query);
             st.setString(1, params.get(0).toString());
             st.setString(2, params.get(1).toString());
-            st.setString(3, params.get(2).toString());
+            st.setString(3, params.get(2).toString()); 
             
-            System.out.print("Statement"+st);
+            System.out.println("Running query: ");
+            System.out.println(st.toString());
             st.executeUpdate();
             
         } catch (SQLException sqlException) {

@@ -6,11 +6,9 @@ package com.bms.model.util;
 
 import com.bms.model.BankAccount;
 import com.bms.model.CommercialBank.Loan;
-import com.bms.model.consumerbank.BankStatements;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  *
@@ -41,14 +39,6 @@ public class Customer extends Person{
         this.recipients = new ArrayList<Customer>();
     }
     
-    /**public Customer(type, String routingNumber, int currentBalance){
-        id = id+1;
-        this.customerId = id;
-        this.accounts = new ArrayList<BankAccount>();
-        this.person = new Person();
-        this.recipients = new HashMap();
-    }**/
-    
     public Customer(Person person){
         super();
         id = id+1;
@@ -65,14 +55,6 @@ public class Customer extends Person{
     public void setPerson(Person person) {
         this.person = person;
     }
-    
-    /**public Branch getHomeBranch() {
-        return homeBranch;
-    }
-
-    public void setHomeBranch(Branch homeBranch) {
-        this.homeBranch = homeBranch;
-    }**/
 
     public ArrayList<BankAccount> getAccounts() {
         return accounts;
@@ -101,7 +83,7 @@ public class Customer extends Person{
         
     public BankAccount addNewBankAccount(BankAccount account){
         BankAccount newAccount = new BankAccount(account.getCustomer(),
-                Integer.toString(account.getAccountId()), account.getAccountType(), 
+                account.getAccountId(), account.getAccountType(), 
                 account.getRoutingNumber(), account.getCurrentBalance());
         this.accounts.add(newAccount);
         return newAccount;
@@ -127,12 +109,9 @@ public class Customer extends Person{
         DBConnection con = new DBConnection();
         String query = "Select account_id,account_type,routing_number,current_balance from bank_accounts"
                 + " WHERE customer_id = (?);";
-        System.out.println("1");
-
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(customer.getCustomerId());
         ResultSet rs = con.runSelect( query, params);
-        System.out.println("3");
         try{
             do{
                 BankAccount account = customer.fetchBankAccount(customer, rs.getString("account_id"),
@@ -145,7 +124,6 @@ public class Customer extends Person{
         }catch(Exception e){
             e.printStackTrace();
         }
-        //this.getAccounts().addAll(accounts);
         return accounts;       
     }
     
@@ -157,10 +135,8 @@ public class Customer extends Person{
         account.setAccountType(type);
         account.setRoutingNumber(routingNumber);
         account.setCurrentBalance(currentBalance);
-        account.setStatement(new BankStatements());
-        this.getAccounts().add(account);
         return account;
     }
     
-    
+        
 }

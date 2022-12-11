@@ -8,7 +8,6 @@ import com.bms.UI.employeerole.LoanOfficerJPanel;
 import com.bms.UI.employeerole.BankTellerJPanel;
 import com.bms.ui.consumerbank.ViewBalanceJPanel;
 import com.bms.model.BankAccount;
-import com.bms.model.BankAccountDirectory;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -39,13 +38,15 @@ public class MainJFrame extends javax.swing.JFrame {
     JPanel cards;
     Business business;  
     Customer customer;
+    User loginUser;
     public MainJFrame() {
         initComponents();
         this.cl = new CardLayout();
         this.cards = new JPanel(cl);
-
         controlPanel.add(cards);
-
+        unameTextField.setText("");
+        PasswordField.setText("");
+        
         this.business = new Business();
         PersonDirectory personDirectory = this.business.getPersonDirectory();
         ConsumerBank consumerBank = this.business.getConsumerBank();
@@ -70,6 +71,9 @@ public class MainJFrame extends javax.swing.JFrame {
         regPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        homePanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         controlPanel = new javax.swing.JPanel();
         mainPanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -98,7 +102,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Home Page");
+        jLabel2.setText("Back");
         jLabel2.setToolTipText("");
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -112,14 +116,14 @@ public class MainJFrame extends javax.swing.JFrame {
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -150,20 +154,56 @@ public class MainJFrame extends javax.swing.JFrame {
             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        homePanel1.setBackground(new java.awt.Color(54, 33, 39));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/bms/UI/images/home.png"))); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Login Page");
+        jLabel4.setToolTipText("");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout homePanel1Layout = new javax.swing.GroupLayout(homePanel1);
+        homePanel1.setLayout(homePanel1Layout);
+        homePanel1Layout.setHorizontalGroup(
+            homePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homePanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        homePanel1Layout.setVerticalGroup(
+            homePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
         sidePanel.setLayout(sidePanelLayout);
         sidePanelLayout.setHorizontalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(sidePanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(homePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(regPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         sidePanelLayout.setVerticalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sidePanelLayout.createSequentialGroup()
-                .addGap(110, 110, 110)
+                .addGap(95, 95, 95)
+                .addComponent(homePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         splitPane.setLeftComponent(sidePanel);
@@ -261,13 +301,13 @@ public class MainJFrame extends javax.swing.JFrame {
                             .addComponent(jLabel11))
                         .addGap(29, 29, 29)
                         .addGroup(loginscreenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(PasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
                             .addComponent(unameTextField)
-                            .addComponent(jComboBox1, 0, 1, Short.MAX_VALUE)))
+                            .addComponent(PasswordField)
+                            .addComponent(jComboBox1, 0, 200, Short.MAX_VALUE)))
                     .addGroup(loginscreenPanelLayout.createSequentialGroup()
                         .addGap(126, 126, 126)
                         .addComponent(jButton1)))
-                .addContainerGap(609, Short.MAX_VALUE))
+                .addContainerGap(511, Short.MAX_VALUE))
         );
         loginscreenPanelLayout.setVerticalGroup(
             loginscreenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,7 +376,6 @@ public class MainJFrame extends javax.swing.JFrame {
             cl.show(cards, "BTPanel");
 
         }else if(selectedfield.equals("Customer")){
-            User loginUser;
             DBConnection con = new DBConnection();
             String query  = "Select username, password, type from users where username=? and password=?";
             ArrayList<Object> params = new ArrayList<Object>();
@@ -345,22 +384,30 @@ public class MainJFrame extends javax.swing.JFrame {
             try{
                 ResultSet res = con.runSelect(query, params);
                 if(res.first()){
-                    loginUser = new User(res.getString("username"),res.getString("password").toCharArray(),res.getString("type"));
+                    this.loginUser = new User(res.getString("username"),res.getString("password").toCharArray(),res.getString("type"));
                     //JOptionPane.showMessageDialog(this,"You have successfully logged in");
                     CustomerDirectory custDirectory = business.getConsumerBank().getCustomerDirectory();
                     Customer fetchedCustomer = custDirectory.fetchCustomer(Integer.toString(loginUser.getPersonId()));
                     this.customer=fetchedCustomer;
-
-                    BankAccountDirectory accDirectory = business.getAccountDirectory();
+                    
+                    business.getConsumerBank().getCustomerDirectory().addExistingCustomer(customer);
+                    
                     ArrayList<BankAccount> accounts = this.customer.fetchAccounts(fetchedCustomer);
-
+                    this.customer.getAccounts().addAll(accounts);
+                    business.getAccountDirectory().getBankAccountDirectory().addAll(accounts);
+                    
+                    
                     PersonDirectory personDirectory = business.getPersonDirectory();
                     Person existingPerson = personDirectory.fetchPerson(Integer.toString(loginUser.getPersonId()));
-
-                    ViewBalanceJPanel customerPanel = new ViewBalanceJPanel(cards,business,loginUser,splitPane,this.controlPanel, this.customer);
-                    cards.add(customerPanel, "vbPanel");
+                    this.customer.setPerson(existingPerson);
+                    this.loginUser.setPerson(existingPerson);
+                    System.out.println("MainJframe fetched person"+this.loginUser.getPerson());
+                    
+                                 
+                    ViewBalanceJPanel balancePanel = new ViewBalanceJPanel(cards,business,this.loginUser,splitPane,this.controlPanel, this.customer);
+                    cards.add(balancePanel, "vbPanel");
                     splitPane.setRightComponent(cards);
-                    cl.show(cards, "vbPanel");
+                    //cl.show(cards, "vbPanel");
                 }else{
                     JOptionPane.showMessageDialog(this,"Wrong Username & Password");
                 }
@@ -404,7 +451,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
         JPanel panel =(JPanel) cards.getComponent(0);
-        cards.removeAll();
+        //cards.removeAll();
         cards.add(panel,"ControlPanel");
         cl.show(cards,"ControlPanel");
         
@@ -414,6 +461,15 @@ public class MainJFrame extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        
+        
+        //cards.add(this.controlPanel,"cpanel");
+        splitPane.setRightComponent(this.controlPanel);
+        cl.show(cards,"cpanel");
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments
@@ -454,6 +510,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JPasswordField PasswordField;
     private javax.swing.JPanel controlPanel;
     private javax.swing.JPanel homePanel;
+    private javax.swing.JPanel homePanel1;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -462,6 +519,8 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

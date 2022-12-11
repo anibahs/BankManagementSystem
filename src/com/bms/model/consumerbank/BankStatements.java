@@ -4,6 +4,7 @@
  */
 package com.bms.model.consumerbank;
 
+import com.bms.model.BankAccount;
 import com.bms.model.util.Customer;
 import java.util.ArrayList;
 
@@ -17,11 +18,11 @@ public class BankStatements {
     
     
     public BankStatements(){
-    
+        this.transactions = new ArrayList<Transaction>();
     }
     
     public ArrayList<Transaction> getTransactions() {
-        return transactions;
+        return this.transactions;
     }
 
     public void setTransactions(ArrayList<Transaction> transactions) {
@@ -36,4 +37,8 @@ public class BankStatements {
         this.customer = customer;
     }
 
+    public void addTransaction(Transaction t) {
+        this.transactions.add(t);
+    }
+    
 }

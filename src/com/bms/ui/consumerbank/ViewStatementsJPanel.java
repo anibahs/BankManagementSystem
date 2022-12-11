@@ -2,7 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.bms.UI.consumerbank;
+package com.bms.ui.consumerbank;
+
+import com.bms.model.BankAccount;
+import com.bms.model.Business;
+import com.bms.model.consumerbank.BankStatements;
+import com.bms.model.consumerbank.Transaction;
+import com.bms.model.util.Customer;
+import com.bms.model.util.User;
+import com.bms.ui.consumerbank.MakeTransactionJPanel;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,8 +25,19 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ViewBalanceJPanel
      */
-    public ViewStatementsJPanel() {
+    JPanel cards;
+    CardLayout cl;
+    Customer customer;
+    Business business;
+    User loginUser;
+    JSplitPane splitPane;
+    public ViewStatementsJPanel(JPanel cards,Business business, User loginUser, JSplitPane splitPane,
+            Customer cust) {
         initComponents();
+        this.customer=cust;        
+        for(BankAccount acc: this.customer.getAccounts()){
+            accountIdCmbBx.addItem(acc.toString());
+        }        
     }
 
     /**
@@ -32,18 +55,19 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
         viewProfileLbl = new javax.swing.JLabel();
         homePanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        viewAccountsLbl = new javax.swing.JLabel();
+        viewStatementsLbl = new javax.swing.JLabel();
         homePanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         makeTransactionsLbl = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
-        jPanel2 = new javax.swing.JPanel();
-        transferMoneyBtn2 = new javax.swing.JButton();
+        viewStatementsBtn = new javax.swing.JButton();
+        accountIdLbl = new javax.swing.JLabel();
+        accountIdCmbBx = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         viewStatementsTbl = new javax.swing.JTable();
-        accountIdLbl = new javax.swing.JLabel();
-        accoutTypeCmbBx = new javax.swing.JComboBox<>();
+
+        setBackground(new java.awt.Color(255, 255, 255));
 
         mainPanel.setBackground(new java.awt.Color(122, 72, 221));
 
@@ -81,13 +105,13 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/bms/UI/images/search.png"))); // NOI18N
 
-        viewAccountsLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        viewAccountsLbl.setForeground(new java.awt.Color(255, 255, 255));
-        viewAccountsLbl.setText("View Accounts");
-        viewAccountsLbl.setToolTipText("");
-        viewAccountsLbl.addMouseListener(new java.awt.event.MouseAdapter() {
+        viewStatementsLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        viewStatementsLbl.setForeground(new java.awt.Color(255, 255, 255));
+        viewStatementsLbl.setText("View Statements");
+        viewStatementsLbl.setToolTipText("");
+        viewStatementsLbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                viewAccountsLblMouseClicked(evt);
+                viewStatementsLblMouseClicked(evt);
             }
         });
 
@@ -99,13 +123,12 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
                 .addGap(17, 17, 17)
                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(viewAccountsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addComponent(viewStatementsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         homePanel1Layout.setVerticalGroup(
             homePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(viewAccountsLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(viewStatementsLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         homePanel2.setBackground(new java.awt.Color(54, 33, 39));
@@ -114,7 +137,7 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
 
         makeTransactionsLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         makeTransactionsLbl.setForeground(new java.awt.Color(255, 255, 255));
-        makeTransactionsLbl.setText("Withdraw/Deposit");
+        makeTransactionsLbl.setText("Make Transaction");
         makeTransactionsLbl.setToolTipText("");
         makeTransactionsLbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -129,9 +152,8 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
             .addGroup(homePanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(makeTransactionsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(makeTransactionsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         homePanel2Layout.setVerticalGroup(
             homePanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,7 +175,7 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
                 .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(homePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(homePanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34))
             .addGroup(mainPanelLayout.createSequentialGroup()
@@ -174,12 +196,22 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
                 .addGap(31, 31, 31))
         );
 
-        transferMoneyBtn2.setBackground(new java.awt.Color(54, 33, 39));
-        transferMoneyBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        transferMoneyBtn2.setText("View Statements");
-        transferMoneyBtn2.addActionListener(new java.awt.event.ActionListener() {
+        jLayeredPane2.setBackground(new java.awt.Color(255, 255, 255));
+
+        viewStatementsBtn.setBackground(new java.awt.Color(54, 33, 39));
+        viewStatementsBtn.setForeground(new java.awt.Color(255, 255, 255));
+        viewStatementsBtn.setText("View Statements");
+        viewStatementsBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                transferMoneyBtn2ActionPerformed(evt);
+                viewStatementsBtnActionPerformed(evt);
+            }
+        });
+
+        accountIdLbl.setText("Account Number:");
+
+        accountIdCmbBx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accountIdCmbBxActionPerformed(evt);
             }
         });
 
@@ -187,11 +219,10 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
 
         viewStatementsTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"123456789", "", "0", null},
                 {null, null, null, null}
             },
             new String [] {
-                "Transaction Id", "Recipient Account", "Transaction Amount ($)", "Timestamp"
+                "Transaction Id", "Transaction Amount ($)", "Recipient Account", "Timestamp"
             }
         ) {
             Class[] types = new Class [] {
@@ -206,98 +237,132 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
         viewStatementsTbl.setRowHeight(22);
         jScrollPane1.setViewportView(viewStatementsTbl);
 
-        accountIdLbl.setText("Account Number:");
-
-        accoutTypeCmbBx.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "RoxburyCrossing", "Prudential", "Huntington" }));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(accountIdLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(accoutTypeCmbBx, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(transferMoneyBtn2))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(accountIdLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(accoutTypeCmbBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(transferMoneyBtn2))
-                .addContainerGap(107, Short.MAX_VALUE))
-        );
-
-        jLayeredPane2.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(viewStatementsBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(accountIdLbl, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(accountIdCmbBx, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
         jLayeredPane2Layout.setHorizontalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addComponent(accountIdLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(accountIdCmbBx, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(viewStatementsBtn))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addGap(114, 114, 114)
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(accountIdLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(accountIdCmbBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewStatementsBtn))
+                .addGap(55, 55, 55)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(159, 159, 159)
-                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(159, 159, 159)
+                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewProfileLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProfileLblMouseClicked
         // TODO add your handling code here:
-        
+        callViewCustomerJPanel();
     }//GEN-LAST:event_viewProfileLblMouseClicked
-
-    private void viewAccountsLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewAccountsLblMouseClicked
-        // TODO add your handling code here:
-        
-
-    }//GEN-LAST:event_viewAccountsLblMouseClicked
 
     private void makeTransactionsLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_makeTransactionsLblMouseClicked
         // TODO add your handling code here:
-        
+        callMakeTransactionJPanel();
     }//GEN-LAST:event_makeTransactionsLblMouseClicked
 
-    private void transferMoneyBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferMoneyBtn2ActionPerformed
+    private void viewStatementsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewStatementsBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_transferMoneyBtn2ActionPerformed
+        for(BankAccount ba: this.customer.getAccounts()){
+            if(Integer.parseInt(accountIdCmbBx.getSelectedItem().toString())==ba.getAccountId()){
+                ba.fetchStatements();
+                System.out.println("should have found fetchStatements"+ba.getStatement().getTransactions());
+                populateStatementsTable(ba.getStatement());
+                System.out.println("Done");
+                break;
+            }
+        }
+    }//GEN-LAST:event_viewStatementsBtnActionPerformed
+        
+    public void callMakeTransactionJPanel() {
+        MakeTransactionJPanel transactionPanel = new MakeTransactionJPanel(cards, business, this.loginUser, splitPane, this.customer);
+        cards.add(transactionPanel, "mtPanel");
+        splitPane.setRightComponent(cards);
+        cl.show(cards, "mtPanel");
+    }
 
+    public void callViewStatementsJPanel() {
+        ViewStatementsJPanel statementsJPanel = new ViewStatementsJPanel(cards, business, this.loginUser, splitPane, this.customer);
+        cards.add(statementsJPanel, "vsPanel");
+        splitPane.setRightComponent(cards);
+        cl.show(cards, "vsPanel");
+    }
 
+    public void callViewCustomerJPanel() {
+        ViewCustomerJPanel customerJPanel = new ViewCustomerJPanel(cards, business, this.loginUser, splitPane, this.customer);
+        cards.add(customerJPanel, "vcPanel");
+        splitPane.setRightComponent(cards);
+        cl.show(cards, "vcPanel");
+    }
+    
+    private void accountIdCmbBxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountIdCmbBxActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_accountIdCmbBxActionPerformed
+
+    private void viewStatementsLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewStatementsLblMouseClicked
+        // TODO add your handling code here:
+        callViewStatementsJPanel();
+    }//GEN-LAST:event_viewStatementsLblMouseClicked
+
+    public void populateStatementsTable(BankStatements s) {
+        DefaultTableModel model = (DefaultTableModel) viewStatementsTbl.getModel();
+        model.setRowCount(0);
+        for(Transaction transact : s.getTransactions()){
+            Object[] row = new Object[4];
+            row[0] = transact;         
+            row[1] = transact.getTransactionAmount();
+            row[2] = transact.getToAccount();
+            row[3] = transact.getTimestamp();
+            model.addRow(row);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> accountIdCmbBx;
     private javax.swing.JLabel accountIdLbl;
-    private javax.swing.JComboBox<String> accoutTypeCmbBx;
     private javax.swing.JPanel homePanel;
     private javax.swing.JPanel homePanel1;
     private javax.swing.JPanel homePanel2;
@@ -306,13 +371,12 @@ public class ViewStatementsJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane2;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel makeTransactionsLbl;
-    private javax.swing.JButton transferMoneyBtn2;
-    private javax.swing.JLabel viewAccountsLbl;
     private javax.swing.JLabel viewProfileLbl;
+    private javax.swing.JButton viewStatementsBtn;
+    private javax.swing.JLabel viewStatementsLbl;
     private javax.swing.JTable viewStatementsTbl;
     // End of variables declaration//GEN-END:variables
 }

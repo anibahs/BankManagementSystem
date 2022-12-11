@@ -4,6 +4,8 @@
  */
 package com.bms.model.util;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Shabina
@@ -119,4 +121,24 @@ public class Person {
         return this;
     }
 
+    public boolean updatePerson() {
+        String query = "UPDATE person SET first_name = ?, last_name = ?, gender = ?, age = ?, address = ?, phone_number = ?, email = ? WHERE person_id = ?;";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(this.getFirstName());
+        params.add(this.getLastName());
+        params.add(this.getGender());
+        params.add(this.getAge());
+        params.add(this.getAddress());
+        params.add(this.getPhoneNumber());
+        params.add(this.getEmailAddress());
+        params.add(Integer.toString(this.getPersonId()));
+        try{
+            DBConnection conn = new DBConnection();
+            conn.runInsert(query, params);
+            return true;
+        }catch(Exception c){
+            System.out.println("c.printStackTrace()");
+        }
+        return false;
+    }
 }
