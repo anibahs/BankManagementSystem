@@ -369,12 +369,57 @@ public class MainJFrame extends javax.swing.JFrame {
         String password = PasswordField.getText();
 
         if(selectedfield.equals("BankTeller")){
-
-            BankTellerJPanel bpanel = new BankTellerJPanel(cards);
-            cards.add(bpanel, "BTPanel");
-            splitPane.setRightComponent(cards);
-            cl.show(cards, "BTPanel");
-
+            
+            DBConnection con = new DBConnection();
+            System.out.print("DB Connection started");
+            String query  = "Select username, password, type from users where username=? and password=?";
+            System.out.print("Querys"+query);
+            ArrayList<Object> params = new ArrayList<Object>();
+            params.add(username);
+            params.add(password);
+            try
+            {
+                ResultSet res = con.runSelect(query, params);
+                if(res.first()){
+                    loginUser = new User(res.getString("username"),res.getString("password").toCharArray(),res.getString("type"));
+                    JOptionPane.showMessageDialog(this,"You have successfully logged in");
+                    BankTellerJPanel bpanel = new BankTellerJPanel(cards,business,loginUser,splitPane,this.controlPanel);
+                    cards.add(bpanel, "BTPanel");
+                    splitPane.setRightComponent(cards);
+                    cl.show(cards, "BTPanel");
+                    
+                }else{
+                    JOptionPane.showMessageDialog(this,"Wrong Username & Password");
+                }
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
+        if(selectedfield.equals("RelationshipManager")){
+            
+            DBConnection con = new DBConnection();
+            String query  = "Select username, password, type from users where username=? and password=?";
+            ArrayList<Object> params = new ArrayList<Object>();
+            params.add(username);
+            params.add(password);
+            try{
+                ResultSet res = con.runSelect(query, params);
+                if(res.first()){
+                    loginUser = new User(res.getString("username"),res.getString("password").toCharArray(),res.getString("type"));
+                    JOptionPane.showMessageDialog(this,"You have successfully logged in");
+                    
+                    RelationshipManagerJPanel bpanel = new RelationshipManagerJPanel(cards,business,loginUser,splitPane,this.controlPanel);
+                    cards.add(bpanel, "RMPanel");
+                    splitPane.setRightComponent(cards);
+                    cl.show(cards, "RMPanel");
+                    
+                }else{
+                    JOptionPane.showMessageDialog(this,"Wrong Username & Password");
+                }
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
         }else if(selectedfield.equals("Customer")){
             DBConnection con = new DBConnection();
             String query  = "Select username, password, type from users where username=? and password=?";
@@ -417,7 +462,6 @@ public class MainJFrame extends javax.swing.JFrame {
             
         }
         else if(selectedfield.equals("LoanOfficer")){
-            User loginUser;
             DBConnection con = new DBConnection();
             String query  = "Select username, password, type from users where username=? and password=?";
             ArrayList<Object> params = new ArrayList<Object>();

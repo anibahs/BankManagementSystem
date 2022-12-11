@@ -21,6 +21,7 @@ public class DBConnection {
     
     String password = "admin";
     public DBConnection(){
+       
         
     }
     
@@ -29,17 +30,24 @@ public class DBConnection {
         try {
             Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
               "root", this.password);
+
             PreparedStatement st = (PreparedStatement) connection
                                         .prepareStatement(query,    ResultSet.TYPE_SCROLL_INSENSITIVE, 
                                                                             ResultSet.CONCUR_READ_ONLY);
             int i=1;
-            for( Object p : params){
-                st.setString(i, p.toString());
-                i=i+1;
+            System.out.println("Parameter"+params.size());
+                for( Object p : params){
+                    st.setString(i, p.toString());
+                    i=i+1;
             }
+            
+
+  
             System.out.println("Running query: ");
+
             System.out.println(st.toString());
             result = st.executeQuery();
+            System.out.print("Result"+result);
             if (result.first()) {
                 //do nothing
             }
@@ -54,6 +62,7 @@ public class DBConnection {
         try {
             Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/public_schema",
               "root", this.password);
+
             PreparedStatement st = (PreparedStatement) connection
             .prepareStatement(query);
             int i=1;
@@ -78,8 +87,8 @@ public class DBConnection {
               "root", this.password);
             PreparedStatement st = (PreparedStatement) connection
             .prepareStatement(query);
-            System.out.print("Query:"+query);
-            System.out.print("Parameter first:"+params.get(0));
+            //System.out.print("Query:"+query);
+            System.out.print("Parameter sixth:"+params.get(4));
             
             
             st.setString(1, params.get(0).toString());
@@ -87,10 +96,10 @@ public class DBConnection {
             st.setString(3, params.get(2).toString());
             st.setString(4, params.get(3).toString());
             st.setString(5, params.get(4).toString());
-            st.setString(6, params.get(5).toString());
-            
+
             System.out.println("Running query: ");
             System.out.println(st.toString());
+
             st.executeUpdate();
             
         } catch (SQLException sqlException) {
@@ -120,11 +129,16 @@ public class DBConnection {
         return flag;
     }
     
+    
     public ResultSet testFunctionQuery(String query){
         ResultSet result = null;
         try{
             String myConnectionString = "jdbc:mysql://localhost:3306?" + "useUnicode=yes&characterEncoding=UTF-8";
+
+            
+
             Connection conn = DriverManager.getConnection(myConnectionString, "root", this.password);
+
             Statement stmt = conn.createStatement();
             stmt.execute("SHOW DATABASES");
             ResultSet rs = stmt.getResultSet();

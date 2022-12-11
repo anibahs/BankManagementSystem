@@ -28,7 +28,7 @@ public class BankAccount {
     private BankStatements statement;
 
 
-    BankAccount(){
+    public BankAccount(){
         id = id+1;
         this.accountId = id;
         this.statement=new BankStatements();
@@ -103,7 +103,36 @@ public class BankAccount {
     public void setStatement(BankStatements statement) {
         this.statement = statement;
     }
-
+    
+    public boolean deposit(float amount) {
+        try {
+            if (amount <= 0.0F) {
+                throw new IllegalArgumentException("Amount must be > 0!");
+            } else {
+                this.currentBalance += amount;
+                return true;
+            }
+        } catch (IllegalArgumentException var3) {
+            System.out.println(var3.getMessage());
+            return false;
+        }
+    }
+    
+    public boolean withdraw(float amount) {
+        try {
+            if (amount <= 0.0F) {
+                throw new IllegalArgumentException("Amount must be > 0!");
+            } else if (amount > this.currentBalance) {
+                throw new IllegalArgumentException("You cannot overdraw!");
+            } else {
+                this.currentBalance -= amount;
+                return true;
+            }
+        } catch (IllegalArgumentException var3) {
+            System.out.println(var3.getMessage());
+            return false;
+        }
+    }
     
     @Override
     public String toString(){
@@ -178,4 +207,43 @@ public class BankAccount {
         }
         System.out.println(this.getStatement().getTransactions());
     }
+    
+    public void updateBalancebyId(Integer no,Double total) {
+        
+        String query = "UPDATE bank_accounts SET current_balance = ? WHERE account_id = '"+no+"'";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(total);
+        System.out.print("Parameter"+params);
+        //params.add(this.getAccountId());
+        try{
+            DBConnection conn = new DBConnection();
+            conn.runInsert(query, params);
+            
+        }catch(Exception c){
+            c.printStackTrace();
+        }
+        
+    }
+
+    public Integer fetchAccountNumber(Integer accountno) {
+        
+        //BankAccount bank = new BankAccount();
+        int balance = 0;
+        String query = "Select current_balance from bank_accounts where account_id = '"+accountno+"'";
+        ArrayList<Object> params = new ArrayList<Object>();
+        //params.add(customerAccountIds);
+        try{
+                DBConnection con = new DBConnection();
+                ResultSet rs = con.runSelect(query, params); 
+                balance = rs.getInt("current_balance");
+                //bank.setCurrentBalance(balance);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("Account Id:"+balance);
+        return balance;
+
+    }
+    
 }

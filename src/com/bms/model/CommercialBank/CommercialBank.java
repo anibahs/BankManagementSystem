@@ -67,11 +67,12 @@ public class CommercialBank {
         return null;
     }
     
-    public Loan fetchLoanbyID(Double amt,Double roi,Double month, Double repay, Double emi){
+    public Loan fetchLoanbyID(Integer id,Double amt,Double roi,Double month, Double repay, Double emi){
         
         Loan emp = new Loan();
         System.out.print("Fetching Loan"+emp);
         
+        emp.setloanId(id);
         emp.setLoan(amt);
         emp.setInterestRate(roi);
         emp.setMonth(month);

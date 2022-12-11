@@ -4,6 +4,18 @@
  */
 package com.bms.ui.consumerbank;
 
+import com.bms.model.investmentbank.AccountProfile;
+import com.bms.model.investmentbank.CompanyStock;
+import com.bms.model.investmentbank.CurrencyStock;
+import com.bms.model.investmentbank.StockProfile;
+import com.bms.ui.investmentbank.CreateAccountJPanel;
+import com.bms.ui.investmentbank.InvestmentMainJPanel;
+import static com.bms.ui.investmentbank.InvestmentMainJPanel.HISTORYFILEPATH;
+import static com.bms.ui.investmentbank.InvestmentMainJPanel.createAllStocks;
+import static com.bms.ui.investmentbank.InvestmentMainJPanel.createHistoryFiles;
+import static com.bms.ui.investmentbank.InvestmentMainJPanel.deleteHistoryFiles;
+import static com.bms.ui.investmentbank.InvestmentMainJPanel.recalculationLoop;
+import com.bms.ui.investmentbank.MakeInvestmentJPanel;
 import com.bms.model.BankAccount;
 import com.bms.model.Business;
 import com.bms.model.util.Customer;
@@ -14,6 +26,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.table.DefaultTableModel;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -69,6 +89,9 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         makeTransactionsLbl = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        investLbl1 = new javax.swing.JLabel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
         jPanel2 = new javax.swing.JPanel();
         accountFieldsPanel = new javax.swing.JPanel();
@@ -110,7 +133,8 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
                 .addGap(7, 7, 7)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(viewProfileLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(viewProfileLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,7 +164,7 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
                 .addGap(17, 17, 17)
                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(viewStatementsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(viewStatementsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         homePanel1Layout.setVerticalGroup(
@@ -170,9 +194,9 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
             .addGroup(homePanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(makeTransactionsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addGap(20, 20, 20))
         );
         homePanel2Layout.setVerticalGroup(
             homePanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,32 +209,73 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         jLabel10.setText("Welcome Customer!");
         jLabel10.setToolTipText("");
 
+        jPanel1.setBackground(new java.awt.Color(54, 33, 39));
+
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/bms/UI/images/money.png"))); // NOI18N
+
+        investLbl1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        investLbl1.setForeground(new java.awt.Color(255, 255, 255));
+        investLbl1.setText("Investment Banking");
+        investLbl1.setToolTipText("");
+        investLbl1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                investLbl1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(investLbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(investLbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(homePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
-                .addComponent(homePanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(86, 86, 86))
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(281, 281, 281)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(homePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(homePanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(homePanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(homePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(homePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(homePanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
@@ -380,7 +445,7 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
             .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -434,6 +499,13 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         callMakeTransactionJPanel();
     }//GEN-LAST:event_transferMoneyBtnActionPerformed
 
+    private void investLbl1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_investLbl1MouseClicked
+        // TODO add your handling code here:
+        //StockSimulatorJPanel.setVisible(true);
+        //ViewAccountJPanel.setVisible(false);
+ 
+    }//GEN-LAST:event_investLbl1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField accountBalanceField;
@@ -446,14 +518,20 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel homePanel;
     private javax.swing.JPanel homePanel1;
     private javax.swing.JPanel homePanel2;
+    private javax.swing.JPanel homePanel3;
+    private javax.swing.JLabel investLbl1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel makeTransactionsLbl;
+    private javax.swing.JLabel makeTransactionsLbl1;
     private javax.swing.JButton transferMoneyBtn;
     private javax.swing.JButton viewAccountBtn;
     private javax.swing.JScrollPane viewAccountScrlPn;
@@ -501,5 +579,23 @@ public class ViewBalanceJPanel extends javax.swing.JPanel {
         cards.add(customerJPanel, "vcPanel");
         splitPane.setRightComponent(cards);
         cl.show(cards, "vcPanel");
+    }
+
+    private void btnNameActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        
+        
+        try {
+            //  String btnName = evt.getActionCommand();
+   
+            InvestmentMainJPanel window = new InvestmentMainJPanel(cards);
+            //ViewBalanceJPanel customerPanel = new ViewBalanceJPanel(cards,business,loginUser,splitPane,this.controlPanel);
+            //cards.add(window, "IMPanel");
+            //splitPane.setRightComponent(cards);
+            //cl.show(cards, "IMPanel");
+        } catch (IOException ex) {
+            Logger.getLogger(ViewBalanceJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }
 }

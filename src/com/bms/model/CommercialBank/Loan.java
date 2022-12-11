@@ -16,9 +16,10 @@ public class Loan {
     private double month;
     private double payment;
     private double MonthlyPayment;
+    private String loanDate;
     
     public Loan(){
-        this.loanid = loanid +1;
+        this.loanid = 0;
         this.loan = 0;
         this.interestRate = 0.0;
         this.month = 0;
@@ -82,5 +83,18 @@ public class Loan {
         return String.valueOf(this.getLoan());
     }
     
-    
+    public String getloanDate() {
+        return loanDate;
+    }
+
+    public void setloanDate(String loanDate) {
+        this.loanDate = loanDate;
+    }
+    public double getloanId() {
+        return loan;
+    }
+
+    public void setloanId(int loanid) {
+        this.loanid = loanid;
+    }
 }

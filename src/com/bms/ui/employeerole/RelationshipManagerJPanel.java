@@ -5,20 +5,15 @@
 package com.bms.UI.employeerole;
 
 import com.bms.model.BankAccount;
-import com.bms.model.BankAccountDirectory;
 import com.bms.model.Business;
 import com.bms.model.util.Customer;
-import com.bms.model.util.CustomerDirectory;
 import com.bms.model.util.DBConnection;
 import com.bms.model.util.Employee;
-import com.bms.model.util.Person;
-import com.bms.model.util.PersonDirectory;
 import com.bms.model.util.User;
 import java.awt.CardLayout;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.table.DefaultTableModel;
@@ -27,10 +22,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ashwini
  */
-public class BankTellerJPanel extends javax.swing.JPanel {
+public class RelationshipManagerJPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form EditCustJPanel
+     * Creates new form RelationshipManager
      */
     Business business;
     Employee employee;
@@ -40,19 +35,17 @@ public class BankTellerJPanel extends javax.swing.JPanel {
     CardLayout cl;
     User loginUser;
     JSplitPane splitPane;
-    double totalbalance;
-    double transferamount;
-     
-    public BankTellerJPanel(JPanel cards,Business business,User loginUser, JSplitPane splitPane, JPanel panel) {
-        
+    
+    
+    public RelationshipManagerJPanel(JPanel cards,Business business,User loginUser, JSplitPane splitPane, JPanel panel) {
         this.cards = cards;
         this.business = business;
         this.loginUser = loginUser;
         this.splitPane=splitPane;
         initComponents();
-        withdrawdepositPanel.setVisible(false);
         profilePanel.setVisible(false);
         searchCustPanel.setVisible(false);
+        initComponents();
     }
 
     /**
@@ -64,6 +57,7 @@ public class BankTellerJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         mainPanel = new javax.swing.JPanel();
         homePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -71,9 +65,6 @@ public class BankTellerJPanel extends javax.swing.JPanel {
         homePanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        homePanel2 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
         profilePanel = new javax.swing.JPanel();
@@ -98,19 +89,8 @@ public class BankTellerJPanel extends javax.swing.JPanel {
         sbyIDButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        withdrawdepositPanel = new javax.swing.JPanel();
-        transferamtField = new javax.swing.JTextField();
-        BalanceField = new javax.swing.JTextField();
-        transferButton = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        showbalanceButton = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        accountnoField = new javax.swing.JTextField();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         mainPanel.setBackground(new java.awt.Color(122, 72, 221));
 
@@ -165,9 +145,9 @@ public class BankTellerJPanel extends javax.swing.JPanel {
             .addGroup(homePanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addContainerGap())
         );
         homePanel1Layout.setVerticalGroup(
             homePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,40 +155,9 @@ public class BankTellerJPanel extends javax.swing.JPanel {
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        homePanel2.setBackground(new java.awt.Color(54, 33, 39));
-
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/bms/UI/images/money.png"))); // NOI18N
-
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Withdraw/Deposit");
-        jLabel14.setToolTipText("");
-        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel14MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout homePanel2Layout = new javax.swing.GroupLayout(homePanel2);
-        homePanel2.setLayout(homePanel2Layout);
-        homePanel2Layout.setHorizontalGroup(
-            homePanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(homePanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
-        );
-        homePanel2Layout.setVerticalGroup(
-            homePanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Welcome Bank Teller!");
+        jLabel10.setText("Welcome Relationship Manager!");
         jLabel10.setToolTipText("");
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -216,17 +165,15 @@ public class BankTellerJPanel extends javax.swing.JPanel {
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addContainerGap(334, Short.MAX_VALUE)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(364, 364, 364))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(99, 99, 99)
                 .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(homePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71)
-                .addComponent(homePanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addGap(147, 147, 147))
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(287, 287, 287)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,11 +181,10 @@ public class BankTellerJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(homePanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(homePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         profilePanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -295,7 +241,7 @@ public class BankTellerJPanel extends javax.swing.JPanel {
         profilePanelLayout.setVerticalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(profilePanelLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(40, 40, 40)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -373,7 +319,7 @@ public class BankTellerJPanel extends javax.swing.JPanel {
                                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(178, Short.MAX_VALUE))
+                .addContainerGap(190, Short.MAX_VALUE))
         );
         searchCustPanelLayout.setVerticalGroup(
             searchCustPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -390,100 +336,14 @@ public class BankTellerJPanel extends javax.swing.JPanel {
                 .addContainerGap(140, Short.MAX_VALUE))
         );
 
-        withdrawdepositPanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        transferamtField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                transferamtFieldActionPerformed(evt);
-            }
-        });
-
-        transferButton.setBackground(new java.awt.Color(54, 33, 39));
-        transferButton.setForeground(new java.awt.Color(255, 255, 255));
-        transferButton.setText("Transfer");
-        transferButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                transferButtonActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setText("Action to Choose:");
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "withdraw", "deposit" }));
-
-        jLabel6.setText("Total Balance: ");
-
-        jLabel7.setText("Amount to Transfer: ");
-
-        showbalanceButton.setBackground(new java.awt.Color(54, 33, 39));
-        showbalanceButton.setForeground(new java.awt.Color(255, 255, 255));
-        showbalanceButton.setText("Show Balance");
-        showbalanceButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showbalanceButtonActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setText("Enter Account Number: ");
-
-        javax.swing.GroupLayout withdrawdepositPanelLayout = new javax.swing.GroupLayout(withdrawdepositPanel);
-        withdrawdepositPanel.setLayout(withdrawdepositPanelLayout);
-        withdrawdepositPanelLayout.setHorizontalGroup(
-            withdrawdepositPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(withdrawdepositPanelLayout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addGroup(withdrawdepositPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addGroup(withdrawdepositPanelLayout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(transferButton))
-                    .addComponent(jLabel8))
-                .addGap(25, 25, 25)
-                .addGroup(withdrawdepositPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(showbalanceButton)
-                    .addComponent(BalanceField)
-                    .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(transferamtField, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                    .addComponent(accountnoField))
-                .addContainerGap(207, Short.MAX_VALUE))
-        );
-        withdrawdepositPanelLayout.setVerticalGroup(
-            withdrawdepositPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, withdrawdepositPanelLayout.createSequentialGroup()
-                .addContainerGap(61, Short.MAX_VALUE)
-                .addGroup(withdrawdepositPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(accountnoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(withdrawdepositPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BalanceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(23, 23, 23)
-                .addGroup(withdrawdepositPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(withdrawdepositPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(transferamtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGap(20, 20, 20)
-                .addGroup(withdrawdepositPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(transferButton)
-                    .addComponent(showbalanceButton))
-                .addGap(52, 52, 52))
-        );
-
         jLayeredPane2.setLayer(profilePanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(searchCustPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(withdrawdepositPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
         jLayeredPane2Layout.setHorizontalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 894, Short.MAX_VALUE)
             .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane2Layout.createSequentialGroup()
                     .addGap(42, 42, 42)
@@ -493,11 +353,6 @@ public class BankTellerJPanel extends javax.swing.JPanel {
                 .addGroup(jLayeredPane2Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(searchCustPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-            .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(withdrawdepositPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
         jLayeredPane2Layout.setVerticalGroup(
@@ -510,48 +365,59 @@ public class BankTellerJPanel extends javax.swing.JPanel {
                     .addContainerGap(220, Short.MAX_VALUE)))
             .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                    .addContainerGap()
+                    .addGap(117, 117, 117)
                     .addComponent(searchCustPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(212, Short.MAX_VALUE)))
-            .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(withdrawdepositPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(256, Short.MAX_VALUE)))
+                    .addContainerGap(118, Short.MAX_VALUE)))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLayeredPane2)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLayeredPane2)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 48, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        // TODO add your handling code here:
-        profilePanel.setVisible(false);
-        searchCustPanel.setVisible(true);
-        withdrawdepositPanel.setVisible(false);
-        
-    }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
         profilePanel.setVisible(true);
         searchCustPanel.setVisible(false);
-        withdrawdepositPanel.setVisible(false);
+        
         populateTextFields(fetchEmployee());
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        profilePanel.setVisible(false);
+        searchCustPanel.setVisible(true);
+
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     private void sbyIDButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sbyIDButtonActionPerformed
         // TODO add your handling code here:
@@ -565,85 +431,12 @@ public class BankTellerJPanel extends javax.swing.JPanel {
             searchbyName(name);
             searchField.setText("");
 
-
         }
-        
-        
-        
+
     }//GEN-LAST:event_sbyIDButtonActionPerformed
-
-    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
-        // TODO add your handling code here:
-        withdrawdepositPanel.setVisible(true);
-        profilePanel.setVisible(false);
-        searchCustPanel.setVisible(false);
-    }//GEN-LAST:event_jLabel14MouseClicked
-
-    private void transferamtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferamtFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_transferamtFieldActionPerformed
-
-    private void transferButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transferButtonActionPerformed
-        // TODO add your handling code here:
-        
-        Integer accountno = Integer.parseInt(accountnoField.getText());
-        String selectedfield = jComboBox3.getSelectedItem().toString();
-        
-        if(selectedfield.equals("withdraw")){
-            transferamount = Double.parseDouble(transferamtField.getText());
-            totalbalance = Double.parseDouble(BalanceField.getText());
-            totalbalance = totalbalance - transferamount;
-            
-            bank.updateBalancebyId(accountno,totalbalance);
-            JOptionPane.showMessageDialog(this,"Transaction Done Successfully!");
-
-        }
-        else if(selectedfield.equals("deposit")){
-            transferamount = Double.parseDouble(transferamtField.getText());
-            totalbalance = Double.parseDouble(BalanceField.getText());
-            totalbalance = totalbalance + transferamount;
-            System.out.print("newBalance"+totalbalance);
-            bank.updateBalancebyId(accountno,totalbalance);
-            JOptionPane.showMessageDialog(this,"Transaction Done Successfully!");
-        }
-    }//GEN-LAST:event_transferButtonActionPerformed
-
-    private void showbalanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showbalanceButtonActionPerformed
-        // TODO add your handling code here:
-        
-        bank = new BankAccount();
-        int val = 0;
-        
-        
-        if (accountnoField.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"Please enter a value","Loan System", JOptionPane.INFORMATION_MESSAGE );
-            val++;
-        }
-        else if (accountnoField.getText().matches("[a-zA-Z]+")){
-            JOptionPane.showMessageDialog(null,"Invalid type. Please enter Integer value","Loan System", JOptionPane.INFORMATION_MESSAGE );
-            val++;
-
-        }
-        else{
-            Integer.parseInt(accountnoField.getText());
-        }
-        if(val == 0){
-            int accountno =  Integer.parseInt(accountnoField.getText());
-            bank.setAccountId(accountno);
-            bank.fetchAccount(accountno);
-            Integer balance = bank.fetchAccountNumber(accountno);
-            BalanceField.setText(String.valueOf(balance));
-            transferamtField.setText("");
-
-            JOptionPane.showMessageDialog(this,"Balance Updated Successfully!");
-        }
-        
-    }//GEN-LAST:event_showbalanceButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField BalanceField;
-    private javax.swing.JTextField accountnoField;
     private javax.swing.JTextField addressField1;
     private javax.swing.JTextField ageField;
     private javax.swing.JTextField emailField;
@@ -651,14 +444,11 @@ public class BankTellerJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField genderField;
     private javax.swing.JPanel homePanel;
     private javax.swing.JPanel homePanel1;
-    private javax.swing.JPanel homePanel2;
     private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -667,12 +457,8 @@ public class BankTellerJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField lameField;
@@ -683,29 +469,12 @@ public class BankTellerJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel searchCustPanel;
     private javax.swing.JTextField searchField;
     private javax.swing.JLabel searchLabel;
-    private javax.swing.JButton showbalanceButton;
-    private javax.swing.JButton transferButton;
-    private javax.swing.JTextField transferamtField;
-    private javax.swing.JPanel withdrawdepositPanel;
     // End of variables declaration//GEN-END:variables
-
     private Employee fetchEmployee() {
         Employee emp = new Employee();
         DBConnection con = new DBConnection();
         String query = "Select first_name,last_name,age,gender,address,phone_number,email from employee, person"
-                + " WHERE employee.person_id = person.person_id and employee_type = 'BankTeller'";
-        //System.out.println(query);
-       /**
-        ArrayList<String> slist = new ArrayList<String>();
-        System.out.println("customer"+customer.getCustomerId());
-        for(BankAccount account: customer.getAccounts()){
-            System.out.println("account.getAccountId()"+account.getAccountId());
-            slist.add(Integer.toString(account.getAccountId()));
-        }
-        System.out.println(slist);
-        
-        String customerAccountIds = String.join(",", slist);
-        System.out.println("customerAccountIds"+customerAccountIds);**/
+                + " WHERE employee.person_id = person.person_id and employee_type = 'RelationshipManager'";
         ArrayList<Object> params = new ArrayList<Object>();
         //params.add(customerAccountIds);
         ResultSet rs = con.runSelect(query, params);
@@ -747,24 +516,6 @@ public class BankTellerJPanel extends javax.swing.JPanel {
     }
 
     private void searchbyName(String name) {
-        
-        /*
-        this.customer = new Customer();
-        CustomerDirectory custDirectory = business.getConsumerBank().getCustomerDirectory();
-        System.out.print("Fetched Customer Data"+custDirectory);
-        Customer fetchedCustomer = custDirectory.fetchCustomerbyName((name));
-        this.customer=fetchedCustomer;
-        System.out.print("Fetched Customer Data"+this.customer);
-
-
-        BankAccountDirectory accDirectory = business.getAccountDirectory();
-        ArrayList<BankAccount> accounts = this.customer.fetchAccounts(fetchedCustomer);
-
-        PersonDirectory personDirectory = business.getPersonDirectory();
-        Person existingPerson = personDirectory.fetchPerson(Integer.toString(loginUser.getPersonId()));
-        System.out.print("Customer Account"+customer);
-        
-        */
         Customer cust = new Customer();
         ArrayList<Customer> custdir = new ArrayList<Customer>();
         DBConnection con = new DBConnection();
@@ -800,7 +551,6 @@ public class BankTellerJPanel extends javax.swing.JPanel {
         System.out.println("Employee:"+cust);
         PopulateTable(custdir);
     }
-
     private void PopulateTable(ArrayList<Customer> cust) {
        
         System.out.print("Customer Array"+cust);
