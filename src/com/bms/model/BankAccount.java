@@ -99,7 +99,36 @@ public class BankAccount {
     public void setStatement(BankStatements statement) {
         this.statement = statement;
     }
-
+    
+    public boolean deposit(float amount) {
+        try {
+            if (amount <= 0.0F) {
+                throw new IllegalArgumentException("Amount must be > 0!");
+            } else {
+                this.currentBalance += amount;
+                return true;
+            }
+        } catch (IllegalArgumentException var3) {
+            System.out.println(var3.getMessage());
+            return false;
+        }
+    }
+    
+    public boolean withdraw(float amount) {
+        try {
+            if (amount <= 0.0F) {
+                throw new IllegalArgumentException("Amount must be > 0!");
+            } else if (amount > this.currentBalance) {
+                throw new IllegalArgumentException("You cannot overdraw!");
+            } else {
+                this.currentBalance -= amount;
+                return true;
+            }
+        } catch (IllegalArgumentException var3) {
+            System.out.println(var3.getMessage());
+            return false;
+        }
+    }
     
     @Override
     public String toString(){

@@ -2,24 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package cms.bms.model.investmentbanking;
-
-import com.bms.model.BankAccount;
-import java.util.ArrayList;
+package com.bms.model.investmentbank;
 
 /**
  *
  * @author asawari
  */
 public class StockProfile {
-    
-    private final String profileName;
+    private String profileName;
     private double buyPrice;
     private double sellPrice;
     private double change;
     private double margin;
     private int quantity;
-    
+
+    // Class constructor for stock that has been bought 
     public StockProfile(String pName, double sPrice, double bPrice, int quant) {
         profileName = pName;
         buyPrice = bPrice;
@@ -36,6 +33,10 @@ public class StockProfile {
         change = 0;
     }
     
+    public StockProfile(){
+        
+    }
+
     // Method to retrieve the quatity of stocks bought
     public int getQuantity() {
         return quantity;
@@ -85,6 +86,5 @@ public class StockProfile {
     public double getChange() {
         return change;
     }
-
-  
+    
 }

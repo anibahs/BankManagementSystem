@@ -221,6 +221,17 @@ public class MakeTransactionJPanel extends javax.swing.JPanel  implements ItemLi
                 .addGap(31, 31, 31))
         );
 
+
+        destRoutingNumberLbl.setText("Routing Number:");
+        jPanel2.add(destRoutingNumberLbl);
+        jPanel2.add(accountBalanceField);
+
+    
+        jPanel2.add(transactionAmountField);
+
+        toRecipientNameField.setEnabled(false);
+        jPanel2.add(toRecipientNameField);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -232,6 +243,7 @@ public class MakeTransactionJPanel extends javax.swing.JPanel  implements ItemLi
             .addGap(0, 27, Short.MAX_VALUE)
         );
 
+
         transferMoneyBtn.setBackground(new java.awt.Color(54, 33, 39));
         transferMoneyBtn.setForeground(new java.awt.Color(255, 255, 255));
         transferMoneyBtn.setText("Transfer");
@@ -240,6 +252,7 @@ public class MakeTransactionJPanel extends javax.swing.JPanel  implements ItemLi
                 transferMoneyBtnActionPerformed(evt);
             }
         });
+        jPanel2.add(transferMoneyBtn);
 
         transferMoneyLbl.setText("From:");
 
@@ -262,12 +275,20 @@ public class MakeTransactionJPanel extends javax.swing.JPanel  implements ItemLi
         });
 
         recipientAddressLbl.setText("Recipient Address:");
+        jPanel2.add(recipientAddressLbl);
 
         transferMoneyLbl1.setText("Transaction Amount:");
+        jPanel2.add(transferMoneyLbl1);
 
         toRecipientAddressField.setEnabled(false);
+        jPanel2.add(toRecipientAddressField);
+
+
+   
+
 
         fromAccountLbl.setText("From Account:");
+        jPanel2.add(fromAccountLbl);
 
         fromAccountCmbBx.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -286,14 +307,29 @@ public class MakeTransactionJPanel extends javax.swing.JPanel  implements ItemLi
                 fromAccountCmbBxActionPerformed(evt);
             }
         });
+        jPanel2.add(fromAccountCmbBx);
+
+
+        transferMoneyLbl.setText("From:");
+        jPanel2.add(transferMoneyLbl);
+        jPanel2.add(toRoutingNumberField);
+
+
 
         accountIdLbl1.setText("Account Number:");
+        jPanel2.add(accountIdLbl1);
 
         accountBalanceLbl.setText("Account Balance:");
+        jPanel2.add(accountBalanceLbl);
+        jPanel2.add(toAccountIdField);
 
         transferMoneyLbl2.setText("To:");
 
+        jPanel2.add(transferMoneyLbl2);
+
+
         toRecipientName.setText("Recipient Name:");
+
 
         jLayeredPane2.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(transferMoneyBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);

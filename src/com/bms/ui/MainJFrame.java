@@ -182,6 +182,11 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Investment Banking");
         jLabel8.setToolTipText("");
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -332,12 +337,22 @@ public class MainJFrame extends javax.swing.JFrame {
         if(selectedfield.equals("BankTeller")){
             
             DBConnection con = new DBConnection();
+            System.out.print("DB Connection started");
             String query  = "Select username, password, type from users where username=? and password=?";
+            System.out.print("Querys"+query);
             ArrayList<Object> params = new ArrayList<Object>();
             params.add(username);
             params.add(password);
             try{
                 ResultSet res = con.runSelect(query, params);
+                if(res.first()){
+                    loginUser = new User(res.getString("username"),res.getString("password").toCharArray(),res.getString("type"));
+                    JOptionPane.showMessageDialog(this,"You have successfully logged in");
+//                    ViewCustomerJPanel vcpanel = new ViewCustomerJPanel(cards);
+//                    cards.add(vcpanel, "CPanel");
+                    ViewBalanceJPanel customerPanel = new ViewBalanceJPanel(cards,business,loginUser,splitPane,this.controlPanel);
+
+                    ResultSet res = con.runSelect(query, params);
                 if(res.first()){
                     loginUser = new User(res.getString("username"),res.getString("password").toCharArray(),res.getString("type"));
                     JOptionPane.showMessageDialog(this,"You have successfully logged in");
@@ -403,6 +418,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     Person existingPerson = personDirectory.fetchPerson(Integer.toString(loginUser.getPersonId()));
 
                     ViewBalanceJPanel customerPanel = new ViewBalanceJPanel(cards,business,loginUser,splitPane,this.controlPanel, this.customer);
+
                     cards.add(customerPanel, "vbPanel");
                     splitPane.setRightComponent(cards);
                     cl.show(cards, "vbPanel");
@@ -455,9 +471,16 @@ public class MainJFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jLabel2MouseClicked
 
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jLabel8MouseClicked
+
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
 
     /**
      * @param args the command line arguments
