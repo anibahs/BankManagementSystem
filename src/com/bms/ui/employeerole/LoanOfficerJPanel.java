@@ -6,6 +6,7 @@ package com.bms.UI.employeerole;
 
 import com.bms.model.Business;
 import com.bms.model.CommercialBank.Loan;
+import com.bms.model.util.Customer;
 import com.bms.model.util.DBConnection;
 import com.bms.model.util.Employee;
 import com.bms.model.util.User;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -46,6 +48,12 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         profilePanel.setVisible(false);
         searchCustPanel.setVisible(false);
         requestloanPanel.setVisible(false);
+        jTxtLoan.setText("");
+        jTxtInterest.setText("");
+        jTxtNoPayment.setText("");
+        repaymentField.setText("");
+        jTextMonthlyPayment.setText("");
+        homePanel2.setVisible(false);
         
     }
     
@@ -60,7 +68,7 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         profilePanel.setVisible(false);
         searchCustPanel.setVisible(false);
         requestloanPanel.setVisible(false);
-        
+        homePanel2.setVisible(false);
     }
 
     /**
@@ -89,7 +97,6 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         jLabel12 = new javax.swing.JLabel();
         ageField = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -99,7 +106,6 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         fnameField = new javax.swing.JTextField();
         phoneField = new javax.swing.JTextField();
         genderField = new javax.swing.JTextField();
-        bnameField = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         addressField1 = new javax.swing.JTextField();
         searchCustPanel = new javax.swing.JPanel();
@@ -196,6 +202,11 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         );
 
         homePanel3.setBackground(new java.awt.Color(54, 33, 39));
+        homePanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homePanel3MouseClicked(evt);
+            }
+        });
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/bms/UI/images/login.png"))); // NOI18N
 
@@ -268,8 +279,6 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
 
         jLabel13.setText("First Name: ");
 
-        jLabel11.setText("Branch:");
-
         jLabel16.setText("Gender: ");
 
         jLabel17.setText("Email:");
@@ -288,7 +297,6 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
                 .addGap(51, 51, 51)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13)
-                    .addComponent(jLabel11)
                     .addComponent(jLabel16)
                     .addComponent(jLabel17)
                     .addComponent(jLabel18)
@@ -303,18 +311,13 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
                     .addComponent(emailField)
                     .addComponent(lameField)
                     .addComponent(fnameField)
-                    .addComponent(genderField)
-                    .addComponent(bnameField, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(genderField))
                 .addContainerGap(249, Short.MAX_VALUE))
         );
         profilePanelLayout.setVerticalGroup(
             profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(profilePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(44, 44, 44)
                 .addGroup(profilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -368,7 +371,7 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "First Name", "Last Name", "AccountNumber", "BranchName", "RoutingNumber", "TotalBalance", "Transferdate", "Transfertype", "TransferAmount", "Loan Taken?", "PreviousLoanApplieddate", "PreviousLoanStatus"
+                "First Name", "Last Name", "AccountNumber", "BranchName", "RoutingNumber", "TotalBalance", "Transferdate", "Transfertype", "TransferAmount", "Loan Amount", "PreviousLoanApplieddate", "PreviousLoanROI"
             }
         ));
         jTable1.setGridColor(new java.awt.Color(255, 255, 255));
@@ -572,7 +575,7 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGap(0, 505, Short.MAX_VALUE)
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
                     .addContainerGap(137, Short.MAX_VALUE)
@@ -641,13 +644,28 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         requestloanPanel.setVisible(true);
         profilePanel.setVisible(false);
         searchCustPanel.setVisible(false);
-        PopulateLoanTextFields(fetchLoan());
+        jTxtLoan.setText("");
+        jTxtInterest.setText("");
+        jTxtNoPayment.setText("");
+        repaymentField.setText("");
+        jTextMonthlyPayment.setText("");
+        
+        
     }//GEN-LAST:event_jLabel10MouseClicked
 
     private void sbyIDButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sbyIDButtonActionPerformed
         // TODO add your handling code here:
+        String selectedfield = jComboBox2.getSelectedItem().toString();
+        int rowindex = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        System.out.println(selectedfield);
+        if(selectedfield.equals("CustomerName")){
+            String name = searchField.getText();
+            System.out.print("Search Customer Name"+name);
+            searchbyName(name);
+            searchField.setText("");
 
-        
+        }
 
     }//GEN-LAST:event_sbyIDButtonActionPerformed
 
@@ -663,27 +681,45 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
     private void approveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_approveButtonActionPerformed
         // TODO add your handling code here:
         
-        String accountId = accountidField.getText();
-        String selectedtype = jComboBox3.getSelectedItem().toString();
-        Date sdate = jXDatePicker1.getDate();
-        String pattern = "MM-dd-yyyy";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String date = simpleDateFormat.format(sdate);
+        int val =0;
+        if (accountidField.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"Please enter account number:","Loan System", JOptionPane.INFORMATION_MESSAGE );
+            val++;
+        }
+        else if (accountidField.getText().matches("[a-zA-Z]+")){
+            JOptionPane.showMessageDialog(null,"Invalid type. Please enter Integer value","Loan System", JOptionPane.INFORMATION_MESSAGE );
+            val++;
+
+        }
+        else{
+            accountidField.getText();
+        }
+        if (val == 0){
+            String accountId = accountidField.getText();
+            Double amt = loan.getLoan();
+            String selectedtype = jComboBox3.getSelectedItem().toString();
+            Date sdate = jXDatePicker1.getDate();
+            String pattern = "MM-dd-yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String date = simpleDateFormat.format(sdate);
+
+            ArrayList<Loan> loans = new ArrayList<Loan>();
+            DBConnection con = new DBConnection();
+            int loanid = 0;
+            //Double loanamt = Double.parseInt
+            String query = "update loan set account_id = ?, loantype = ?, loanDate = ? where loanamt ='"+amt+ "'";
+            ArrayList<Object> params = new ArrayList<Object>();
+
+            params.add(accountId);
+            params.add(selectedtype);
+            params.add(date);
         
-        ArrayList<Loan> loans = new ArrayList<Loan>();
-        DBConnection con = new DBConnection();
-        int loanid = 0;
-        //Double loanamt = Double.parseInt
-        String query = "update loan set account_id = ?, loantype = ?, loanDate = ? where loanId = 5";
-        ArrayList<Object> params = new ArrayList<Object>();
+            con.runUpdateloan(cards, query, params);
+            JOptionPane.showMessageDialog(this, "Loan Application Request Submitted Successfully!");
+
+        }
         
-        params.add(accountId);
-        params.add(selectedtype);
-        params.add(date);
-        
-        con.runUpdateloan(cards, query, params);
-        
-        JOptionPane.showMessageDialog(this, "Loan Application Request Submitted Successfully!");
+        //JOptionPane.showMessageDialog(this, "Loan Application Request Submitted Successfully!");
     }//GEN-LAST:event_approveButtonActionPerformed
 
     private void denyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_denyButtonActionPerformed
@@ -697,13 +733,17 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_jTxtLoanActionPerformed
 
+    private void homePanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homePanel3MouseClicked
+        // TODO add your handling code here:
+        PopulateLoanTextFields(fetchLoan());
+    }//GEN-LAST:event_homePanel3MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField accountidField;
     private javax.swing.JTextField addressField1;
     private javax.swing.JTextField ageField;
     private javax.swing.JButton approveButton;
-    private javax.swing.JTextField bnameField;
     private javax.swing.JButton denyButton;
     private javax.swing.JTextField emailField;
     private javax.swing.JTextField fnameField;
@@ -715,7 +755,6 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -822,7 +861,7 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
     private Loan fetchLoan() {
         Loan loan = new Loan();
         DBConnection con = new DBConnection();
-        String query = "Select loanamt,InterestRate,NoofMonths,RepaymentTotal,MonthlyEMI from loan";
+        String query = "Select loanId,loanamt,InterestRate,NoofMonths,Repayment,MonthlyEMI,loantype,loanDate,account_id from loan ORDER BY loanId DESC LIMIT 1";
         //System.out.println(query);
        /**
         ArrayList<String> slist = new ArrayList<String>();
@@ -842,11 +881,12 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
 
         try{
             do{
+                System.out.print("loan Id"+rs.getInt("loanId"));
                 
-                
-                loan = business.getCommercialbank().fetchLoanbyID(rs.getDouble("loanamt"),
+                loan = business.getCommercialbank().fetchLoanbyID(rs.getInt("loanId"),
+                        rs.getDouble("loanamt"),
                         rs.getDouble("InterestRate"), rs.getDouble("NoofMonths"),
-                        rs.getDouble("RepaymentTotal"), rs.getDouble("MonthlyEMI"));
+                        rs.getDouble("Repayment"), rs.getDouble("MonthlyEMI"));
                 //emps.add(emp);
                 //System.out.println("Employee:"+emp);
                 
@@ -869,6 +909,49 @@ public class LoanOfficerJPanel extends javax.swing.JPanel {
         jTxtNoPayment.setText(String.valueOf(fetchLoan.getMonth()));
         repaymentField.setText(String.valueOf(fetchLoan.getPayment()));
         jTextMonthlyPayment.setText(String.valueOf(fetchLoan.getMonthlyPayment()));
+    }
+    private void searchbyName(String name) {
+        
+        
+        Customer cust = new Customer();
+        ArrayList<Customer> custdir = new ArrayList<Customer>();
+        DBConnection con = new DBConnection();
+        String query = "Select per.first_name,per.last_name,per.address,per.phone_number,acc.account_id,acc.account_type,acc.current_balance,"
+                + "acc.routing_number,acc.customer_id,l.loanamt,l.loanDate,l.loantype "
+                + "from person as per ,bank_accounts as acc ,customers as cust ,loan as l "
+                + "where per.person_id = cust.person_id and cust.account_id = acc.account_id "
+                + "  and l.account_id = cust.account_id and per.first_name='"+name+ "'";
+        System.out.println(query);
+        ArrayList<Object> params = new ArrayList<Object>();
+        //params.add(name);
+        //params.add(customerAccountIds);
+        System.out.print("Before getting result set : ");
+        ResultSet rs = con.runSelect(query, params);
+        System.out.print("result set : "+rs);
+        
+        try{
+            do{
+                
+                
+                cust = business.getConsumerBank().getCustomerDirectory().fetchCustomerwithloan(rs.getString("first_name"),
+                        rs.getString("last_name"),rs.getString("address"),rs.getString("phone_number"), 
+                        rs.getInt("account_id"), rs.getString("account_type"),
+                        rs.getInt("current_balance"),rs.getString("routing_number"),
+                       rs.getInt("customer_id"),rs.getDouble("loanamt"),rs.getString("loanDate"),
+                        rs.getString("loantype"));
+                //custdir.add(cust);
+                System.out.println("Employee:"+cust);
+                
+            }while(rs.next());
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        custdir.add(cust);
+        System.out.println("Employee:"+cust);
+        //PopulateTable(custdir);
     }
 
    

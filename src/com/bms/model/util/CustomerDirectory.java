@@ -3,8 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.bms.model.util;
+import com.bms.model.CommercialBank.Loan;
 
 import com.bms.model.BankAccount;
+import com.bms.model.BankAccountDirectory;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
  * @author Shabina
  */
 public class CustomerDirectory {
+    
     private ArrayList<Customer> customerDirectory;
     User user;
     BankAccount bankaccount;
@@ -62,6 +65,7 @@ public class CustomerDirectory {
         emp.setLastName(lname);
         emp.setAddress(address);
         emp.setPhoneNumber(phone);
+        
         bank.setAccountId(accountid);
         bank.setAccountType(type);
         bank.setCurrentBalance(balance);
@@ -69,6 +73,7 @@ public class CustomerDirectory {
         accounts.add(bank);
         emp.setCustomerId(custid);
         emp.setAccounts(accounts);
+        
         
         
         System.out.print("FetchEmployee Name"+emp);
@@ -119,5 +124,59 @@ public class CustomerDirectory {
         }catch(Exception e){
             e.printStackTrace();
         }    
+    }
+    
+    public Customer fetchCustomerbyName(String name){
+        DBConnection con = new DBConnection();
+        String query = "Select * from person where person.first_name ='"+name+ "'";
+        Customer c = new Customer();
+        ArrayList<Object> params = new ArrayList<Object>();
+        //params.add(name);
+        ResultSet rs = con.runSelect(query, params);
+        System.out.print("Result Set"+rs);
+        try{
+            while(rs.next()){
+                c.setFirstName((rs.getString("customer_name")));
+                System.out.println("Fetched Customer");
+                System.out.println(c);
+            }
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        this.addExistingCustomer(c);
+        return c;     
+    }
+    
+    public Customer fetchCustomerwithloan(String fname, String lname,String address, String phone, Integer accountid,
+            String type,Integer balance,String routingno,Integer custid, Double amt,String date,String ltype){
+        
+        Customer emp = new Customer();
+        BankAccount bank = new BankAccount();
+        Loan l = new Loan();
+        ArrayList<BankAccount> accounts = new ArrayList<BankAccount>();
+        ArrayList<Loan> loan = new ArrayList<Loan>();
+        System.out.print("Fetching Customer"+emp);
+        
+        emp.setFirstName(fname);
+        emp.setLastName(lname);
+        emp.setAddress(address);
+        emp.setPhoneNumber(phone);
+        
+        bank.setAccountId(accountid);
+        bank.setAccountType(type);
+        bank.setCurrentBalance(balance);
+        bank.setRoutingNumber(routingno);
+        accounts.add(bank);
+        emp.setCustomerId(custid);
+        l.setLoan(amt);
+        l.setloanDate(date);
+        loan.add(l);
+        emp.setLoans(loan);
+        emp.setAccounts(accounts);
+        
+        System.out.print("FetchEmployee Name"+emp);
+        return emp;
     }
 }

@@ -7,6 +7,8 @@ package com.bms.model;
 import com.bms.model.consumerbank.BankStatements;
 import com.bms.model.util.Customer;
 import com.bms.model.util.DBConnection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -119,4 +121,43 @@ public class BankAccount {
         
         return false;
     }
+    
+    public void updateBalancebyId(Integer no,Double total) {
+        
+        String query = "UPDATE bank_accounts SET current_balance = ? WHERE account_id = '"+no+"'";
+        ArrayList<Object> params = new ArrayList<Object>();
+        params.add(total);
+        System.out.print("Parameter"+params);
+        //params.add(this.getAccountId());
+        try{
+            DBConnection conn = new DBConnection();
+            conn.runInsert(query, params);
+            
+        }catch(Exception c){
+            c.printStackTrace();
+        }
+        
+    }
+
+    public Integer fetchAccount(Integer accountno) {
+        
+        //BankAccount bank = new BankAccount();
+        int balance = 0;
+        String query = "Select current_balance from bank_accounts where account_id = '"+accountno+"'";
+        ArrayList<Object> params = new ArrayList<Object>();
+        //params.add(customerAccountIds);
+        try{
+                DBConnection con = new DBConnection();
+                ResultSet rs = con.runSelect(query, params); 
+                balance = rs.getInt("current_balance");
+                //bank.setCurrentBalance(balance);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("Account Id:"+balance);
+        return balance;
+
+    }
+    
 }

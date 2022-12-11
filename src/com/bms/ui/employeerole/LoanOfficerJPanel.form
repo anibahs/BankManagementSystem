@@ -205,6 +205,9 @@
                   <Color blue="27" green="21" red="36" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="homePanel3MouseClicked"/>
+              </Events>
 
               <Layout>
                 <DimensionLayout dim="0">
@@ -294,7 +297,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="500" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="505" max="32767" attributes="0"/>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace pref="137" max="32767" attributes="0"/>
@@ -333,7 +336,6 @@
                           <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel16" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel17" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -350,7 +352,6 @@
                               <Component id="lameField" alignment="0" max="32767" attributes="0"/>
                               <Component id="fnameField" alignment="0" max="32767" attributes="0"/>
                               <Component id="genderField" alignment="0" max="32767" attributes="0"/>
-                              <Component id="bnameField" alignment="1" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace pref="249" max="32767" attributes="0"/>
                       </Group>
@@ -359,12 +360,7 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel11" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="bnameField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel13" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               <Component id="fnameField" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -417,11 +413,6 @@
                     <Property name="text" type="java.lang.String" value="First Name: "/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel11">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Branch:"/>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JTextField" name="emailField">
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel16">
@@ -451,8 +442,6 @@
                 <Component class="javax.swing.JTextField" name="phoneField">
                 </Component>
                 <Component class="javax.swing.JTextField" name="genderField">
-                </Component>
-                <Component class="javax.swing.JTextField" name="bnameField">
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel22">
                   <Properties>
@@ -568,9 +557,9 @@
                             <Column editable="true" title="Transferdate" type="java.lang.Object"/>
                             <Column editable="true" title="Transfertype" type="java.lang.Object"/>
                             <Column editable="true" title="TransferAmount" type="java.lang.Object"/>
-                            <Column editable="true" title="Loan Taken?" type="java.lang.Object"/>
+                            <Column editable="true" title="Loan Amount" type="java.lang.Object"/>
                             <Column editable="true" title="PreviousLoanApplieddate" type="java.lang.Object"/>
-                            <Column editable="true" title="PreviousLoanStatus" type="java.lang.Object"/>
+                            <Column editable="true" title="PreviousLoanROI" type="java.lang.Object"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -691,15 +680,6 @@
                                           <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
                                           <Component id="jXDatePicker1" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                  <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="repaymentField" max="32767" attributes="0"/>
-                                      <Component id="jTxtLoan" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jTxtInterest" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jTxtNoPayment" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jTextMonthlyPayment" pref="122" max="32767" attributes="0"/>
-                                      <Component id="accountidField" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jComboBox3" alignment="0" pref="115" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -727,7 +707,10 @@
                               <Component id="jComboBox3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                          <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jXDatePicker1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -877,6 +860,8 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="repaymentField">
+                </Component>
+                <Component class="org.jdesktop.swingx.JXDatePicker" name="jXDatePicker1">
                 </Component>
               </SubComponents>
             </Container>

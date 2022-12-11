@@ -228,11 +228,16 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         //String monthlyPayment = String.format(jTextMonthlyPayment.getText());
-
+        int val = 0;
         if (jTxtLoan.getText().equals("")){
             JOptionPane.showMessageDialog(null,"Please enter loan amount to borrow","Loan System", JOptionPane.INFORMATION_MESSAGE );
+            val++;
         }
+        else if (jTxtLoan.getText().matches("[a-zA-Z]+")){
+            JOptionPane.showMessageDialog(null,"Invalid Amount type. Please enter Integer loan amount to borrow","Loan System", JOptionPane.INFORMATION_MESSAGE );
+            val++;
 
+        }
         else
         {
             loanamt = Double.parseDouble(jTxtLoan.getText());
@@ -242,8 +247,13 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
         ///////////////////////////////////////////
         if (jTxtInterest.getText().equals("")){
             JOptionPane.showMessageDialog(null,"Please enter Interest rate","Loan System", JOptionPane.INFORMATION_MESSAGE );
+            val++;
         }
+        else if (jTxtInterest.getText().matches("[a-zA-Z]+")){
+            JOptionPane.showMessageDialog(null,"Invalid type. Please enter Valid type for Interest Rate","Loan System", JOptionPane.INFORMATION_MESSAGE );
+            val++;
 
+        }
         else
         {
             interestRate = Double.parseDouble(jTxtInterest.getText());
@@ -252,8 +262,13 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
         //////////////////////////////////////////
         if (jTxtNoPayment.getText().equals("")){
             JOptionPane.showMessageDialog(null,"Please enter number of Installments","Loan System", JOptionPane.INFORMATION_MESSAGE );
+            val++;
         }
+        else if (jTxtNoPayment.getText().matches("[a-zA-Z]+")){
+            JOptionPane.showMessageDialog(null,"Invalid type. Please enter Integer value","Loan System", JOptionPane.INFORMATION_MESSAGE );
+            val++;
 
+        }
         else
         {
             month = Double.parseDouble(jTxtNoPayment.getText());
@@ -261,7 +276,8 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
         //////////////////////////////////////////
 
         
-        commercialbank = new CommercialBank();
+        if(val == 0){
+            commercialbank = new CommercialBank();
         loanapp = new Loan();
         
         loanapp.setLoan(loanamt);
@@ -282,6 +298,8 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
         commercialbank.addLoan(loanapp);
         System.out.print(this.commercialbank.getLoans());
         PopulateTable(this.commercialbank.getLoans());
+        }
+        
         
         
         /*
@@ -324,6 +342,8 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
         loan.setMonth(month);
         loan.setPayment(totalrepay);
         loan.setMonthlyPayment(monemi);
+        
+        
         LoanOfficerJPanel jpanel = new LoanOfficerJPanel(cards,business,splitPane,loan);
         cards.add(jpanel, "LOPanel");
         splitPane.setRightComponent(cards);
@@ -379,17 +399,18 @@ public class LoanEstimatorJPanel extends javax.swing.JPanel {
         
         ArrayList<Loan> loans = new ArrayList<Loan>();
         DBConnection con = new DBConnection();
-        int loanid = 0;
+        int loanid = 5;
         //Double loanamt = Double.parseInt
-        String query = "Insert into loan (loanamt,InterestRate,NoofMonths,RepaymentTotal,MonthlyEMI,loanID) values (?,?,?,?,?,?)";
+        String query = "Insert into loan (loanamt,InterestRate,NoofMonths,Repayment,MonthlyEMI) values (?,?,?,?,?)";
         ArrayList<Object> params = new ArrayList<Object>();
         params.add(loanamt);
         params.add(roi);
         params.add(month);
         params.add(repay);
         params.add(monemi);
-        params.add(5);
+        //params.add(loanid++);
         //params.add(customerAccountIds);
+        System.out.print("Parameter"+params);
         con.runInsertloan(cards, query, params);
         
     }
